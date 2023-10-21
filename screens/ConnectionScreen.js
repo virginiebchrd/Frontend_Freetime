@@ -1,50 +1,73 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useFonts } from 'expo-font';
-import HeaderReturn from '../components/HeaderReturn';
+import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from "expo-font";
+import HeaderReturn from "../components/HeaderReturn";
+import SmallButton from "../components/buttons/SmallButton";
 
-export default function FirstConnectionScreen ({navigation}) {
-    const [fontsLoaded] = useFonts({
-        'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
-    });
+export default function FirstConnectionScreen({ navigation }) {
+  const [fontsLoaded] = useFonts({
+    "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
+  });
 
-    if (!fontsLoaded) {
+  if (!fontsLoaded) {
     return null;
-    }
+  }
 
-    return (
-        <View style={styles.container}>
-            <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn />
+  const valider = "Valider";//text du bouton
 
-                <View style={styles.bodyContainer}>
-                    <Text>Connection Screen</Text>
-                </View>
-                
+  const handleValidateButton = () => {
+    alert("Valider");
+  };
 
-                
-            </LinearGradient>
+  return (
+    <View style={styles.container}>
+      <LinearGradient
+        colors={["#D9F2B1", "transparent"]}
+        style={styles.background}
+      >
+        <HeaderReturn />
+
+        <View style={styles.InputsContainer}>
+            <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
         </View>
-    )
+        <View style={styles.buttonContainer}>
+        <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
+          <SmallButton title={valider} onPress={handleValidateButton} />
+          <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
+        </View>
+      </LinearGradient>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    background: {
-        height: '100%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    },
-    bodyContainer: {
-        height: '80%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-  });
+  container: {
+    flex: 1,
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  background: {
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  InputsContainer: {
+    height: "50%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonContainer: {
+    height: "20%",
+    width: 500,
+    alignItems: "center",
+    bottom: 0,
+  },
+  title: {
+    color: "#004644",
+    fontSize: 50,
+    fontFamily: "Indie-Flower",
+  },
+});
