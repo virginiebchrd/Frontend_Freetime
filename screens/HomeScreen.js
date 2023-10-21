@@ -1,37 +1,36 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import HeaderReturn from '../components/HeaderReturn';
 
 export default function HomeScreen ({navigation}) {
+
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-            <View style={styles.welcomeContainer}>
-                <Text style={styles.welcome}>Welcome to</Text>
-            </View>
-            <View style={styles.logoContainer}>
-                <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
-            </View>
-
-            <View style={styles.buttonContainer}>
-                <View style={styles.gradientContainer}>
-                    <LinearGradient  colors={['transparent', '#004644']}  style={styles.background}>
-                        <TouchableOpacity style={styles.buttonBackground} onPress={() => navigation.navigate('FirstConnection')}>
-                            <Text>First</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
+                <View style={styles.welcomeContainer}>
+                    <Text style={styles.welcome}>Welcome to</Text>
+                </View>
+                <View style={styles.logoContainer}>
+                    <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
                 </View>
 
-                <View style={styles.gradientContainer}>
-                    <LinearGradient  colors={['transparent', '#004644']}  style={styles.background}>
-                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Connection')}>
-                            <Text>Connexion</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
+                <View style={styles.buttonContainer}>
+                    <View style={styles.gradientContainer}>
+                        <LinearGradient colors={['transparent', '#004644']}  style={styles.background}>
+                            <TouchableOpacity style={styles.buttonBackground} onPress={() => navigation.navigate('ShowActivity')}>
+                                <Text>First</Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                    </View>
+
+                    <View style={styles.gradientContainer}>
+                        <LinearGradient  colors={['transparent', '#004644']}  style={styles.background}>
+                            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Connection')}>
+                                <Text>Connexion</Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                    </View>
                 </View>
-            </View>
-      </LinearGradient>
-            
+            </LinearGradient>
         </View>
     )
 }
@@ -66,7 +65,6 @@ const styles = StyleSheet.create({
     welcome: {
         color: '#004644',
         fontSize: 50,
-        fontFamily: 'indieFlower',
     },
     logoContainer: {
         height: '25%',

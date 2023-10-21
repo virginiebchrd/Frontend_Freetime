@@ -5,6 +5,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import FirstConnectionScreen from './screens/FirstConnectionScreen';
 import ConnectionScreen from './screens/ConnectionScreen';
+import CreateProfilScreen from './screens/CreateProfilScreen';
+import ProfilScreen from './screens/ProfilScreen';
+import CalendarScreen from './screens/CalendarScreen';
+import WhoScreen from './screens/WhoScreen';
+import MapScreen from './screens/MapScreen';
+import ActivitiesScreen from './screens/ActivitiesScreen';
+import ResultScreen from './screens/ResultScreen';
+import ShowActivityScreen from './screens/ShowActivityScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +23,14 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="FirstConnection" component={FirstConnectionScreen} />
         <Stack.Screen name="Connection" component={ConnectionScreen}/>
+        <Stack.Screen name="CreateProfil" component={CreateProfilScreen}/>
+        <Stack.Screen name="Profil" component={ProfilScreen}/>
+        <Stack.Screen name="Calendar" component={CalendarScreen}/>
+        <Stack.Screen name="Who" component={WhoScreen}/>
+        <Stack.Screen name="Map" component={MapScreen}/>
+        <Stack.Screen name="Activities" component={ActivitiesScreen}/>
+        <Stack.Screen name="Result" component={ResultScreen}/>
+        <Stack.Screen name="ShowActivity" component={ShowActivityScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
