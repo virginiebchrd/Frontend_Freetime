@@ -2,6 +2,7 @@ import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
+import LargeButton from "../components/buttons/LargeButton";
 
 export default function WhoScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
@@ -11,6 +12,28 @@ export default function WhoScreen ({navigation}) {
     if (!fontsLoaded) {
     return null;
     }
+    //text affiché dans le bouton
+    const seulementMoi = "Seulement Moi";
+    const avecMaFamille = "Avec Ma Famille";
+    const avecMesAmis = "Avec Mes Amis";
+    const uniquementCertainesPersonnes = "Uniquement Certaines Personnes";
+
+    //les fonctions qui sont utilisées dans le bouton
+    const handleOnlyME = () => {
+        alert("sélectionner un activité pour un personne");
+    }
+
+    const handleWithFamily = () => {
+        alert("sélectionner un activité avec la famille(adultes et enfants)");
+    }
+
+    const handleWithFriends = () => {
+        alert("sélectionner un activité avec les amis (adultes)");
+    }
+
+    const handleOtherPerson = () => {
+        alert("sélectionner un activité pour une autre personne");
+    }
     
     return (
         <View style={styles.container}>
@@ -18,9 +41,23 @@ export default function WhoScreen ({navigation}) {
                 <HeaderReturn icon="profil" />
 
                 <View style={styles.bodyContainer}>
-                    <Text>Qui va participer ?</Text>
+                    <Text style={styles.titlePage}>Qui va participer ?</Text>
+                     
+                <View style={styles.buttonContainer}>
+                    <LargeButton title={seulementMoi} onPress={handleOnlyME}/>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <LargeButton title={avecMaFamille} onPress={handleWithFamily}/>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <LargeButton title={avecMesAmis} onPress={handleWithFriends}/>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <LargeButton title={uniquementCertainesPersonnes} onPress={handleOtherPerson}/>
+                </View>
                 </View>
                 
+               
 
                 
             </LinearGradient>
@@ -46,5 +83,17 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    buttonContainer: {
+        height: '20%',
+        width: '100%',
+        alignItems: 'center',
+        bottom: 0,
+    },
+    titlePage: {
+        fontSize: 30,
+        color: '#004644',
+        fontFamily: 'Indie-Flower',
+        fontWeight: 'bold',
+    },
   });

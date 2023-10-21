@@ -12,8 +12,10 @@ export default function FirstConnectionScreen({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
+    //text affiché dans le bouton
+  const valider = "Valider";
 
-  const valider = "Valider";//text du bouton
+      //la fonctiona qui est utilisé dans le bouton
 
   const handleValidateButton = () => {
     alert("Valider");
@@ -28,12 +30,13 @@ export default function FirstConnectionScreen({ navigation }) {
         <HeaderReturn />
 
         <View style={styles.InputsContainer}>
-            <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
+            <Text>input 1</Text>
+            <Text>input 2</Text>
         </View>
         <View style={styles.buttonContainer}>
-        <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
-          <SmallButton title={valider} onPress={handleValidateButton} />
-          <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
+        
+          <SmallButton title={valider} onPress={() => navigation.navigate('Who')} />
+          
         </View>
       </LinearGradient>
     </View>
