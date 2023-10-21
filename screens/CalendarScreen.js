@@ -1,8 +1,17 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
 
 export default function CalendarScreen ({navigation}) {
+    const [fontsLoaded] = useFonts({
+        'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
+    });
+
+    if (!fontsLoaded) {
+    return null;
+    }
+    
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >

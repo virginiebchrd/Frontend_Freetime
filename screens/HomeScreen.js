@@ -1,7 +1,15 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts } from 'expo-font';
 
 export default function HomeScreen ({navigation}) {
+    const [fontsLoaded] = useFonts({
+        'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
+    });
+
+    if (!fontsLoaded) {
+    return null;
+    }
 
     return (
         <View style={styles.container}>
@@ -65,6 +73,7 @@ const styles = StyleSheet.create({
     welcome: {
         color: '#004644',
         fontSize: 50,
+        fontFamily: 'Indie-Flower'
     },
     logoContainer: {
         height: '25%',
