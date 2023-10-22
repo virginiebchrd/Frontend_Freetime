@@ -12,13 +12,13 @@ export default function WhoScreen ({navigation}) {
     if (!fontsLoaded) {
     return null;
     }
-    //text affiché dans le bouton
+    //text affiché dans les boutons
     const seulementMoi = "Seulement Moi";
     const avecMaFamille = "Avec Ma Famille";
     const avecMesAmis = "Avec Mes Amis";
     const uniquementCertainesPersonnes = "Uniquement Certaines Personnes";
 
-    //les fonctions qui sont utilisées dans le bouton
+    //les fonctions qui sont utilisées dans les boutons
     const handleOnlyME = () => {
         alert("sélectionner un activité pour un personne");
     }

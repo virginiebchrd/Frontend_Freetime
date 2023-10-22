@@ -1,11 +1,15 @@
+/*
+@param {string} title
+@param {function} onPress
+*/
+
 import { TouchableOpacity, Text, View, StyleSheet} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-
+import { useFonts } from 'expo-font';
 
 
 const SmallButton  = ({ title, onPress  }) => {
     
-   
 
   return (
     <View style={styles.smallButtonContainer}>
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: "#004644",
-  
+    fontFamily: "Indie-Flower",
   },
 });
 
