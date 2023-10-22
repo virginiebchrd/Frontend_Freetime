@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
@@ -12,10 +12,11 @@ export default function FirstConnectionScreen({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
+  //text affiché dans le bouton
+  const valider = "Valider";
 
-  const valider = "Valider";//text du bouton
-
-  const handleValidateButton = () => {
+  //la fonction qui est utilisé dans le bouton
+  const handleSignIn = () => {
     alert("Valider");
   };
 
@@ -28,12 +29,13 @@ export default function FirstConnectionScreen({ navigation }) {
         <HeaderReturn />
 
         <View style={styles.InputsContainer}>
-            <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
+          <Text>emplacement input</Text>
         </View>
         <View style={styles.buttonContainer}>
-        <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
-          <SmallButton title={valider} onPress={handleValidateButton} />
-          <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
+          <SmallButton
+            title={valider}
+            onPress={() => navigation.navigate("Who")}
+          />
         </View>
       </LinearGradient>
     </View>
@@ -65,9 +67,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     bottom: 0,
   },
-  title: {
-    color: "#004644",
-    fontSize: 50,
-    fontFamily: "Indie-Flower",
-  },
+
 });

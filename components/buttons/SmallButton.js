@@ -1,5 +1,11 @@
+/*
+@param {string} title
+@param {function} onPress
+*/
+
 import { TouchableOpacity, Text, View, StyleSheet} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from 'expo-font';
 
 
 
@@ -50,9 +56,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
 },
   buttonText: {
-    fontSize: 20,
+    fontSize: 40,
     color: "#004644",
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontFamily: "Indie-Flower",
   },
 });
 
