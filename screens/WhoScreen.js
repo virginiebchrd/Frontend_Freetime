@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import { Text, View, StyleSheet} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
@@ -56,10 +56,7 @@ export default function WhoScreen ({navigation}) {
                     <LargeButton title={uniquementCertainesPersonnes} onPress={handleOtherPerson}/>
                 </View>
                 </View>
-                
-               
-
-                
+                                               
             </LinearGradient>
         </View>
     )
