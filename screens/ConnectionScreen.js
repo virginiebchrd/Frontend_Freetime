@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
+import InputWithLabel from "../components/inputs/InputWithLabel";
 
 export default function FirstConnectionScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -12,9 +13,13 @@ export default function FirstConnectionScreen({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
-  //text affiché dans le bouton
+  //text affiché dans le bouton et inputs
   const valider = "Valider";
-
+  const EmailPlaceholder = "Entrer votre adresse email";
+  const Password = "Entrer votre mot de passe";
+  const EmailLabel = "Email";
+  const PasswordLabel = "Mot de passe";
+  
   //la fonction qui est utilisé dans le bouton
   const handleSignIn = () => {
     alert("Valider");
@@ -29,7 +34,10 @@ export default function FirstConnectionScreen({ navigation }) {
         <HeaderReturn />
 
         <View style={styles.InputsContainer}>
-          <Text>emplacement input</Text>
+          <InputWithLabel placeholder={EmailPlaceholder} label={EmailLabel}/>
+
+          <InputWithLabel placeholder={Password} label={PasswordLabel}/>
+          <Text style={styles.Text}>Mot de passe oublié?</Text>
         </View>
         <View style={styles.buttonContainer}>
           <SmallButton
@@ -66,6 +74,10 @@ const styles = StyleSheet.create({
     width: 500,
     alignItems: "center",
     bottom: 0,
+  },
+  Text: {
+    color: "#da122a",
+    fontFamily: "Indie-Flower",
   },
 
 });
