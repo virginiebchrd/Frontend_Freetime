@@ -10,7 +10,6 @@ import { useFonts } from 'expo-font';
 
 const SmallButton  = ({ title, onPress  }) => {
     
-
   return (
     <View style={styles.smallButtonContainer}>
    
