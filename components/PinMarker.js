@@ -2,12 +2,12 @@ import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
-function PinMarker () {
+function PinMarker (props) {
 
     return (
         <View style={styles.headerContainer}>
             <TouchableOpacity style={styles.logoutBtn}>
-                <FontAwesome name='map-pin' size={25} color='#cae1db' />
+                <FontAwesome name='map-pin' size={25} color={props.color} />
             </TouchableOpacity>
         </View>
     )

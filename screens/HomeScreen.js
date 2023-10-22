@@ -19,7 +19,7 @@ export default function HomeScreen ({navigation}) {
                     <Text style={styles.welcome}>Welcome to</Text>
                 </View>
                 <View style={styles.logoContainer}>
-                    <Logo width='125%' fill='pink' stroke='yellow'/>
+                    <Logo width='125%'/>
                 </View>
 
                 <View style={styles.buttonContainer}>
