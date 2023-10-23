@@ -7,7 +7,7 @@ import { TouchableOpacity, Text, View, StyleSheet} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from 'expo-font';
 
-const SmallButton  = ({ title, onPress  }) => {
+const LargeButton  = ({ title, onPress  }) => {
     
   return (
     <View style={styles.smallButtonContainer}>
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SmallButton;
+export default LargeButton;
