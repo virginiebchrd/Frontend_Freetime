@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
 
+
 export default function FirstConnectionScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -16,7 +17,7 @@ export default function FirstConnectionScreen ({navigation}) {
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
                 <HeaderReturn />
-
+                
                 <View style={styles.bodyContainer}>
                     <Text>First Connection</Text>
                 </View>
@@ -46,5 +47,5 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
   });

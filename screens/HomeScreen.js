@@ -1,6 +1,7 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
+import Logo from '../assets/Free-Time-logos_black.svg';
 
 export default function HomeScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
@@ -18,13 +19,13 @@ export default function HomeScreen ({navigation}) {
                     <Text style={styles.welcome}>Welcome to</Text>
                 </View>
                 <View style={styles.logoContainer}>
-                    <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
+                    <Logo width='125%'/>
                 </View>
 
                 <View style={styles.buttonContainer}>
                     <View style={styles.gradientContainer}>
                         <LinearGradient colors={['transparent', '#004644']}  style={styles.background}>
-                            <TouchableOpacity style={styles.buttonBackground} onPress={() => navigation.navigate('ShowActivity')}>
+                            <TouchableOpacity style={styles.buttonBackground} onPress={() => navigation.navigate('FirstConnection')}>
                                 <Text>First</Text>
                             </TouchableOpacity>
                         </LinearGradient>

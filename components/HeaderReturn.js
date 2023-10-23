@@ -1,21 +1,24 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Logout from './Logout';
+import Profil from './Profil';
+import Return from './Return';
 
 
 function HeaderReturn (props) {
     let icon;
     if(props.icon === 'logout') {
-        icon = <FontAwesome name= 'power-off' size={25} color='#cae1db' />
+        icon = <Logout />
     }
     else if(props.icon === 'profil') {
-        icon = <FontAwesome name= 'user' size={25} color='#cae1db' />
+        icon = <Profil />
     }
     return (
         <View style={styles.headerContainer}>
             <LinearGradient colors={['#004644', 'transparent']}  style={styles.headerGradient} >
                 <View style={styles.returnContainer}>
-                    <FontAwesome name='arrow-left' size={25} color='#cae1db' />
+                    <Return />
                 </View>
                 <View style={styles.logoContainer}>
                     <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
