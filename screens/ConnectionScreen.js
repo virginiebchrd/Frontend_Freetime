@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 
 
+
 export default function FirstConnectionScreen({ navigation }) {
   const[mail, setMail] = useState(""); 
 
@@ -50,8 +51,10 @@ export default function FirstConnectionScreen({ navigation }) {
           <InputWithLabel 
           placeholder={EmailPlaceholder} 
           label={EmailLabel}  
+
           icon={true}
           />
+
 
           <InputWithLabel 
           placeholder={Password} 
