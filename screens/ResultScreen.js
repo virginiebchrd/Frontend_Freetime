@@ -61,10 +61,10 @@ export default function ResultScreen ({navigation}) {
                             {markers}
                         </MapView>
                     </View>
-                    <ScrollView contentContainerStyle={
-                        styles.scrollContainer
-                    }>
-                        {activities}
+                    <ScrollView>
+                        <View style={styles.activitiesContainer}>
+                            {activities}
+                        </View>
                     </ScrollView>
                 </View>
                 
@@ -116,8 +116,12 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
     },
-    scrollContainer: {
-        height: '20%',
-        width: '100%',
+    activitiesContainer: {
+        height: '100%',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        padding: 10,
+        alignContent: 'space-between',
     },
+    
   });

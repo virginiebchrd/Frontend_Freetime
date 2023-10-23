@@ -44,7 +44,7 @@ function CheckBoxContainer (props) {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '70%',
+        height: '40%',
         width: '100%',
         flexDirection: 'row',
         backgroundColor: '#004644',
