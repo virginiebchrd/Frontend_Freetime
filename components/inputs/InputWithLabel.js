@@ -5,10 +5,17 @@
 import React from "react";
 import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { useFonts } from "expo-font";
 
 
 function InputWithLabel({ placeholder, label, icon, onChangeText }) {
- 
+  const fontsLoaded = useFonts({
+    "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <KeyboardAvoidingView
     behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -16,7 +23,8 @@ function InputWithLabel({ placeholder, label, icon, onChangeText }) {
   >
       <View style={styles.inputContainer}>
 
-        <TextInput style={styles.input} 
+        <TextInput  style={[styles.input, { fontFamily: "Indie-Flower" }]}
+
         placeholder={placeholder}
         onChangeText={onChangeText}
         autoCapitalize="none"         
@@ -34,7 +42,8 @@ function InputWithLabel({ placeholder, label, icon, onChangeText }) {
         )}
 
       </View>
-      <Text style={styles.label}>
+      <Text style={[styles.label, { fontFamily: "Indie-Flower" }]}
+>
         {label}
       </Text>
     </KeyboardAvoidingView>

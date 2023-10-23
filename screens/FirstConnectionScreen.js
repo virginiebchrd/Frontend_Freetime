@@ -1,43 +1,44 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useFonts } from 'expo-font';
-import { useDispatch, useSelector } from 'react-redux';
-import { addEmail, addPassword } from '../reducers/userReducer';
-import HeaderReturn from '../components/HeaderReturn';
-import SmallButton from '../components/buttons/SmallButton';
-import InputWithLabel from '../components/inputs/InputWithLabel';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from "expo-font";
+import { useDispatch, useSelector } from "react-redux";
+import { addEmail, addPassword } from "../reducers/userReducer";
+import HeaderReturn from "../components/HeaderReturn";
+import SmallButton from "../components/buttons/SmallButton";
+import  BasicInput  from "../components/inputs/BasicInput";
 
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default function FirstConnectionScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
 
-  const [mail, setMail] = useState('');
-  const [password, setPassword] = useState('');
+  const [mail, setMail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
   const fontsLoaded = useFonts({
-    'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
+    "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
 
   const handleSubmit = () => {
-    console.log('E-mail:', mail);
-    console.log('Password:', password);
+    console.log("E-mail:", mail);
+    console.log("Password:", password);
 
     if (EMAIL_REGEX.test(mail) && password.length >= 6) {
-      console.log('Conditions remplies.');
+      console.log("Conditions remplies.");
 
       // Dispatch actions to store the email and password
       dispatch(addEmail(mail));
       dispatch(addPassword(password));
 
       // Navigate to the 'Profil' screen
-      navigation.navigate('Profil');
+      navigation.navigate("Profil");
     } else {
-      console.log('Champs vides ou conditions non remplies.');
+      console.log("Champs vides ou conditions non remplies.");
       setEmailError(!EMAIL_REGEX.test(mail));
       setPasswordError(password.length < 6);
     }
@@ -47,25 +48,26 @@ export default function FirstConnectionScreen({ navigation }) {
     return null;
   }
 
-  const valider = 'Valider';
-  const EmailPlaceholder = 'Entrer votre adresse mail';
-  const PasswordLabel = 'Mot de passe';
-
+  const valider = "Valider";
+  const EmailPlaceholder = "Entrer votre adresse mail";
+  const PasswordLabel = "Entrer votre mot de passe";
+  //fake btn google et facebook
+  const google = "google";
+  const facebook = "facebook";
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <LinearGradient
-        colors={['#D9F2B1', 'transparent']}
+        colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
         <HeaderReturn />
-
-        <View style={styles.InputsContainer}>
+            
           <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
-          <InputWithLabel
+          <BasicInput 
             placeholder={EmailPlaceholder}
             label="Mail"
             onChangeText={(value) => setMail(value)}
@@ -75,27 +77,33 @@ export default function FirstConnectionScreen({ navigation }) {
             keyboardType="email-address"
           />
 
-          <InputWithLabel
-            placeholder={PasswordLabel}
-            label={PasswordLabel}
-            onChangeText={(value) => setPassword(value)}
-            secureTextEntry
-          />
-            <InputWithLabel
+          <BasicInput 
             placeholder={PasswordLabel}
             label={PasswordLabel}
             onChangeText={(value) => setPassword(value)}
             secureTextEntry
           />
 
-          {( passwordError) && (
-            <Text style={styles.TextError}>le mot de passe n'est pas identique !</Text>
+          <Text style={styles.title}>
+            Confirmer votre mot de passe
+          </Text>
+
+            <BasicInput
+              placeholder={PasswordLabel}
+              label={PasswordLabel}
+              onChangeText={(value) => setPassword(value)}
+              secureTextEntry
+            />
+
+          {passwordError && (
+            <Text style={styles.TextError}>
+              Le mot de passe n'est pas identique !
+            </Text>
           )}
-        </View>
 
-        <View style={styles.buttonContainer}>
+        
           <SmallButton title={valider} onPress={handleSubmit} />
-        </View>
+    
       </LinearGradient>
     </KeyboardAvoidingView>
   );
@@ -104,38 +112,58 @@ export default function FirstConnectionScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  background: {
-    height: '100%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
+  
   InputsContainer: {
-    height: '50%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: 10,
+    height: 300,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
+
+  confirmationContainer: {
+    height: 500,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+
   buttonContainer: {
-    height: '20%',
-    width: 500,
-    alignItems: 'center',
+    height: 500,
+    width: "100%",
+    alignItems: "center",
     marginBottom: 0,
   },
+  
+  background: {
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+ 
+ 
   title: {
-    color: '#004644',
-    fontFamily: 'Indie-Flower',
+    color: "#004644",
+    fontFamily: "Indie-Flower",
     fontSize: 20,
     marginBottom: 10,
+    textAlign: "center",
   },
-  TextError: {
-    color: '#da122a',
-    fontFamily: 'Indie-Flower',
+  Text:{
+    color: "#004644",
+    fontFamily: "Indie-Flower",
     marginBottom: 10,
   },
+
+  TextError: {
+    color: "#da122a",
+    fontFamily: "Indie-Flower",
+    marginBottom: 10,
+  },
+  
 });
