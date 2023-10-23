@@ -1,46 +1,59 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import HomeScreen from './screens/HomeScreen';
-import FirstConnectionScreen from './screens/FirstConnectionScreen';
-import ConnectionScreen from './screens/ConnectionScreen';
-import CreateProfilScreen from './screens/CreateProfilScreen';
-import ProfilScreen from './screens/ProfilScreen';
-import CalendarScreen from './screens/CalendarScreen';
-import WhoScreen from './screens/WhoScreen';
-import MapScreen from './screens/MapScreen';
-import ActivitiesScreen from './screens/ActivitiesScreen';
-import ResultScreen from './screens/ResultScreen';
-import ShowActivityScreen from './screens/ShowActivityScreen';
+import HomeScreen from "./screens/HomeScreen";
+import FirstConnectionScreen from "./screens/FirstConnectionScreen";
+import ConnectionScreen from "./screens/ConnectionScreen";
+import CreateProfilScreen from "./screens/CreateProfilScreen";
+import ProfilScreen from "./screens/ProfilScreen";
+import CalendarScreen from "./screens/CalendarScreen";
+import WhoScreen from "./screens/WhoScreen";
+import MapScreen from "./screens/MapScreen";
+import ActivitiesScreen from "./screens/ActivitiesScreen";
+import ResultScreen from "./screens/ResultScreen";
+import ShowActivityScreen from "./screens/ShowActivityScreen";
+
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./reducers/userReducer";
+
+const store = configureStore({
+  reducer: { user: userReducer },
+});
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="FirstConnection" component={FirstConnectionScreen} />
-        <Stack.Screen name="Connection" component={ConnectionScreen}/>
-        <Stack.Screen name="CreateProfil" component={CreateProfilScreen}/>
-        <Stack.Screen name="Profil" component={ProfilScreen}/>
-        <Stack.Screen name="Calendar" component={CalendarScreen}/>
-        <Stack.Screen name="Who" component={WhoScreen}/>
-        <Stack.Screen name="Map" component={MapScreen}/>
-        <Stack.Screen name="Activities" component={ActivitiesScreen}/>
-        <Stack.Screen name="Result" component={ResultScreen}/>
-        <Stack.Screen name="ShowActivity" component={ShowActivityScreen}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="FirstConnection"
+            component={FirstConnectionScreen}
+          />
+          <Stack.Screen name="Connection" component={ConnectionScreen} />
+          <Stack.Screen name="CreateProfil" component={CreateProfilScreen} />
+          <Stack.Screen name="Profil" component={ProfilScreen} />
+          <Stack.Screen name="Calendar" component={CalendarScreen} />
+          <Stack.Screen name="Who" component={WhoScreen} />
+          <Stack.Screen name="Map" component={MapScreen} />
+          <Stack.Screen name="Activities" component={ActivitiesScreen} />
+          <Stack.Screen name="Result" component={ResultScreen} />
+          <Stack.Screen name="ShowActivity" component={ShowActivityScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

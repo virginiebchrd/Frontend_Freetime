@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 5,
     width: 250,
+      position: "relative", 
   },
 
   input: {
