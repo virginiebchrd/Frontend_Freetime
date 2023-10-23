@@ -117,7 +117,7 @@ export default function FirstConnectionScreen({ navigation }) {
 
        {isAllowed ? (
             <View style={styles.buttonContainer}>
-              <SmallButton title={Valider} onPress={() => navigation.navigate('ConnectionScreen')} />
+              <SmallButton title={Valider} onPress={() => navigation.navigate('Connection')} />
             </View>
           ) : (
             <View style={styles.buttonContainer}>
