@@ -1,27 +1,48 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 import Logout from './Logout';
 import Profil from './Profil';
 import Return from './Return';
 
+function HeaderReturn ({iconContext, pages}) {
+    const navigation = useNavigation();
 
-function HeaderReturn (props) {
-    let icon;
-    if(props.icon === 'logout') {
-        icon = <Logout />
+    const handleReturn = () => {
+        navigation.navigate('Who');
     }
-    else if(props.icon === 'profil') {
-        icon = <Profil />
+
+    const Logout = () => {
+        console.log('logout');
+        //dispatch() retirer adresse mail
+        navigation.navigate('Home');
+    }
+
+    const handleProfil = () => {
+        navigation.navigate('Profil')
+    }
+
+    const handleLogo = () => {
+        navigation.navigate('Map');
+    }
+
+    let icon;
+    if(iconContext === 'logout') {
+        icon = <Logout onPress={handleLogout}/>
+    }
+    else if(iconContext === 'profil') {
+        icon = <Profil onPress={handleProfil}/>
     }
     return (
         <View style={styles.headerContainer}>
             <LinearGradient colors={['#004644', 'transparent']}  style={styles.headerGradient} >
                 <View style={styles.returnContainer}>
-                    <Return />
+                    <Return onPress={handleReturn}/>
                 </View>
                 <View style={styles.logoContainer}>
-                    <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
+                    <TouchableOpacity style={styles.logoTouchable} onPress={()=>handleLogo()}>
+                        <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.profilContainer}>
                     {icon}
@@ -58,6 +79,10 @@ const styles = StyleSheet.create({
         width: '60%',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    logoTouchable: {
+        height: '100%',
+        width: '100%',
     },
     profilContainer: {
         height: '20%',
