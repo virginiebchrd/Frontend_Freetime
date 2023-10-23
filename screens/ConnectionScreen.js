@@ -1,14 +1,18 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text,KeyboardAvoidingView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import InputWithLabel from "../components/inputs/InputWithLabel";
-//--testing areas
-import BasicInput from "../components/inputs/BasicInput";
+//pour créer un état et stocker la valeur de l'état
+import { useState } from 'react';
+
+
 
 
 export default function FirstConnectionScreen({ navigation }) {
+  const[mail, setMail] = useState(""); 
+
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -32,7 +36,8 @@ export default function FirstConnectionScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+
       <LinearGradient
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
@@ -46,7 +51,10 @@ export default function FirstConnectionScreen({ navigation }) {
           <InputWithLabel 
           placeholder={EmailPlaceholder} 
           label={EmailLabel}  
-          icon={true}/>
+
+          icon={true}
+          />
+
 
           <InputWithLabel 
           placeholder={Password} 
@@ -62,7 +70,7 @@ export default function FirstConnectionScreen({ navigation }) {
           />
         </View>
       </LinearGradient>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
