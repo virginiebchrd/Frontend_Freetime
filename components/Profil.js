@@ -1,11 +1,11 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-function Profil () {
+function Profil ({onPress}) {
 
     return (
         <View style={styles.headerContainer}>
-            <TouchableOpacity style={styles.logoutBtn}>
+            <TouchableOpacity style={styles.logoutBtn} onPress={onPress}>
                 <FontAwesome name= 'user' size={25} color='#cae1db' />
             </TouchableOpacity>
         </View>
