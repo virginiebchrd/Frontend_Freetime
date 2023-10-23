@@ -26,8 +26,8 @@ export default function FirstConnectionScreen({ navigation }) {
 
   const [isAllowed, setIsAllowed] = useState(false);
 
-
-  const handleSubmit = () => {
+  //inspiration morningnews
+  const handleConnection = () => {
     console.log('E-mail:', mail);
     console.log('Password:', password);
     console.log('isAllowed:', isAllowed);
@@ -71,7 +71,7 @@ export default function FirstConnectionScreen({ navigation }) {
     return null;
   }
   //text affiché dans le bouton et placeholder des inputs 
-  const valider = "Valider";
+  const Valider = "Valider";
   const EmailPlaceholder = "Entrer votre adresse mail";
   const Password = "Entrer votre mot de passe";
   const EmailLabel = "Mail";
@@ -108,6 +108,7 @@ export default function FirstConnectionScreen({ navigation }) {
           label={PasswordLabel}  
           icon={false}
           onChangeText={(value) => setPassword(value)}
+          secureTextEntry
          />
 
           {(emailError || passwordError) && <Text style={styles.TextError}>Erreur mot de passe ou mail ?</Text>}
@@ -116,11 +117,11 @@ export default function FirstConnectionScreen({ navigation }) {
 
        {isAllowed ? (
             <View style={styles.buttonContainer}>
-              <SmallButton title={valider} onPress={() => navigation.navigate('ConnectionScreen')} />
+              <SmallButton title={Valider} onPress={() => navigation.navigate('ConnectionScreen')} />
             </View>
           ) : (
             <View style={styles.buttonContainer}>
-              <SmallButton title={valider} onPress={handleSubmit} />
+              <SmallButton title={Valider} onPress={handleConnection} />
             </View>
        )}
           

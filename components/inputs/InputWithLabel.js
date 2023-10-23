@@ -8,7 +8,7 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 
 
-function InputWithLabel({ placeholder, label, icon, onChangeText }) {
+function InputWithLabel({ placeholder, label, icon, onChangeText, secureTextEntry }) {
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -27,7 +27,8 @@ function InputWithLabel({ placeholder, label, icon, onChangeText }) {
 
         placeholder={placeholder}
         onChangeText={onChangeText}
-        autoCapitalize="none"         
+        autoCapitalize="none" 
+        secureTextEntry={secureTextEntry}    
        />
 
         {icon && (
@@ -111,6 +112,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 250, // Ajustez la largeur de l'input
     padding:5,
+  },
+  iconContainer:{
+
   },
 });
 

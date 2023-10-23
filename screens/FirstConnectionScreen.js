@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { useDispatch, useSelector } from "react-redux";
-import { addEmail, addPassword } from "../reducers/userReducer";
+import { addEmail, addPassword, login } from "../reducers/userReducer";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import  BasicInput  from "../components/inputs/BasicInput";
@@ -23,8 +23,11 @@ export default function FirstConnectionScreen({ navigation }) {
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
-
-  const handleSubmit = () => {
+  if (!fontsLoaded) {
+    return null;
+  }
+  //inspiration morningnews
+  const handleRegister = () => {
     console.log("E-mail:", mail);
     console.log("Password:", password);
 
@@ -35,6 +38,10 @@ export default function FirstConnectionScreen({ navigation }) {
       dispatch(addEmail(mail));
       dispatch(addPassword(password));
 
+      console.log("Enregistrement effectué avec succès.");
+      console.log("E-mail enregistré:", mail);
+      console.log("Mot de passe enregistré:", password);
+
       // Navigate to the 'Profil' screen
       navigation.navigate("Profil");
     } else {
@@ -44,16 +51,11 @@ export default function FirstConnectionScreen({ navigation }) {
     }
   };
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
-  const valider = "Valider";
+  const Valider = "Valider";
   const EmailPlaceholder = "Entrer votre adresse mail";
   const PasswordLabel = "Entrer votre mot de passe";
-  //fake btn google et facebook
-  const google = "google";
-  const facebook = "facebook";
+  
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -64,7 +66,7 @@ export default function FirstConnectionScreen({ navigation }) {
         style={styles.background}
       >
         <HeaderReturn />
-            
+
           <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
           <BasicInput 
@@ -75,15 +77,17 @@ export default function FirstConnectionScreen({ navigation }) {
             icon={false}
             autoComplete="email"
             keyboardType="email-address"
+            
           />
 
           <BasicInput 
             placeholder={PasswordLabel}
             label={PasswordLabel}
             onChangeText={(value) => setPassword(value)}
+            value={password}
             secureTextEntry
           />
-
+       
           <Text style={styles.title}>
             Confirmer votre mot de passe
           </Text>
@@ -92,6 +96,7 @@ export default function FirstConnectionScreen({ navigation }) {
               placeholder={PasswordLabel}
               label={PasswordLabel}
               onChangeText={(value) => setPassword(value)}
+              value={password}
               secureTextEntry
             />
 
@@ -102,7 +107,7 @@ export default function FirstConnectionScreen({ navigation }) {
           )}
 
         
-          <SmallButton title={valider} onPress={handleSubmit} />
+          <SmallButton title={Valider} onPress={handleRegister} />
     
       </LinearGradient>
     </KeyboardAvoidingView>
@@ -115,23 +120,10 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    margin: 0,
+    padding: 0,
   },
   
-  InputsContainer: {
-    height: 300,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  confirmationContainer: {
-    height: 500,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-
   buttonContainer: {
     height: 500,
     width: "100%",
@@ -154,12 +146,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
   },
-  Text:{
-    color: "#004644",
-    fontFamily: "Indie-Flower",
-    marginBottom: 10,
-  },
-
+ 
   TextError: {
     color: "#da122a",
     fontFamily: "Indie-Flower",

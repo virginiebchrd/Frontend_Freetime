@@ -6,7 +6,7 @@ import React from 'react';
 import { View, SafeAreaView, StyleSheet, TextInput } from 'react-native';
 import { useFonts } from "expo-font";
 
-function InputWithLabel  ({placeholder}) {
+function LabelBasic  ({placeholder, secureTextEntry, onChangeText}) {
 
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
@@ -21,6 +21,9 @@ function InputWithLabel  ({placeholder}) {
         <TextInput
           style={[styles.input, { fontFamily: "Indie-Flower" }]}
           placeholder={placeholder}
+          secureTextEntry={secureTextEntry}
+          onChangeText={onChangeText}
+          autoCapitalize="none" 
         />
          </View>
     </SafeAreaView>
@@ -65,4 +68,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default InputWithLabel;
+export default LabelBasic;
