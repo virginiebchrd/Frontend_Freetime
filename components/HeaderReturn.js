@@ -9,7 +9,12 @@ function HeaderReturn ({iconContext, pages}) {
     const navigation = useNavigation();
 
     const handleReturn = () => {
-        navigation.navigate('Who');
+        if(pages === 'ComeFromProfil') {
+            navigation.goBack();
+        }
+        else {
+            navigation.navigate(pages);
+        }
     }
 
     const handleLogout = () => {
