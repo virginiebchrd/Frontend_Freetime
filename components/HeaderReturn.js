@@ -12,7 +12,7 @@ function HeaderReturn ({iconContext, pages}) {
         navigation.navigate('Who');
     }
 
-    const Logout = () => {
+    const handleLogout = () => {
         console.log('logout');
         //dispatch() retirer adresse mail
         navigation.navigate('Home');
