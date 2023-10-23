@@ -15,6 +15,7 @@ export default function MapScreen ({navigation}) {
     const [isAuthorized, setIsAuthorized] = useState(3);
     const [pressedCoordinates, setPressedCoordinates] = useState(null);
 
+    
     useEffect( () => {
         
             ( async () => {

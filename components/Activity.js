@@ -6,19 +6,19 @@ function Activity (props) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
-    
+
     return (
         <View style={styles.headerContainer}>
             <View style={styles.activityContainer} >
             <View style={styles.pinContainer}>
-                <PinMarker />
+                <PinMarker color={props.activity.colorPin} />
             </View>
             <View style={styles.activityDetail}>
-                <Text style={styles.text}>Activité {props.key} : {props.name}</Text>
-                <Text style={styles.text}>Adresse : {props.adress}</Text>
-                <Text style={styles.text}>{props.zipCode} {props.city}</Text>
-                <Text style={styles.text}>mail: {props.email}</Text>
-                <Text style={styles.text}>Tél. : {props.phoneNumber}</Text>
+                <Text style={styles.text}>Activité {props.activity.key+1} : {props.activity.activityName}</Text>
+                <Text style={styles.text}>Adresse : {props.activity.activity.adress}</Text>
+                <Text style={styles.text}>{props.activity.activity.zipCode} {props.activity.activity.city}</Text>
+                <Text style={styles.text}>mail: {props.activity.activity.email}</Text>
+                <Text style={styles.text}>Tél. : {props.activity.activity.phoneNumber}</Text>
             </View>
             </View>
         </View>
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'Indie-Flower',
         fontSize: 15,
+        color: '#cae1db',
     }
 });
 

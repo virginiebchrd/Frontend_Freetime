@@ -1,7 +1,9 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HeaderReturn from '../components/HeaderReturn';
+import SmallButton from '../components/buttons/SmallButton';
 
 export default function CreateProfilScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
@@ -11,14 +13,31 @@ export default function CreateProfilScreen ({navigation}) {
     if (!fontsLoaded) {
     return null;
     }
+
+    const handleValidate = () => {
+        //dispatch activité
+        navigation.navigate('Profil');
+    }
     
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn />
+                <HeaderReturn pages='ComeFromProfil'/>
 
                 <View style={styles.bodyContainer}>
-                    <Text>Create Profil</Text>
+                    <View style={styles.titleContainer}>
+                        <FontAwesome name= 'user' size={75} color='#004644' />
+                        <Text style={styles.title}>Création du profil</Text>
+                    </View>
+
+                    <View style={styles.infoContainer}>
+
+                    </View>
+
+                    <View style={styles.validateContainer}>
+                        <SmallButton title='Valider' onPress={handleValidate} />
+                    </View>
+
                 </View>
                 
 
@@ -45,6 +64,30 @@ const styles = StyleSheet.create({
         height: '80%',
         width: '100%',
         alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    titleContainer: {
+        height: '20%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+    title: {
+        fontSize: 22,
+        fontFamily: 'Indie-Flower',
+        color: '#004644'
+    },
+    infoContainer:{
+        height: '60%',
+        width: '100%',
+        alignItems: 'center',
         justifyContent: 'center',
-    }
+        borderWidth: 1,
+    },
+    validateContainer: {
+        height: '20%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
   });

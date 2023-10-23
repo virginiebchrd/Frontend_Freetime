@@ -2,8 +2,16 @@ import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
+import SmallButton from '../components/buttons/SmallButton';
+import Activity from '../components/Activity';
+import MapView, { Marker } from 'react-native-maps';
+import { useState } from 'react';
 
-export default function ShowActivityScreen ({navigation}) {
+export default function ShowActivityScreen ({navigation, route}) {
+    const dataActivity = route.params.activity;
+
+    const [isValidated, setIsValidated] = useState(false);
+
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -12,17 +20,49 @@ export default function ShowActivityScreen ({navigation}) {
     return null;
     }
 
+    const handleValidate = () => {
+        setIsValidated(true);
+    }
+
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn icon="profil" />
+                <HeaderReturn iconContext="profil" pages='Result' />
 
                 <View style={styles.bodyContainer}>
-                    <Text>Activité sélectionnée</Text>
+                    <View style={styles.titleContainer}>
+                    {isValidated ?
+                        <Text style={styles.title}>Partager votre activité</Text>
+                        :
+                        <Text style={styles.title}>Activité sélectionnée</Text>
+                    }
+                    </View>
+                    <View style={styles.mapContainer}>
+                        {/*TODO mettre coordonnée du useSelector */}
+                        <MapView 
+                        initialRegion={{
+                            latitude: dataActivity.latitude,
+                            longitude: dataActivity.longitude,
+                            latitudeDelta: 0.025,
+                            longitudeDelta: 0.025,
+                        }}
+                        style={styles.map}
+                        >
+                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.colorPin}/>
+                        </MapView>
+                    </View>
+                    <View style={styles.activityContainer}>
+                        <Activity {...route.params} />
+                    </View>
+                    
+                    <View style={styles.validateContainer}>
+                    {isValidated ?
+                        <View></View>
+                        :
+                        <SmallButton title='Valider' onPress={handleValidate} />
+                    }
+                    </View>
                 </View>
-                
-
-                
             </LinearGradient>
         </View>
     )
@@ -45,6 +85,39 @@ const styles = StyleSheet.create({
         height: '80%',
         width: '100%',
         alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    titleContainer: {
+        height: '10%',
+        width: '100%',
+        alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    title: {
+        fontSize: 22,
+        fontFamily: 'Indie-Flower',
+        color: '#004644',
+    },
+    mapContainer: {
+        height: '40%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+    },
+    map: {
+        height: '100%',
+        width: '100%',
+    },
+    activityContainer: {
+        height: '30%',
+        width: '100%',
+    },
+    validateContainer: {
+        height: '20%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
   });

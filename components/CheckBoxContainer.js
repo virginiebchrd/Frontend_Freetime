@@ -2,10 +2,13 @@ import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import PinMarker from '../components/PinMarker';
 
 function CheckBoxContainer (props) {
     const [isToggled, setIsToggled] = useState(false);
+    const navigation = useNavigation();
+
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -14,13 +17,18 @@ function CheckBoxContainer (props) {
     return null;
     }
 
+    if(isToggled) {
+        navigation.navigate('ShowActivity',{activity: props.activity});
+        setIsToggled(false);
+    }
+
     return (
         <View style={styles.headerContainer}>
             <View style={styles.pinContainer}>
                 <PinMarker color={props.colorPin} />
             </View>
             <View style={styles.activityContainer}>
-                <Text style={styles.checkboxName}>CheckBox</Text>
+                <Text style={styles.checkboxName}>{props.activityName}</Text>
             </View>
             <View style={styles.checkboxContainer}>
                 <Checkbox
@@ -36,7 +44,7 @@ function CheckBoxContainer (props) {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '100%',
+        height: '40%',
         width: '100%',
         flexDirection: 'row',
         backgroundColor: '#004644',
