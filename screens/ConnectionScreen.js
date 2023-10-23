@@ -5,13 +5,63 @@ import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import InputWithLabel from "../components/inputs/InputWithLabel";
 //pour créer un état et stocker la valeur de l'état
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateEmail } from '../reducers/userReducer';
 
-
+//pris sur emailregex.com
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
 export default function FirstConnectionScreen({ navigation }) {
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user.value)
+
   const[mail, setMail] = useState(""); 
+  const [emailError, setMailError] = useState(false);
+
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
+  const [isAllowed, setIsAllowed] = useState(false);
+
+
+  const handleSubmit = () => {
+    console.log('E-mail:', mail);
+    console.log('Password:', password);
+    console.log('isAllowed:', isAllowed);
+
+    if (EMAIL_REGEX.test(mail) && password.length >= 6) {
+      console.log('Conditions remplies.');
+      if (password === 'azerty' && mail === '123456@gmail.com') {
+        console.log('Conditions de connexion remplies.');
+        setIsAllowed(true);
+        dispatch(updateEmail(mail));
+        navigation.navigate('Profil');
+      } else {
+        console.log('Mot de passe ou e-mail incorrect.');
+        setMailError(true);
+        setPasswordError(true);
+        setIsAllowed(false);
+        setMail('');
+        setPassword('');
+      }
+    } else {
+      console.log('Champs vides ou conditions non remplies.');
+      setMailError(true);
+      setPasswordError(true);
+      setIsAllowed(false);
+      setMail('');
+      setPassword('');
+    }
+  };
+
+    /* connecter avec une adresse mail et mot de passe déjà enregistré ???
+  useEffect(() => {
+    user.email && user.password && navigation.navigate('Profil');
+  }, []);
+  */
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -30,11 +80,7 @@ export default function FirstConnectionScreen({ navigation }) {
   //zone test
   const Test = "test";
   
-  //la fonction qui est utilisé dans le bouton
-  const handleSignIn = () => {
-    alert("Valider");
-  };
-
+ 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
@@ -51,24 +97,35 @@ export default function FirstConnectionScreen({ navigation }) {
           <InputWithLabel 
           placeholder={EmailPlaceholder} 
           label={EmailLabel}  
-
-          icon={true}
+          onChangeText={(value) => setMail(value)}
+          value={mail}
+          icon={false}
+          autoComplete="email"
+          keyboardType="email-address"
           />
 
 
           <InputWithLabel 
           placeholder={Password} 
           label={PasswordLabel}  
-          icon={false}/>
+          icon={false}
+          onChangeText={(value) => setPassword(value)}
+         />
 
-          <Text style={styles.Text}>Mot de passe oublié?</Text>
+          {(emailError || passwordError) && <Text style={styles.TextError}>Erreur mot de passe ou mail ?</Text>}
+         
         </View>
-        <View style={styles.buttonContainer}>
-          <SmallButton
-            title={valider}
-            onPress={() => navigation.navigate("Who")}
-          />
-        </View>
+
+       {isAllowed ? (
+            <View style={styles.buttonContainer}>
+              <SmallButton title={valider} onPress={() => navigation.navigate('ConnectionScreen')} />
+            </View>
+          ) : (
+            <View style={styles.buttonContainer}>
+              <SmallButton title={valider} onPress={handleSubmit} />
+            </View>
+       )}
+          
       </LinearGradient>
     </KeyboardAvoidingView>
   );
@@ -107,7 +164,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  Text: {
+  TextError: {
     color: "#da122a",
     fontFamily: "Indie-Flower",
     marginBottom: 10,
