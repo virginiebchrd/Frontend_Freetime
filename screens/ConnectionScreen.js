@@ -5,7 +5,7 @@ import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import InputWithLabel from "../components/inputs/InputWithLabel";
 //pour créer un état et stocker la valeur de l'état
-import { useState,useEffect } from 'react';
+import { useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEmail } from '../reducers/userReducer';
 
@@ -77,8 +77,6 @@ export default function FirstConnectionScreen({ navigation }) {
   const EmailLabel = "Mail";
   const PasswordLabel = "Mot de passe";
 
-  //zone test
-  const Test = "test";
   
  
   return (
