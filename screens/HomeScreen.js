@@ -2,7 +2,7 @@ import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import Logo from "../assets/Free-Time-logos_black.svg";
-import SmallButton from "../components/buttons/SmallButton";
+import LoginButtons from "../components/buttons/LoginButtons";
 
 export default function HomeScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -28,23 +28,17 @@ export default function HomeScreen({ navigation }) {
 
         <View style={styles.buttonContainer}>
           <View style={styles.buttonBackgroundUp}>
-            <SmallButton
+            <LoginButtons
               title="S'inscrire"
               onPress={() => navigation.navigate("CreateProfil")}
-              style={styles.buttonSignUp}
-            >
-              <Text style={{ fontSize: 10 }}>S'inscrire</Text>
-            </SmallButton>
+            ></LoginButtons>
           </View>
 
           <View style={styles.buttonBackgroundIn}>
-            <SmallButton
+            <LoginButtons
               title="Se connecter"
               onPress={() => navigation.navigate("Connection")}
-              style={styles.buttonSignIn}
-            >
-              <Text style={{ fontSize: 10 }}>S'inscrire</Text>
-            </SmallButton>
+            ></LoginButtons>
           </View>
         </View>
       </LinearGradient>
@@ -59,12 +53,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  //   gradientContainer: {
-  //     height: "20%",
-  //     width: "60%",
-  //     alignItems: "center",
-  //     justifyContent: "center",
-  //   },
+
   background: {
     height: "100%",
     width: "100%",
@@ -81,8 +70,9 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: "#004644",
-    fontSize: 50,
+    fontSize: 40,
     fontFamily: "Indie-Flower",
+    marginTop: 130,
   },
   logoContainer: {
     height: "25%",
@@ -106,12 +96,12 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    fontSize: 16,
   },
   buttonBackgroundIn: {
     height: 110,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: 16,
   },
 });
