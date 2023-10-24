@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,8 @@ import { addEmail, addPassword, login } from "../reducers/userReducer";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import  BasicInput  from "../components/inputs/BasicInput";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -65,7 +67,7 @@ export default function FirstConnectionScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn />
+        <HeaderReturn icon="logout" pages='Home'/>
 
           <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 

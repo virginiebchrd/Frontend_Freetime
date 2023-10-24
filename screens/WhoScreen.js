@@ -20,7 +20,7 @@ export default function WhoScreen ({navigation}) {
 
     //les fonctions qui sont utilisées dans les boutons
     const handleOnlyME = () => {
-        alert("sélectionner un activité pour un personne");
+        navigation.navigate("Map")
     }
 
     const handleWithFamily = () => {

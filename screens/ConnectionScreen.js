@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text,KeyboardAvoidingView } from "react-native";
+import { View, StyleSheet, Text,KeyboardAvoidingView, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
@@ -8,6 +8,7 @@ import InputWithLabel from "../components/inputs/InputWithLabel";
 import { useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEmail } from '../reducers/userReducer';
+
 
 //pris sur emailregex.com
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -86,7 +87,7 @@ export default function FirstConnectionScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn />
+        <HeaderReturn pages='Home'/>
 
         <View style={styles.InputsContainer}>
              
