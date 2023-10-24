@@ -9,7 +9,7 @@ import SmallButton from "../components/buttons/SmallButton";
 import  BasicInput  from "../components/inputs/BasicInput";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-
+const BACKEND_ADDRESS ='http://192.168.0.12:3000'//'http://BACKEND_IP:3000';
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -28,29 +28,41 @@ export default function FirstConnectionScreen({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
+
   //inspiration morningnews
+  //premier test en local avec fetch(`http://192.168.0.12:3000/users/signup`,
   const handleRegister = () => {
-    console.log("E-mail:", mail);
-    console.log("Password:", password);
-
-    if (EMAIL_REGEX.test(mail) && password.length >= 6) {
-      console.log("Conditions remplies.");
-
-      // Dispatch actions to store the email and password
-      dispatch(addEmail(mail));
-      dispatch(addPassword(password));
-
-      console.log("Enregistrement effectué avec succès.");
-      console.log("E-mail enregistré:", mail);
-      console.log("Mot de passe enregistré:", password);
-
-      // Navigate to the 'Profil' screen
-      navigation.navigate("Profil");
-    } else {
-      console.log("Champs vides ou conditions non remplies.");
-      setEmailError(!EMAIL_REGEX.test(mail));
-      setPasswordError(password.length < 6);
-    }
+    fetch(`https://backend-freetime.vercel.app/users/signup`, {
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: mail , password: password }),
+    }).then(response => response.json())
+    //console.log("E-mail:", mail);
+    //console.log("Password:", password);
+    .then (data =>{
+      console.log(data);
+      
+      if (data.result) {
+        if (EMAIL_REGEX.test(mail)) {
+          console.log("Conditions remplies.");
+    
+          // Dispatch actions to store the email and password
+          dispatch(addEmail(mail));
+          dispatch(addPassword(password));
+    
+          console.log("Enregistrement effectué avec succès.");
+          console.log("E-mail enregistré:", mail);
+          console.log("Mot de passe enregistré:", password);
+    
+          // Navigate to the 'Profil' screen
+          navigation.navigate("Profil");
+        } else {
+          console.log("Champs vides ou conditions non remplies.");
+          setEmailError(!EMAIL_REGEX.test(mail));
+         
+        }
+      };
+    }); 
   };
 
   const Valider = "Valider";
