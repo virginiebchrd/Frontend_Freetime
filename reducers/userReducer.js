@@ -11,11 +11,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     //email
-    updateEmail: (state, action) => {
-      state.value.email = action.payload;
-    },
+    //updateEmail: (state, action) => {
+    //  state.value.email = action.payload;
+    //},
     addEmail: (state, action) => {
-      state.value.email.push(action.payload);
+      state.value.email = action.payload;//state.value.email.push(action.payload);
     },
     removeEmail: (state, action) => {
       state.value.email = state.value.email.filter(
@@ -24,11 +24,11 @@ export const userSlice = createSlice({
     },
     //password
     addPassword: (state, action) => {
-      state.value.password.push(action.payload);
+      state.value.password = action.payload;// state.value.password.push(action.payload);
     },
-    updatePassword: (state, action) => {
-      state.value.password = action.payload;
-    },
+   // updatePassword: (state, action) => {
+   //   state.value.password = action.payload;
+   // },
     removePassword: (state, action) => {
       state.value.password = state.value.password.filter(
         (password) => password !== action.payload
