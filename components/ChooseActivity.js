@@ -3,9 +3,9 @@ import Checkbox from 'expo-checkbox';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import PinMarker from '../components/PinMarker';
 
-function CheckBoxContainer (props) {
+
+function ChooseActivity (props) {
     const [isToggled, setIsToggled] = useState(false);
     const navigation = useNavigation();
 
@@ -16,17 +16,9 @@ function CheckBoxContainer (props) {
     if (!fontsLoaded) {
     return null;
     }
-    
-    if(isToggled) {
-        navigation.navigate('ShowActivity',{activity: props.activity});
-        setIsToggled(false);
-    }
 
     return (
         <View style={styles.headerContainer}>
-            <View style={styles.pinContainer}>
-                <PinMarker color={props.activity.pinColor} />
-            </View>
             <View style={styles.activityContainer}>
                 <Text style={styles.checkboxName}>{props.activityName}</Text>
             </View>
@@ -44,22 +36,17 @@ function CheckBoxContainer (props) {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '100%',
-        width: '100%',
+        height: '40%',
+        width: '90%',
         flexDirection: 'row',
         backgroundColor: '#004644',
         fontFamily: 'Indie-Flower',
         color: '#cae1db',
-    },
-    pinContainer: {
-        height: '100%',
-        width: '20%',
-        justifyContent: 'center',
-        alignItems: 'center'
+        marginLeft: 10,
     },
     activityContainer: {
         height: '100%',
-        width: '60%',
+        width: '70%',
         justifyContent: 'center',
         alignItems: 'center',
         
@@ -83,4 +70,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default CheckBoxContainer;
+export default ChooseActivity;

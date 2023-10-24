@@ -22,7 +22,7 @@ export default function CalendarScreen ({navigation}) {
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages="profil" />
+                <HeaderReturn iconContext="profil" pages="Profil" />
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.titleContainer}>
