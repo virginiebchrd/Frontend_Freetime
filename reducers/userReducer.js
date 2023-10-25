@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 
-  value: { email: [], password: [], token: null },
+  value: { email: "", password: "", token: null },
 };
 
 export const userSlice = createSlice({
@@ -12,6 +12,7 @@ export const userSlice = createSlice({
   reducers: {
     //email
     updateEmail: (state, action) => {
+      console.log(action.payload)
       state.value.email = action.payload;
     },
     addEmail: (state, action) => {

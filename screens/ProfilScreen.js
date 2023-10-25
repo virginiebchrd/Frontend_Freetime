@@ -12,16 +12,14 @@ export default function ProfilScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
-
+  const [hobbies, setHobbies] = useState([]);
+  const [token, setToken] = useState([`${token}`]);
   if (!fontsLoaded) {
     return null;
   }
 
-    const [hobbies, setHobbies] = useState([]);
-    const userId = "6537cc599ebb6372eaa47eda";
-    
-  
-   
+ 
+
   useEffect(() => {
     async function fetchHobbies() {
       try {
