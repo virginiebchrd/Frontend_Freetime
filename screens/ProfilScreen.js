@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
 
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -12,43 +12,44 @@ export default function ProfilScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
+  const [token, setToken] = useState("");
   const [hobbies, setHobbies] = useState([]);
-  const [token, setToken] = useState([`${token}`]);
+  const user = useSelector((state) => state.user);
+
   if (!fontsLoaded) {
     return null;
   }
 
- 
-
-  useEffect(() => {
-    async function fetchHobbies() {
-      try {
-        const response = await fetch(
-          `https://backend_freetime.vercel.app/hobbies/${token}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          const data = await response.json();
-          setHobbies(data.hobbies);
+  const fetchHobbies = async () => {
+    try {
+      const response = await fetch(
+        `https://backend_freetime.vercel.app/hobbies/${token}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      } catch (error) {
-        console.error("Erreur lors de la récupération des hobbies :", error);
-      }
-    }
+      );
 
-    fetchHobbies();
-  }, [token]);
+      if (response.status === 200) {
+        const data = await response.json();
+        setHobbies(data.hobbies);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des hobbies :", error);
+    }
+  };
+  // useEffect(() => {
+  //   fetchHobbies();
+  // }, [token]);
 
   const handleValidate = () => {
     //dispatch activité
     navigation.navigate("Calendar");
   };
+
+
 
   return (
     <View style={styles.container}>
@@ -61,11 +62,12 @@ export default function ProfilScreen({ navigation }) {
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
             <FontAwesome name="user" size={75} color="#004644" />
-            <Text style={styles.title}>Prénom Nom</Text>
+            <Text style={styles.title}>{user.username}</Text>
           </View>
-          <Text style={styles.title}>Prénom Nom</Text>
+          
           <Text>Hobbies :</Text>
           <View style={styles.hobbiesContainer}>
+            
             {hobbies.map((hobby) => (
               <Text key={hobby._id}>{hobby.name}</Text>
             ))}
