@@ -6,7 +6,7 @@ import LargeButton from '../components/buttons/LargeButton';
 import SmallButton from '../components/buttons/SmallButton';
 import { useState } from 'react';
 import ChooseActivity from '../components/ChooseActivity';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ActivitiesScreen ({navigation}) {
     const [activitiesData, setActivitiesData] = useState([]);
@@ -14,7 +14,7 @@ export default function ActivitiesScreen ({navigation}) {
     const [isShownArtistics, setIsShownArtistics] = useState(false);
     const [isShownCulture, setIsShownCulture] = useState(false);
     const [isShownEvasion, setIsShownEvasion] = useState(false);
-    const dispatch = useDispatch();
+    const hobbies = useSelector((state) => state.hobbies.value.hobbies);
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -91,13 +91,13 @@ export default function ActivitiesScreen ({navigation}) {
             setIsShownEvasion(false);
         }
         else {
-        //dispatch activité par id mongoDB
             navigation.navigate('Result');
         }
     }
 
     const activities = activitiesData.map((data,i) => {
-        return(<ChooseActivity key={i} activityName={data.name} />)
+        const isChecked = hobbies.some(e=> e === data._id);
+        return(<ChooseActivity key={i} activityName={data.name} id={data._id} isChecked={isChecked}/>)
     })
 
     let sports;

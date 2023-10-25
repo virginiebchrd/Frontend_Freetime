@@ -4,10 +4,12 @@ import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import PinMarker from '../components/PinMarker';
+import MyCheckboxResult from './MyCheckboxResult';
 
 function CheckBoxContainer (props) {
     const [isToggled, setIsToggled] = useState(false);
     const navigation = useNavigation();
+    console.log('propsC', props);
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -17,10 +19,10 @@ function CheckBoxContainer (props) {
     return null;
     }
     
-    if(isToggled) {
+    /*if(isToggled) {
         navigation.navigate('ShowActivity',{activity: props.activity});
         setIsToggled(false);
-    }
+    }*/
 
     return (
         <View style={styles.headerContainer}>
@@ -31,12 +33,10 @@ function CheckBoxContainer (props) {
                 <Text style={styles.checkboxName}>{props.activityName}</Text>
             </View>
             <View style={styles.checkboxContainer}>
-                <Checkbox
-                    style={styles.checkbox}
-                    value={isToggled}
-                    onValueChange={setIsToggled}
-                    color={isToggled ? '#cae1db' : undefined}
-                />
+                <MyCheckboxResult 
+                    isChecked={isToggled}
+                    activity={props.activity}
+                    />
             </View>
         </View>
     )

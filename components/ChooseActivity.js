@@ -1,13 +1,14 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
-import Checkbox from 'expo-checkbox';
+import {TouchableOpacity, Text, View, StyleSheet, Image, Pressable} from 'react-native';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import MyCheckbox from '../components/MyCheckbox';
 
 
 function ChooseActivity (props) {
-    const [isToggled, setIsToggled] = useState(false);
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -23,16 +24,15 @@ function ChooseActivity (props) {
                 <Text style={styles.checkboxName}>{props.activityName}</Text>
             </View>
             <View style={styles.checkboxContainer}>
-                <Checkbox
-                    style={styles.checkbox}
-                    value={isToggled}
-                    onValueChange={setIsToggled}
-                    color={isToggled ? '#cae1db' : undefined}
+                <MyCheckbox 
+                isChecked={props.isChecked}
+                id={props.id}
                 />
             </View>
         </View>
     )
 };
+
 
 const styles = StyleSheet.create({
     headerContainer: {
@@ -67,6 +67,20 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30,
     },
+
+    checkboxBase: {
+        width: 24,
+        height: 24,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        borderWidth: 2,
+        borderColor: '#cae1db',
+        backgroundColor: '#cae1db',
+      },
+      checkboxChecked: {
+        backgroundColor: 'white',
+      },
 });
 
 

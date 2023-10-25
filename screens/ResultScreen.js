@@ -5,10 +5,11 @@ import MapView, {Marker} from 'react-native-maps';
 import HeaderReturn from '../components/HeaderReturn';
 import CheckBoxContainer from '../components/CheckBoxContainer';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const city = {latitude: 45.83, longitude: 1.26} //test avec Limoges avec des données brutes imaginaires
 
-const ActivityData = [
+const ActivityDataTest = [
     {colorPin: 'red',name: "Boxe", latitude: 45.8359, longitude: 1.2635, activity:{
         street: "25 rue des coqs", zipCode: 87000, city: "Limoges", email:"boxe@gmail.com", phoneNumber: +33555241236,
     } },
@@ -26,29 +27,27 @@ const ActivityData = [
 const test = [
     '6537cf76d30bc3e81d0e8cf0',
     '6537cd29d30bc3e81d0e8ceb',
-    '6537ca41d30bc3e81d0e8ce7',
+    /*'6537ca41d30bc3e81d0e8ce7',*/
 ];
 
 const token = 'uhSWw7eDVYOdKDbJSDbxMBOf_40T09E-';
 
 export default function ResultScreen ({navigation}) {
-    //const [ActivityData, setActivityData] = useState([]);
+    const [ActivityData, setActivityData] = useState([]);
+    const hobbies = useSelector( (state) => state.hobbies.value.hobbies)
+    console.log(hobbies);
 
-    /*useEffect ( () => {
+    useEffect ( () => {
         //TODO Ajouter le tableau récupérer d'ID
-        for(let i=0; i<test.length; i++) {
-            fetch(`http://192.168.1.12:3000/hobbies/each/${test[i]}`,)
+            fetch(`http://192.168.1.12:3000/hobbies/each/${hobbies}`,)
             .then(response => response.json())
             .then (data => {
-
                     if(data.result) {
-
-                        //setActivityData([...ActivityData, data.hobby]);
+                        console.log('hobbies',data.hobby);
+                        setActivityData(data.hobby);
                     }
-            })
-        }
-
-    }, [])*/
+        })
+    }, [])
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -59,14 +58,16 @@ export default function ResultScreen ({navigation}) {
     }
     
     const activities = ActivityData.map((data,i) => {
-        //return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, activityName: data.name, email:data.email, adress: data.address.street, zipCode: data.address.zipCode, phoneNumber: data.phoneNumber, city: data.address.city, activity: data.category, latitude: data.address.latitude, longitude: data.address.longitude}} />
-        return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, activityName: data.name, email:data.activity.email, adress: data.activity.street, zipCode: data.activity.zipCode, phoneNumber: data.activity.phoneNumber, city: data.activity.city, activity: data.category, latitude: data.latitude, longitude: data.longitude, pinColor: data.colorPin}} />
+        //const activities = ActivityDataTest.map((data,i) => {
+        return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, id:data._id, activityName: data.name, email:data.email, adress: data.address.street, zipCode: data.address.zipCode, phoneNumber: data.phoneNumber, city: data.address.city, activity: data.category, latitude: data.address.latitude, longitude: data.address.longitude}} />
+        //return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, activityName: data.name, email:data.activity.email, adress: data.activity.street, zipCode: data.activity.zipCode, phoneNumber: data.activity.phoneNumber, city: data.activity.city, activity: data.category, latitude: data.latitude, longitude: data.longitude, pinColor: data.colorPin}} />
     })
 
 
+    //const markers = ActivityDataTest.map((data,i) => {
     const markers = ActivityData.map((data,i) => {
-        //return <Marker key={i} coordinate={{latitude: data.address.latitude, longitude: data.address.longitude}} pinColor={data.colorPin} />
-        return <Marker key={i} coordinate={{latitude: data.latitude, longitude: data.longitude}} pinColor={data.colorPin} />
+        return <Marker key={i} coordinate={{latitude: data.address.latitude, longitude: data.address.longitude}} pinColor={data.colorPin} />
+        //return <Marker key={i} coordinate={{latitude: data.latitude, longitude: data.longitude}} pinColor={data.colorPin} />
     })
 
     return (
@@ -85,8 +86,8 @@ export default function ResultScreen ({navigation}) {
                         initialRegion={{
                             latitude: city.latitude,
                             longitude: city.longitude,
-                            latitudeDelta: 0.025,
-                            longitudeDelta: 0.025,
+                            latitudeDelta: 0.05,
+                            longitudeDelta: 0.05,
                         }}
                         style={styles.map}
                         >
