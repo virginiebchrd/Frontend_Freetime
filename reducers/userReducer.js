@@ -5,6 +5,7 @@ const initialState = {
     email: "",
     password: "",
     token: null,
+    civility:"",
     lastname: "",
     firstname: "",
     birthday: new Date(),
@@ -17,9 +18,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     //email
-    //updateEmail: (state, action) => {
-    //  state.value.email = action.payload;
-    //},
     addEmail: (state, action) => {
       state.value.email = action.payload; //state.value.email.push(action.payload);
     },
@@ -32,22 +30,23 @@ export const userSlice = createSlice({
     addPassword: (state, action) => {
       state.value.password = action.payload; // state.value.password.push(action.payload);
     },
-    // updatePassword: (state, action) => {
-    //   state.value.password = action.payload;
-    // },
+    
     removePassword: (state, action) => {
       state.value.password = state.value.password.filter(
         (password) => password !== action.payload
       );
     },
+    addCivility: (state, action) => {
+      state.value.civility = action.civility;
+    },
     addLastname: (state, action) => {
-      state.lastname = action.payload;
+      state.value.lastname = action.payload;
     },
     addFirstname: (state, action) => {
-      state.firstname = action.payload;
+      state.value.firstname = action.payload;
     },
     addBirthday: (state, action) => {
-      state.birthday = action.payload;
+      state.value.birthday = action.payload;
     },
 
     //connect
