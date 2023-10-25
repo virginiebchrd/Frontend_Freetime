@@ -3,14 +3,34 @@
 @param {string} label
  */
 import React from "react";
-import { Text, View, SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { useFonts } from "expo-font";
 
-function InputWithLabel({ placeholder, label, icon }) {
+
+function InputWithLabel({ placeholder, label, icon, onChangeText, secureTextEntry }) {
+  const fontsLoaded = useFonts({
+    "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    style={styles.container}
+  >
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder={placeholder} />
+
+        <TextInput  style={[styles.input, { fontFamily: "Indie-Flower" }]}
+
+        placeholder={placeholder}
+        onChangeText={onChangeText}
+        autoCapitalize="none" 
+        secureTextEntry={secureTextEntry}    
+       />
+
         {icon && (
           <View style={styles.iconContainer}>
             <FontAwesomeIcon
@@ -21,9 +41,13 @@ function InputWithLabel({ placeholder, label, icon }) {
             />
           </View>
         )}
+
       </View>
-      <Text style={styles.label}>{label}</Text>
-    </SafeAreaView>
+      <Text style={[styles.label, { fontFamily: "Indie-Flower" }]}
+>
+        {label}
+      </Text>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -42,8 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 5,
     width: 250,
-
-      position: "relative", 
+    position: "relative", 
 
   },
 
@@ -54,16 +77,18 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     backgroundColor: "#fff",
   },
+
   label: {
     position: "absolute",
     left: 10, // Ajustez la position à gauche selon vos besoins
-    top: 45, // Ajustez la position vers le haut selon vos besoins
+    top: 10, // Ajustez la position vers le haut selon vos besoins
     color: "#004644",
     fontSize: 12,
     backgroundColor: "#bbd1b0",
     borderRadius: 5,
     padding: 3,
-  },
+    },
+
   placeholder: {
     color: "#004644",
     fontSize: 12,
@@ -71,6 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingLeft: 10,
   },
+
   searchIcon: {
     margin: 5,
     color: "#004644",
@@ -86,6 +112,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 250, // Ajustez la largeur de l'input
     padding:5,
+  },
+  iconContainer:{
+
   },
 });
 

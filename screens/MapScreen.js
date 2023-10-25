@@ -11,6 +11,7 @@ import * as Location from 'expo-location';
 
 
 export default function MapScreen ({navigation}) {
+    
     const [myPosition, setMyPosition] = useState({});
     const [isAuthorized, setIsAuthorized] = useState(3);
     const [pressedCoordinates, setPressedCoordinates] = useState(null);
