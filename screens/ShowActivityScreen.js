@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 export default function ShowActivityScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
+    console.log(dataActivity);
 
     const [isValidated, setIsValidated] = useState(false);
 

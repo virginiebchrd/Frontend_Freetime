@@ -17,9 +17,10 @@ import ShowActivityScreen from "./screens/ShowActivityScreen";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/userReducer";
+import hobbies from './reducers/hobbiesReducer';
 
 const store = configureStore({
-  reducer: { user: userReducer },
+  reducer: { user: userReducer, hobbies },
 });
 
 const Stack = createNativeStackNavigator();

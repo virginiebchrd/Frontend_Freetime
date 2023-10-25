@@ -13,7 +13,7 @@ import * as Location from 'expo-location';
 export default function MapScreen ({navigation}) {
     
     const [myPosition, setMyPosition] = useState({});
-    const [isAuthorized, setIsAuthorized] = useState(3);
+    const [isAuthorized, setIsAuthorized] = useState(false)//useState(3);
     const [pressedCoordinates, setPressedCoordinates] = useState(null);
 
     
@@ -24,7 +24,7 @@ export default function MapScreen ({navigation}) {
                 console.log(status);
             if(status === 'granted') {
                 const location = await Location.getCurrentPositionAsync({});
-                setIsAuthorized(1);
+                setIsAuthorized(true);
                 setMyPosition(location.coords);
                 console.log(myPosition);
             } else if( status === 'denied') {
@@ -53,56 +53,27 @@ export default function MapScreen ({navigation}) {
         navigation.navigate('Activities');
     }
 
-    let card;
-    if (isAuthorized === 1) { 
-        card = <View style={styles.bodyContainer}>
-                        <MapView initialRegion={{
-                                latitude: 45.93618572359579,
+    return (
+        <View style={styles.container}>
+            <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
+                <HeaderReturn iconContext="profil" pages='Who' />
+                    <View style={styles.bodyContainer}>
+                            {!isAuthorized && <View style={styles.inputContainer}><Text>INPUT</Text></View>}
+                            <MapView initialRegion={{
+                                latitude: 50,
                                 longitude: 1.332240497502353,
                                 latitudeDelta: 12,
                                 longitudeDelta: 12,
                                 }}
-                                style={styles.mapContainer}
+                                style={ isAuthorized? styles.mapContainer : styles.mapContainerNoGeo}
                                 onLongPress={(e) => handleMap(e.nativeEvent)}
                         >
-                            <Marker coordinate={{latitude: myPosition.latitude, longitude: myPosition.longitude}} />
+                            {isAuthorized && <Marker coordinate={{latitude: myPosition.latitude, longitude: myPosition.longitude}} />}
                         </MapView>
                         <View style={styles.validateContainer}>
                             <SmallButton title="Valider" onPress={handleValidate} />
                         </View>
                     </View>
-    } else if (isAuthorized === 2) {
-        card = <View style={styles.bodyContainer}>
-                        <View style={styles.inputContainer}><Text>INPUT</Text></View>
-                        <MapView initialRegion={{
-                            latitude: 50,
-                            longitude: 1.332240497502353,
-                            latitudeDelta: 12,
-                            longitudeDelta: 12,
-                            }}
-                            style={styles.mapContainerNoGeo}
-                            onLongPress={(e) => handleMap(e.nativeEvent)}
-                    >
-
-                    </MapView>
-                    <View style={styles.validateContainer}>
-                        <SmallButton title="Valider" onPress={handleValidate} />
-                    </View>
-                    </View>
-    }
-    else if (isAuthorized === 3) {
-        <View>
-
-        </View>
-    }
-
-
-
-    return (
-        <View style={styles.container}>
-            <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Who' />
-                {card}
             </LinearGradient>
         </View>
     )
