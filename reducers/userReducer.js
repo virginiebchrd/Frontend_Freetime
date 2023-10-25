@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-
-  value: { email: "", password: "", token: null },
+  value: {
+    email: "",
+    password: "",
+    token: null,
+    lastname: "",
+    firstname: "",
+    birthday: new Date(),
+  },
 };
 
 export const userSlice = createSlice({
@@ -15,7 +21,7 @@ export const userSlice = createSlice({
     //  state.value.email = action.payload;
     //},
     addEmail: (state, action) => {
-      state.value.email = action.payload;//state.value.email.push(action.payload);
+      state.value.email = action.payload; //state.value.email.push(action.payload);
     },
     removeEmail: (state, action) => {
       state.value.email = state.value.email.filter(
@@ -24,16 +30,26 @@ export const userSlice = createSlice({
     },
     //password
     addPassword: (state, action) => {
-      state.value.password = action.payload;// state.value.password.push(action.payload);
+      state.value.password = action.payload; // state.value.password.push(action.payload);
     },
-   // updatePassword: (state, action) => {
-   //   state.value.password = action.payload;
-   // },
+    // updatePassword: (state, action) => {
+    //   state.value.password = action.payload;
+    // },
     removePassword: (state, action) => {
       state.value.password = state.value.password.filter(
         (password) => password !== action.payload
       );
     },
+    addLastname: (state, action) => {
+      state.lastname = action.payload;
+    },
+    addFirstname: (state, action) => {
+      state.firstname = action.payload;
+    },
+    addBirthday: (state, action) => {
+      state.birthday = action.payload;
+    },
+
     //connect
     login: (state, action) => {
       state.value.token = action.payload.token;
@@ -44,6 +60,7 @@ export const userSlice = createSlice({
       state.value.email = "";
       state.value.password = "";
     },
+    //
   },
 });
 

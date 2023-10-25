@@ -57,7 +57,7 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result === true) {
-            navigation.navigate("CreateProfilScreen");
+            navigation.navigate("CreateProfil");
 
           } else {
             console.error(data.error);
