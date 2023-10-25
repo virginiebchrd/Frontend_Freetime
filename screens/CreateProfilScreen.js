@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import {  Text, View, StyleSheet, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -7,15 +7,24 @@ import SmallButton from "../components/buttons/SmallButton";
 import BasicInput from "../components/inputs/BasicInput";
 import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
-
+import { useDispatch } from "react-redux";
+import { addLastname, addFirstname, addBirthday, addCivility } from "../reducers/userReducer";
 
 
 export default function CreateProfilScreen({ navigation }) {
- 
- const[lastname, setlastname] = useState("");
- const[firstname, setfirstname] = useState("");
- const[birthday, setbirthday] = useState("");
- const[civilite, setcivilite] = useState("Monsieur");
+  const dispatch = useDispatch();
+
+
+ const[lastname, setLastname] = useState("");
+ const[firstname, setFirstname] = useState("");
+ const[birthday, setBirthday] = useState(""); //format jj/mm/aaaa
+ const[civility, setCivility] = useState(""); // false pour "Madame", true pour "Monsieur"
+
+ //control errors
+ const [birthdayError, setBirthdayError] = useState('');
+ const [firstnameError, setFirstnameError] = useState('');
+ const [lastnameError, setLastnameError] = useState('');
+ const [civilityError, setCivilityError] = useState('');
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -24,17 +33,32 @@ export default function CreateProfilScreen({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
-  const lastnamePlaceholder = 'Lastname *';
-  const fisrtnamePlaceholder = 'Fisrtname *';
-  const birthdayPlaceholder = 'Birthday date';
+
+  const lastnamePlaceholder = 'Nom *';
+  const fisrtnamePlaceholder = 'Prénom *';
+  const birthdayPlaceholder = 'date de naissance ';
+  const birthdayFormatPlaceholder = 'jj/mm/aaaa';
+
+ 
 
   const handleValidate = () => {
-    //dispatch activité
-    navigation.navigate("Profil");
+    if (lastname && firstname && civility) {
+      console.log("Civilité :", civility);
+      console.log("Nom :", lastname);
+      console.log("Prénom :", firstname);
+      console.log("Date de naissance :", birthday);
+    //  dispatch(addCivility(civility));
+    //  dispatch(addLastname(lastname));
+      //dispatch(addFirstname(firstname));
+     // dispatch(addBirthday(birthday));
+      navigation.navigate("Profil");
+    } else {
+      console.log("Champs * vides !");
+    }
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView  style={styles.container}>
       <LinearGradient
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
@@ -54,18 +78,39 @@ export default function CreateProfilScreen({ navigation }) {
               </View>
               <View style={styles.rightCivilityContainer}>
               <View style={styles.CheckboxMonsieur} >
-                    <Checkbox value={true}  color="#004644" />
+                  <Checkbox
+                        value={civility === "Monsieur"}
+                        onValueChange={() => setCivility("Monsieur")}
+                        color="#004644"
+                      />
                     <Text style={styles.civilityText}> Monsieur</Text>
                 </View>
                 <View style={styles.CheckboxMadame} >
-                    <Checkbox value={false} color="#004644"  style={{ backgroundColor: '#fff' }}  />
+                  <Checkbox
+                      value={civility === "Madame"}
+                      onValueChange={() => setCivility("Madame")}
+                      color="#004644"
+                    />
                     <Text style={styles.civilityText}> Madame </Text>
                 </View>
               </View>
             </View>
-            <BasicInput style={styles.lastname} placeholder={lastnamePlaceholder}/>
-            <BasicInput style={styles.fisrtname} placeholder={fisrtnamePlaceholder}/>
-            <BasicInput style={styles.birthday} placeholder={birthdayPlaceholder}/>
+            <BasicInput style={styles.lastname} 
+              placeholder={lastnamePlaceholder}
+              onChangeText={(value) => setLastname(value)}
+              value={lastname}
+              />
+            <BasicInput style={styles.fisrtname} 
+              placeholder={fisrtnamePlaceholder}
+              onChangeText={(value) => setFirstname(value)}
+              value={firstname}
+            />
+            <BasicInput style={styles.birthday} 
+              placeholder={birthdayPlaceholder}
+              onChangeText={(value) => setBirthday(value)}
+              value={birthday}/>
+            
+           
           </View>
 
           <View style={styles.validateContainer}>
@@ -73,7 +118,7 @@ export default function CreateProfilScreen({ navigation }) {
           </View>
         </View>
       </LinearGradient>
-    </View>
+    </SafeAreaView >
   );
 }
 
@@ -83,6 +128,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    margin: 0,
+    padding: 0,
   },
   background: {
     height: "100%",
@@ -95,6 +142,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
+    margin: 0,
+    padding: 0,
   },
   titleContainer: {
     height: "20%",
@@ -108,38 +157,38 @@ const styles = StyleSheet.create({
     color: "#004644",
   },
   infoContainer: {
-    height: "60%", //60%
+    height: "65%", //60%
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
   },
   civilityContainer: {
-    width: "80%",
+    height: "25%",
+    width: "65%",
     flexDirection: "row", //
     alignItems: "center", //
     justifyContent: "space-between", //
     borderBlockColor: "#004644",
     borderRadius: 10,
     borderWidth: 2,
-    margin: 20,
+    margin: 10,
     padding: 0,
     backgroundColor: "#CAE1DB",
   },
   leftCivilityContainer: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "start-align",
     justifyContent: "center",
-    margin: 10,
-    padding: 20,
+    margin: 0,
+    paddingLeft: 15,
   },
   rightCivilityContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 0,
-    marginRight: 10,
-    padding: 30,
+    paddingRight: 10,
+    paddingBottom:5,
   },
   validateContainer: {
     height: "20%",
@@ -163,16 +212,3 @@ civilityText:{
 },
 });
 
-/*
- <View>
-     <Checkbox
-      value={isChecked}
-      onValueChange={toggleCheckbox("Monsieur")}
-      >
-     <Text> {isChecked ? "Oui" : "Non"} Monsieur</Text>
-     </View>
- <View>
-        <Checkbox value={isChecked} onValueChange={toggleCheckbox("Madame")} />
-       <Text> {isChecked ? "Oui" : "Non"} Madame</Text>
- </View>
-*/
