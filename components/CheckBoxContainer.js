@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {Dimensions, Text, View, StyleSheet, Image} from 'react-native';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -41,14 +41,19 @@ function CheckBoxContainer (props) {
     )
 };
 
+const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '100%',
-        width: '100%',
+        /*height: '30%',
+        width: '100%',*/
+        width: (windowWidth*0.9)  - 10,
+        maxHeight: 100,
         flexDirection: 'row',
         backgroundColor: '#004644',
         fontFamily: 'Indie-Flower',
         color: '#cae1db',
+        margin: 1
     },
     pinContainer: {
         height: '100%',

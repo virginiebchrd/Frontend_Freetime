@@ -9,6 +9,7 @@ import * as Location from 'expo-location';
 import InputWithLabel from '../components/inputs/InputWithLabel';
 import { addCity } from '../reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { setEnabled } from 'react-native/Libraries/Performance/Systrace';
 
 
 export default function MapScreen ({navigation}) {
@@ -18,7 +19,7 @@ export default function MapScreen ({navigation}) {
     const [pressedCoordinates, setPressedCoordinates] = useState(null);
     const [city, setCity] = useState('');
     const [citySearch, setCitySearch] = useState(false);
-    //const [coords, setCoords] = useState({});
+
     const dispatch = useDispatch();
     const coords = useSelector( (state) => state.user.value.city)
     
@@ -53,7 +54,6 @@ export default function MapScreen ({navigation}) {
 
     const handleSearch = () => {
         console.log(city);
-        
 
         fetch(`https://api-adresse.data.gouv.fr/search/?q=${city}`)
         .then((response) => response.json())
@@ -66,7 +66,7 @@ export default function MapScreen ({navigation}) {
             latitude: firstCity.geometry.coordinates[1],
             longitude: firstCity.geometry.coordinates[0],
             };
-            //setCoords({latitude: firstCity.geometry.coordinates[1] ,longitude: firstCity.geometry.coordinates[0]})
+            
             dispatch(addCity(newPlace));
         })
     }
@@ -100,7 +100,7 @@ export default function MapScreen ({navigation}) {
                                 showsUserLocation
                                 onLongPress={(e) => handleMap(e.nativeEvent)}
                         >
-                            {citySearch && <Marker coordinate={{latitude: coords.latitude, longitude: coords.longitude}} title="Ma recherche" pinColor="#fecb2d" />}
+                            {citySearch && <Marker coordinate={{latitude: coords.latitude, longitude: coords.longitude}} title={city} pinColor="#fecb2d" />}
                         </MapView>
                         <View style={styles.validateContainer}>
                             <SmallButton title="Valider" onPress={handleValidate} />
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     mapContainer: {
-        height: '80%',
+        height: '86%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     mapContainerNoGeo: {
-        height: '60%',
+        height: '77%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',

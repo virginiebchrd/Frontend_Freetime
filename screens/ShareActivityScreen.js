@@ -6,9 +6,12 @@ import SmallButton from '../components/buttons/SmallButton';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { removeHobbies } from '../reducers/hobbiesReducer';
 
 export default function ShareActivityScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
+    const dispatch = useDispatch();
     console.log(dataActivity);
 
 
@@ -19,6 +22,11 @@ export default function ShareActivityScreen ({navigation, route}) {
     if (!fontsLoaded) {
     return null;
     }
+    
+    const handleReturn  = () => {
+        dispatch(removeHobbies(dataActivity.id))
+        navigation.navigate('Result');
+    }
 
     return (
         <View style={styles.container}>
@@ -26,11 +34,13 @@ export default function ShareActivityScreen ({navigation, route}) {
                 <HeaderReturn iconContext="profil" pages='Result' isNeeded={false} />
 
                 <View style={styles.bodyContainer}>
-                    <View style={styles.titleContainer}>
+
+                        <TouchableOpacity style={styles.titleContainer} onPress={() => handleReturn()}>
+                            <Text style={styles.title}>Retourner vers les autres activités</Text>
+                        </TouchableOpacity>
                         <Text style={styles.title}>Partager votre activité</Text>
-                    </View>
+
                     <View style={styles.mapContainer}>
-                        {/*TODO mettre coordonnée du useSelector */}
                         <MapView 
                         initialRegion={{
                             latitude: dataActivity.latitude,
@@ -77,7 +87,7 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         height: '10%',
-        width: '100%',
+        width: '80%',
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1

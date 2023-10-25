@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         color: '#004644'
     },
     categoryContainer: {
-        height: '15%',
+        height: '18%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     validateContainer: {
-        height: '20%',
+        paddingTop: 30,
+        height: '25%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -173,8 +174,5 @@ const styles = StyleSheet.create({
         width: '100%',
         borderWidth: 1
     },
-    test: {
-        height: '20%',
-        width: '100%',
-    }
+
   });
