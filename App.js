@@ -33,10 +33,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen
-            name="FirstConnection"
-            component={FirstConnectionScreen}
-          />
+          <Stack.Screen name="FirstConnection" component={FirstConnectionScreen} />
           <Stack.Screen name="Connection" component={ConnectionScreen} />
           <Stack.Screen name="CreateProfil" component={CreateProfilScreen} />
           <Stack.Screen name="Profil" component={ProfilScreen} />

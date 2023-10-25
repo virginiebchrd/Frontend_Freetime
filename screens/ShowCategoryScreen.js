@@ -11,8 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function ShowCategoryScreen ({navigation, route}) {
     const activitiesData = route.params.dataToSend.hobbies;
     const title = route.params.dataToSend.category;
-
-    console.log('test', activitiesData, 'title', title);
     
     const hobbies = useSelector((state) => state.hobbies.value.hobbies);
 
@@ -37,26 +35,20 @@ export default function ShowCategoryScreen ({navigation, route}) {
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Map' isNeeded={true}/>
-                
-                <View style={styles.bodyContainer}>
-                    <View style={styles.titleContainer}>
+                <HeaderReturn iconContext="profil" pages='Activities' isNeeded={true}/>
                         <Text style={styles.title}>Quelle(s) activité(s) recherchez-vous ?</Text>
-                    </View>
+                        <View style={styles.largeButton} >
+                            <LargeButton title={title} style={styles.test}/>
+                        </View>
+                        <ScrollView>
+                            <View style={styles.scrollView}>
+                                {activities}
+                            </View>
+                        </ScrollView>
 
-                    <View style={styles.categoryContainer}>
-                        <LargeButton title={title} />
-                    </View>  
-
-                    <ScrollView contentContainerStyle={styles.scrollView}>
-                        {activities}
-                    </ScrollView>
-
-                    <View style={styles.validateContainer}>
-                        <SmallButton title='Valider' onPress={handleValidate} />
-                    </View>
-                </View>
-                
+                        <View style={styles.smallButton} >
+                            <SmallButton title='Valider' onPress={handleValidate} />
+                        </View>
             </LinearGradient>
         </View>
     )
@@ -75,50 +67,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    bodyContainer: {
-        height: '80%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    },
-    titleContainer: {
-        height: '10%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     title: {
         fontSize: 22,
         fontFamily: 'Indie-Flower',
-        color: '#004644'
-    },
-    categoryContainer: {
-        height: '15%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    checkBoxContainer: {
-        height: '50%',
-        width: '100%',
-    },
-    validateContainer: {
-        height: '20%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
+        color: '#004644',
     },
     scrollView: {
-        height: '50%',
-        width: '100%',
+        flex: 1,
+        padding: 10,
+        justifyContent: 'space-between',
     },
-    buttonContainer: {
-        height: '60%',
-        width: '100%',
-        borderWidth: 1
+    largeButton: {
+        height:'15%',
+        width: '70%',
     },
-    test: {
-        height: '20%',
-        width: '100%',
+    smallButton: {
+        height:'15%',
+        width: '40%',
     }
   });
