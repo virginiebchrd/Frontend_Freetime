@@ -8,7 +8,8 @@ const initialState = {
     civility:"",
     lastname: "",
     firstname: "",
-    birthday: new Date(),
+    birthday: "",
+    city: {},
   },
 };
 
@@ -48,7 +49,10 @@ export const userSlice = createSlice({
     addBirthday: (state, action) => {
       state.value.birthday = action.payload;
     },
-
+    addCity: (state,action) => {
+      console.log('city', action.payload);
+      state.value.city = action.payload;
+    },
     //connect
     login: (state, action) => {
       state.value.token = action.payload.token;
@@ -70,6 +74,7 @@ export const {
   updatePassword,
   addPassword,
   removePassword,
+  addCity,
   login,
   logout,
 } = userSlice.actions;

@@ -63,7 +63,7 @@ export default function CreateProfilScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn pages="ComeFromProfil" />
+        <HeaderReturn pages="ComeFromProfil" isNeeded={true} />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>

@@ -22,7 +22,7 @@ export default function ProfilScreen ({navigation}) {
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn icon="logout" pages='ComeFromProfil'/>
+                <HeaderReturn icon="logout" pages='ComeFromProfil' isNeeded={true} />
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.titleContainer}>

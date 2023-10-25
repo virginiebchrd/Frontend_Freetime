@@ -33,7 +33,7 @@ export default function HomeScreen ({navigation}) {
 
                     <View style={styles.gradientContainer}>
                         <LinearGradient  colors={['transparent', '#004644']}  style={styles.background}>
-                            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Map')}>
+                            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Activities')}>
                                 <Text>Connexion</Text>
                             </TouchableOpacity>
                         </LinearGradient>

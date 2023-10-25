@@ -22,13 +22,13 @@ export default function ShowActivityScreen ({navigation, route}) {
     }
 
     const handleValidate = () => {
-        setIsValidated(true);
+        navigation.navigate('ShareActivity',{activity: dataActivity});
     }
 
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Result' />
+                <HeaderReturn iconContext="profil" pages='Result' isNeeded={true}/>
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.titleContainer}>

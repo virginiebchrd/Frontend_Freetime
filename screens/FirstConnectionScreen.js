@@ -80,7 +80,7 @@ export default function FirstConnectionScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn pages="Home" />
+        <HeaderReturn pages="Home" isNeeded={true} />
 
         <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
