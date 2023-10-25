@@ -1,5 +1,4 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
-import Checkbox from 'expo-checkbox';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';

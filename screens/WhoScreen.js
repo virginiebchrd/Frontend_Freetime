@@ -38,7 +38,7 @@ export default function WhoScreen ({navigation}) {
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages="Calendar"/>
+                <HeaderReturn iconContext="profil" pages="Calendar" isNeeded={true}/>
 
                 <View style={styles.bodyContainer}>
                     <Text style={styles.titlePage}>Qui va participer ?</Text>

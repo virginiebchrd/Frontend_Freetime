@@ -12,12 +12,14 @@ import WhoScreen from "./screens/WhoScreen";
 import MapScreen from "./screens/MapScreen";
 import ActivitiesScreen from "./screens/ActivitiesScreen";
 import ResultScreen from "./screens/ResultScreen";
+import ShowCategoryScreen from "./screens/ShowCategoryScreen";
 import ShowActivityScreen from "./screens/ShowActivityScreen";
 
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/userReducer";
 import hobbies from './reducers/hobbiesReducer';
+import ShareActivityScreen from "./screens/ShareActivityScreen";
 
 const store = configureStore({
   reducer: { user: userReducer, hobbies },
@@ -42,8 +44,10 @@ export default function App() {
           <Stack.Screen name="Who" component={WhoScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Activities" component={ActivitiesScreen} />
+          <Stack.Screen name="ShowCategory" component={ShowCategoryScreen} />
           <Stack.Screen name="Result" component={ResultScreen} />
           <Stack.Screen name="ShowActivity" component={ShowActivityScreen} />
+          <Stack.Screen name="ShareActivity" component={ShareActivityScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
