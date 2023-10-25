@@ -1,4 +1,4 @@
-import {  Text, View, StyleSheet, SafeAreaView } from "react-native";
+import {  Text, View, StyleSheet, SafeAreaView, TextInput, Button } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -9,6 +9,8 @@ import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
 import { useDispatch } from "react-redux";
 import { addLastname, addFirstname, addBirthday, addCivility } from "../reducers/userReducer";
+import DateTimePicker from "react-native-modal-datetime-picker";
+import DatePickerModal from "react-native-modal-datetime-picker";
 
 
 export default function CreateProfilScreen({ navigation }) {
@@ -20,6 +22,9 @@ export default function CreateProfilScreen({ navigation }) {
  const[birthday, setBirthday] = useState(""); //format jj/mm/aaaa
  const[civility, setCivility] = useState(""); // false pour "Madame", true pour "Monsieur"
 
+ //date format
+ const [date, setDate] = useState(new Date());
+ const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
  //control errors
  const [birthdayError, setBirthdayError] = useState('');
  const [firstnameError, setFirstnameError] = useState('');
@@ -35,10 +40,29 @@ export default function CreateProfilScreen({ navigation }) {
   }
 
   const lastnamePlaceholder = 'Nom *';
-  const fisrtnamePlaceholder = 'Prénom *';
-  const birthdayPlaceholder = 'date de naissance ';
-  const birthdayFormatPlaceholder = 'jj/mm/aaaa';
+  const firstnamePlaceholder = 'Prénom *';
+  //const birthdayPlaceholder = 'date de naissance ';
+ // const birthdayFormatPlaceholder = 'jj/mm/aaaa';
 
+ // Fonction pour afficher ou cacher le sélecteur de date
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+  
+  const handleConfirm = (selectedDate) => {
+    console.log("Une date a été sélectionnée : ", selectedDate);
+    hideDatePicker();
+    // Format date: jj/mm/aaaa
+    const formattedDate = `${selectedDate.getDate()}/${selectedDate.getMonth() + 1}/${selectedDate.getFullYear()}`;
+    
+    // add date dans le redux store
+    setBirthday(formattedDate);
+  };
  
 
   const handleValidate = () => {
@@ -47,10 +71,10 @@ export default function CreateProfilScreen({ navigation }) {
       console.log("Nom :", lastname);
       console.log("Prénom :", firstname);
       console.log("Date de naissance :", birthday);
-    //  dispatch(addCivility(civility));
-    //  dispatch(addLastname(lastname));
-      //dispatch(addFirstname(firstname));
-     // dispatch(addBirthday(birthday));
+     dispatch(addCivility(civility));
+     dispatch(addLastname(lastname));
+     dispatch(addFirstname(firstname));
+     dispatch(addBirthday(birthday));
       navigation.navigate("Profil");
     } else {
       console.log("Champs * vides !");
@@ -95,22 +119,39 @@ export default function CreateProfilScreen({ navigation }) {
                 </View>
               </View>
             </View>
-            <BasicInput style={styles.lastname} 
-              placeholder={lastnamePlaceholder}
+            <TextInput 
+              style={[styles.birthday, { fontFamily: "Indie-Flower" } ]} 
+              placeholder='Nom *'
               onChangeText={(value) => setLastname(value)}
               value={lastname}
               />
-            <BasicInput style={styles.fisrtname} 
-              placeholder={fisrtnamePlaceholder}
+            <TextInput 
+             style={[styles.birthday, { fontFamily: "Indie-Flower" } ]}  
+              placeholder="Prénom *"
               onChangeText={(value) => setFirstname(value)}
               value={firstname}
             />
-            <BasicInput style={styles.birthday} 
-              placeholder={birthdayPlaceholder}
-              onChangeText={(value) => setBirthday(value)}
-              value={birthday}/>
+       
+              <TextInput 
+                style={[styles.birthday, { fontFamily: "Indie-Flower" } ]} 
+                placeholder="date de naissance"
+                onChangeText={setBirthday}
+                value={birthday}
+                editable={false} // Pour empêcher la modification directe de l'input                 
+              /> 
+           <View>
+      <Button title="choisir sa date de naissance" onPress={showDatePicker} />
+      <DatePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        locale="en_FR"
+        display="spinner" 
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+      />
+    </View>
             
-           
+              
           </View>
 
           <View style={styles.validateContainer}>
@@ -142,7 +183,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
-    margin: 0,
+    marginBottom: 5,
     padding: 0,
   },
   titleContainer: {
@@ -162,6 +203,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
+    padding: 0,
+    margin: 0,
   },
   civilityContainer: {
     height: "25%",
@@ -172,7 +215,7 @@ const styles = StyleSheet.create({
     borderBlockColor: "#004644",
     borderRadius: 10,
     borderWidth: 2,
-    margin: 10,
+    marginTop: 10,
     padding: 0,
     backgroundColor: "#CAE1DB",
   },
@@ -209,6 +252,20 @@ civilityText:{
     fontSize: 16,
     fontFamily: "Indie-Flower",
     color: "#004644",
+},
+birthday: {
+  borderWidth: 1,
+  borderRadius: 5,
+  borderColor: "#004644",
+  margin: 5,
+  padding: 10,
+  borderWidth: 2,
+    borderColor: "#76a696",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    width: 250,
+    marginBottom: 5,
+    marginTop: 10,
 },
 });
 

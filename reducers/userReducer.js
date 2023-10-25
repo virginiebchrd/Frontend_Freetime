@@ -8,7 +8,7 @@ const initialState = {
     civility:"",
     lastname: "",
     firstname: "",
-    birthday: new Date(),
+    birthday: "",
   },
 };
 
@@ -72,5 +72,9 @@ export const {
   removePassword,
   login,
   logout,
+  addCivility,
+  addLastname,
+  addFirstname,
+  addBirthday,
 } = userSlice.actions;
 export default userSlice.reducer;
