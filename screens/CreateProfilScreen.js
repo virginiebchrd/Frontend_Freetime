@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import {  Text, View, StyleSheet, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -30,11 +30,12 @@ export default function CreateProfilScreen({ navigation }) {
 
   const handleValidate = () => {
     //dispatch activité
+
     navigation.navigate("Profil");
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView  style={styles.container}>
       <LinearGradient
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
@@ -73,7 +74,7 @@ export default function CreateProfilScreen({ navigation }) {
           </View>
         </View>
       </LinearGradient>
-    </View>
+    </SafeAreaView >
   );
 }
 
@@ -83,6 +84,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    margin: 0,
+    padding: 0,
   },
   background: {
     height: "100%",
@@ -95,6 +98,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
+    margin: 0,
+    padding: 0,
   },
   titleContainer: {
     height: "20%",
@@ -108,38 +113,38 @@ const styles = StyleSheet.create({
     color: "#004644",
   },
   infoContainer: {
-    height: "60%", //60%
+    height: "65%", //60%
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
   },
   civilityContainer: {
-    width: "80%",
+    height: "25%",
+    width: "65%",
     flexDirection: "row", //
     alignItems: "center", //
     justifyContent: "space-between", //
     borderBlockColor: "#004644",
     borderRadius: 10,
     borderWidth: 2,
-    margin: 20,
+    margin: 10,
     padding: 0,
     backgroundColor: "#CAE1DB",
   },
   leftCivilityContainer: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "start-align",
     justifyContent: "center",
-    margin: 10,
-    padding: 20,
+    margin: 0,
+    paddingLeft: 5,
   },
   rightCivilityContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 0,
-    marginRight: 10,
-    padding: 30,
+    paddingRight: 10,
+    paddingBottom:5,
   },
   validateContainer: {
     height: "20%",
@@ -163,16 +168,3 @@ civilityText:{
 },
 });
 
-/*
- <View>
-     <Checkbox
-      value={isChecked}
-      onValueChange={toggleCheckbox("Monsieur")}
-      >
-     <Text> {isChecked ? "Oui" : "Non"} Monsieur</Text>
-     </View>
- <View>
-        <Checkbox value={isChecked} onValueChange={toggleCheckbox("Madame")} />
-       <Text> {isChecked ? "Oui" : "Non"} Madame</Text>
- </View>
-*/
