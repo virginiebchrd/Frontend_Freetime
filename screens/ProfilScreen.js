@@ -49,21 +49,13 @@ export default function ProfilScreen({ navigation }) {
     navigation.navigate("Calendar");
   };
 
-
-    return (
-        <View style={styles.container}>
-            <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn icon="logout" pages='ComeFromProfil' isNeeded={true} />
-
-
-
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn icon="logout" pages="ComeFromProfil" />
+        <HeaderReturn isNeeded={true} icon="logout" pages="ComeFromProfil" />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>

@@ -19,12 +19,6 @@ export default function CalendarScreen({ navigation }) {
         //dispatch activité
         navigation.navigate('Who');
     }
-    
-    return (
-        <View style={styles.container}>
-            <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages="Profil" isNeeded={true} />
-
 
   return (
     <View style={styles.container}>
@@ -32,7 +26,7 @@ export default function CalendarScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn iconContext="profil" pages="Profil" />
+        <HeaderReturn isNeeded={true} iconContext="profil" pages="Home" />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>

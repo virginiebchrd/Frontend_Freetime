@@ -57,7 +57,7 @@ export default function FirstConnectionScreen({ navigation }) {
         email: mail,
         password: password,
       };
-      fetch("https://backend-freetime.vercel.app/users/signin", {
+      fetch(`https://backend-freetime.vercel.app/users/signin/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

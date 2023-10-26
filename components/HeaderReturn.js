@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         paddingTop: 20
     },
     logo: {
-        height: '100%',
+        height: '140%',
         width: '100%',
     },
     returnContainer: {

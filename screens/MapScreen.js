@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity, Keyboard, Text, TextInput, View, StyleSheet, Image, TouchableWithoutFeedback} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
@@ -9,7 +9,8 @@ import * as Location from 'expo-location';
 import InputWithLabel from '../components/inputs/InputWithLabel';
 import { addCity } from '../reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEnabled } from 'react-native/Libraries/Performance/Systrace';
+
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 
 export default function MapScreen ({navigation}) {
@@ -53,8 +54,7 @@ export default function MapScreen ({navigation}) {
     }
 
     const handleSearch = () => {
-        console.log(city);
-
+        console.log('city', city);
         fetch(`https://api-adresse.data.gouv.fr/search/?q=${city}`)
         .then((response) => response.json())
         .then((data) => {
@@ -88,7 +88,9 @@ export default function MapScreen ({navigation}) {
                                     onChangeText={(value) => setCity(value)}
                                     onPress={() => handleSearch()}
                                 />
+
                             </View>
+
                             <MapView 
                                 style= {styles.mapContainer}
                                 showsUserLocation

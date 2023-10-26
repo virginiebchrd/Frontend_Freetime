@@ -41,7 +41,7 @@ export default function ResultScreen ({navigation}) {
         //TODO Ajouter le tableau récupérer d'ID
             if(hobbies.length !== 0) {
                 console.log('test');
-                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbies}`,)
+                fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbies}`,)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {
