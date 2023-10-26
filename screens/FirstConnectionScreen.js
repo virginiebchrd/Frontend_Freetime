@@ -26,6 +26,7 @@ export default function FirstConnectionScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  
 
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -39,11 +40,14 @@ export default function FirstConnectionScreen({ navigation }) {
   const handleRegister = () => {
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
+      setEmailError(false);
       dispatch(addEmail(mail));
       dispatch(addPassword(password));
+      setPasswordError(false);
     } else {
       console.log("Champs vides ou conditions non remplies.");
       setEmailError(true);
+      return; // Sortir de la fonction si l'e-mail n'est pas valide//
     }
 
       fetch(`https://backend-freetime.vercel.app/users/signup`, {
@@ -61,7 +65,11 @@ export default function FirstConnectionScreen({ navigation }) {
 
           } else {
             console.error(data.error);
-            console.log("Conditions non remplies.");
+            if (data.error === "user  existe déjà") {
+               setEmailError(true);
+            } else {
+              console.log("Conditions non remplies.");
+            }
           }
         });
   
@@ -93,6 +101,12 @@ export default function FirstConnectionScreen({ navigation }) {
           autoComplete="email"
           keyboardType="email-address"
         />
+
+          {emailError && (
+          <Text style={styles.TextError}>
+           Ce mail existe déjà !
+          </Text>
+        )}
 
         <BasicInput
           placeholder={PasswordLabel}

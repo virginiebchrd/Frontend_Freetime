@@ -52,12 +52,12 @@ export const userSlice = createSlice({
     //connect
     login: (state, action) => {
       state.value.token = action.payload.token;
-      state.value.email = action.payload.username;
+   
+     
     },
     logout: (state) => {
       state.value.token = null;
-      state.value.email = "";
-      state.value.password = "";
+     
     },
     //
   },

@@ -60,17 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  inputContainer: {
-    position: "relative",
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: "#76a696",
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    width: 250,
-  },
-
+ 
   input: {
     flex:1,
     height: 40,
