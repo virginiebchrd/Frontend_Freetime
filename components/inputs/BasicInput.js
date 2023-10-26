@@ -6,7 +6,7 @@ import React from 'react';
 import { View, SafeAreaView, StyleSheet, TextInput } from 'react-native';
 import { useFonts } from "expo-font";
 
-function LabelBasic  ({placeholder, secureTextEntry, onChangeText}) {
+function LabelBasic  ({placeholder, autoComplete ,keyborardType, secureTextEntry, onChangeText}) {
 
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
@@ -24,6 +24,8 @@ function LabelBasic  ({placeholder, secureTextEntry, onChangeText}) {
           secureTextEntry={secureTextEntry}
           onChangeText={onChangeText}
           autoCapitalize="none" 
+          keyborardType={keyborardType} 
+          autoComplete={autoComplete}
         />
          </View>
     </SafeAreaView>

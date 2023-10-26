@@ -26,6 +26,7 @@ export default function HomeScreen({ navigation }) {
           <Logo width="125%" />
         </View>
 
+
         <View style={styles.buttonContainer}>
           <View style={styles.buttonBackgroundUp}>
             <LoginButtons
@@ -33,6 +34,7 @@ export default function HomeScreen({ navigation }) {
               onPress={() => navigation.navigate("CreateProfil")}
             ></LoginButtons>
           </View>
+
 
           <View style={styles.buttonBackgroundIn}>
             <LoginButtons

@@ -50,6 +50,12 @@ export default function ProfilScreen({ navigation }) {
   };
 
 
+    return (
+        <View style={styles.container}>
+            <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
+                <HeaderReturn icon="logout" pages='ComeFromProfil' isNeeded={true} />
+
+
 
   return (
     <View style={styles.container}>

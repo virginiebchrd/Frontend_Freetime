@@ -14,10 +14,17 @@ export default function CalendarScreen({ navigation }) {
     return null;
   }
 
-  const handleValidate = () => {
-    //dispatch activité
-    navigation.navigate("Who");
-  };
+
+    const handleValidate = () => {
+        //dispatch activité
+        navigation.navigate('Who');
+    }
+    
+    return (
+        <View style={styles.container}>
+            <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
+                <HeaderReturn iconContext="profil" pages="Profil" isNeeded={true} />
+
 
   return (
     <View style={styles.container}>

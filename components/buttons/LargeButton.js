@@ -13,7 +13,7 @@ const LargeButton  = ({ title, onPress  }) => {
     <View style={styles.smallButtonContainer}>
    
         <LinearGradient
-          colors={["transparent", "#004644"]}
+          colors={["transparent", "#8d9680"]}
           style={styles.buttonBackground}
         >
           <TouchableOpacity

@@ -6,12 +6,14 @@ import SmallButton from '../components/buttons/SmallButton';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { removeHobbies } from '../reducers/hobbiesReducer';
 
-export default function ShowActivityScreen ({navigation, route}) {
+export default function ShareActivityScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
+    const dispatch = useDispatch();
     console.log(dataActivity);
 
-    const [isValidated, setIsValidated] = useState(false);
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -20,26 +22,25 @@ export default function ShowActivityScreen ({navigation, route}) {
     if (!fontsLoaded) {
     return null;
     }
-
-    const handleValidate = () => {
-        navigation.navigate('ShareActivity',{activity: dataActivity});
+    
+    const handleReturn  = () => {
+        dispatch(removeHobbies(dataActivity.id))
+        navigation.navigate('Result');
     }
 
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Result' isNeeded={true}/>
+                <HeaderReturn iconContext="profil" pages='Result' isNeeded={false} />
 
                 <View style={styles.bodyContainer}>
-                    <View style={styles.titleContainer}>
-                    {isValidated ?
+
+                        <TouchableOpacity style={styles.titleContainer} onPress={() => handleReturn()}>
+                            <Text style={styles.title}>Retourner vers les autres activités</Text>
+                        </TouchableOpacity>
                         <Text style={styles.title}>Partager votre activité</Text>
-                        :
-                        <Text style={styles.title}>Activité sélectionnée</Text>
-                    }
-                    </View>
+
                     <View style={styles.mapContainer}>
-                        {/*TODO mettre coordonnée du useSelector */}
                         <MapView 
                         initialRegion={{
                             latitude: dataActivity.latitude,
@@ -57,11 +58,7 @@ export default function ShowActivityScreen ({navigation, route}) {
                     </View>
                     
                     <View style={styles.validateContainer}>
-                    {isValidated ?
-                        <View></View>
-                        :
-                        <SmallButton title='Valider' onPress={handleValidate} />
-                    }
+
                     </View>
                 </View>
             </LinearGradient>
@@ -90,9 +87,10 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         height: '10%',
-        width: '100%',
+        width: '80%',
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 1
     },
     title: {
         fontSize: 22,

@@ -1,4 +1,7 @@
-import { View, StyleSheet, Text, KeyboardAvoidingView } from "react-native";
+
+import { View, StyleSheet, Text, KeyboardAvoidingView, } from "react-native";
+
+
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
@@ -8,6 +11,7 @@ import InputWithLabel from "../components/inputs/InputWithLabel";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateEmail } from "../reducers/userReducer";
+
 
 //pris sur emailregex.com
 const EMAIL_REGEX =
@@ -103,7 +107,7 @@ export default function FirstConnectionScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn />
+        <HeaderReturn pages='Home' isNeeded={true}/>
 
         <View style={styles.InputsContainer}>
           <Text style={styles.title}>Se connecter avec une adresse mail</Text>
