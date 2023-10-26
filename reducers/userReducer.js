@@ -78,6 +78,7 @@ export const {
   addPassword,
   removePassword,
   addCity,
+  addFirstname,
   login,
   logout,
 } = userSlice.actions;

@@ -39,7 +39,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.buttonBackgroundIn}>
             <LoginButtons
               title="Se connecter"
-              onPress={() => navigation.navigate("Connection")}
+              onPress={() => navigation.navigate("Profil")}
             ></LoginButtons>
           </View>
         </View>
