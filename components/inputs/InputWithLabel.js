@@ -3,7 +3,7 @@
 @param {string} label
  */
 import React from "react";
-import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
+import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView, Keyboard } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 

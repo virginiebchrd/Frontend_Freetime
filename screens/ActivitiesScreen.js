@@ -20,7 +20,7 @@ export default function ActivitiesScreen ({navigation}) {
     const handleSports = () => {
         //setIsShownSports(true)
         console.log('sports');
-        fetch(`http://192.168.1.12:3000/hobbies/sports`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/sports`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -38,7 +38,7 @@ export default function ActivitiesScreen ({navigation}) {
 
     const handleArtistics = () => {
         console.log('artistique');
-        fetch(`http://192.168.1.12:3000/hobbies/artistique`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/artistique`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -54,7 +54,7 @@ export default function ActivitiesScreen ({navigation}) {
 
     const handleCulture = () => {
         console.log('culture');
-        fetch(`http://192.168.1.12:3000/hobbies/culture`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/culture`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -70,7 +70,7 @@ export default function ActivitiesScreen ({navigation}) {
 
     const handleEvasion = () => {
         console.log('evasion');
-        fetch(`http://192.168.1.12:3000/hobbies/evasion`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/evasion`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
