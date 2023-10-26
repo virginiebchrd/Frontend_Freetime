@@ -39,15 +39,21 @@ export default function ResultScreen ({navigation}) {
 
     useEffect ( () => {
         //TODO Ajouter le tableau récupérer d'ID
-            fetch(`http://192.168.1.12:3000/hobbies/each/${hobbies}`,)
-            .then(response => response.json())
-            .then (data => {
-                    if(data.result) {
-                        console.log('hobbies',data.hobby);
-                        setActivityData(data.hobby);
-                    }
-        })
-    }, [])
+            if(hobbies.length !== 0) {
+                console.log('test');
+                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbies}`,)
+                .then(response => response.json())
+                .then (data => {
+                        if(data.result) {
+                            console.log('hobbies',data.hobby);
+                            setActivityData(data.hobby);
+                        }
+                })
+            }
+            else {
+                setActivityData([]);
+            }
+    }, [hobbies])
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),

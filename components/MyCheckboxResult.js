@@ -8,17 +8,17 @@ import { useNavigation } from '@react-navigation/native';
 function MyCheckboxResult(props) {
     const [checked, setChecked] = useState(props.isChecked);
     const navigation = useNavigation();
-    console.log(checked);
     
     const handlePress = () => {
         setChecked(!checked)
-
+        if(!checked) {
+          console.log('add');
+          navigation.navigate('ShowActivity',{activity: props.activity})
+          setChecked(false);
       }
-      if(checked) {
-        console.log('add');
-        navigation.navigate('ShowActivity',{activity: props.activity})
-        setChecked(false);
     }
+    
+    
 
     return (
       <Pressable

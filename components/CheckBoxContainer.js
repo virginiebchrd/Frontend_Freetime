@@ -8,7 +8,6 @@ import MyCheckboxResult from './MyCheckboxResult';
 function CheckBoxContainer (props) {
     const [isToggled, setIsToggled] = useState(false);
     const navigation = useNavigation();
-    console.log('propsC', props);
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),

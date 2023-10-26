@@ -7,9 +7,11 @@ import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
 
+const token = 'EnV8RoBmpHTaLSBCV7qvgHHD58SeazTH';
+
 export default function ShowActivityScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
-    console.log(dataActivity);
+    console.log('dataAct', dataActivity);
 
     const [isValidated, setIsValidated] = useState(false);
 
@@ -22,7 +24,22 @@ export default function ShowActivityScreen ({navigation, route}) {
     }
 
     const handleValidate = () => {
-        navigation.navigate('ShareActivity',{activity: dataActivity});
+        fetch(`http://192.168.1.12:3000/users/hobbies/${token}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({hobbies : dataActivity.id})
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if(data.result) {
+                navigation.navigate('ShareActivity',{activity: dataActivity});
+            }
+            else {
+                console.log(data.error);
+            }
+        })
+        
     }
 
     return (

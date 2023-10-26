@@ -6,15 +6,16 @@ import SmallButton from '../components/buttons/SmallButton';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeHobbies } from '../reducers/hobbiesReducer';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function ShareActivityScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
     const dispatch = useDispatch();
-    console.log(dataActivity);
+    console.log('share',dataActivity);
 
-
+    const hobbies = useSelector((state) => state.hobbies.value.hobbies);
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -24,7 +25,8 @@ export default function ShareActivityScreen ({navigation, route}) {
     }
     
     const handleReturn  = () => {
-        dispatch(removeHobbies(dataActivity.id))
+        dispatch(removeHobbies(dataActivity.id));
+        console.log("after dispatch",hobbies);
         navigation.navigate('Result');
     }
 
@@ -36,8 +38,10 @@ export default function ShareActivityScreen ({navigation, route}) {
                 <View style={styles.bodyContainer}>
 
                         <TouchableOpacity style={styles.titleContainer} onPress={() => handleReturn()}>
-                            <Text style={styles.title}>Retourner vers les autres activités</Text>
+                            <FontAwesome name= 'arrow-left' size={25} color='#cae1db' />
+                            <Text style={styles.returnText}>Retour vers Résultats</Text>
                         </TouchableOpacity>
+
                         <Text style={styles.title}>Partager votre activité</Text>
 
                     <View style={styles.mapContainer}>
@@ -86,23 +90,34 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     titleContainer: {
-        height: '10%',
-        width: '80%',
+        height: '5%',
+        width: '60%',
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1
+        justifyContent: 'space-around',
+        borderWidth: 1,
+        backgroundColor: "#004644",
+        borderRadius: 20,
+        borderColor: '#004644',
+    },
+    returnText: {
+        fontSize: 18,
+        fontFamily: 'Indie-Flower',
+        color: '#cae1db',
     },
     title: {
         fontSize: 22,
         fontFamily: 'Indie-Flower',
         color: '#004644',
+        marginTop : 15,
+        marginBottom: 15,
     },
     mapContainer: {
         height: '40%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
+
     },
     map: {
         height: '100%',
@@ -110,7 +125,8 @@ const styles = StyleSheet.create({
     },
     activityContainer: {
         height: '30%',
-        width: '100%',
+        width: '90%',
+        marginTop: 15,
     },
     validateContainer: {
         height: '20%',

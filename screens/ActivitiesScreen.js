@@ -29,6 +29,7 @@ export default function ActivitiesScreen ({navigation}) {
                     category: "sports",
                     hobbies: data.hobbies,
                 }
+                
                 navigation.navigate("ShowCategory", {dataToSend})
             }
         })
