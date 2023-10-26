@@ -81,25 +81,19 @@ export default function MapScreen ({navigation}) {
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
                 <HeaderReturn iconContext="profil" pages='Who' isNeeded={true} />
                     <View style={styles.bodyContainer}>
-                            {!isAuthorized && <View style={styles.inputContainer}>
+                            <View style={styles.inputContainer}>
                                 <InputWithLabel 
                                     placeholder='Entrer une ville' 
                                     icon={true}
                                     onChangeText={(value) => setCity(value)}
                                     onPress={() => handleSearch()}
                                 />
-                            </View>}
-                            <MapView /*initialRegion={{
-                                latitude: 50,
-                                longitude: 1.332240497502353,
-                                latitudeDelta: 12,
-                                longitudeDelta: 12,
-                                
-                                }}*/
-                                style={ isAuthorized? styles.mapContainer : styles.mapContainerNoGeo}
+                            </View>
+                            <MapView 
+                                style= {styles.mapContainer}
                                 showsUserLocation
                                 onLongPress={(e) => handleMap(e.nativeEvent)}
-                        >
+                            >
                             {citySearch && <Marker coordinate={{latitude: coords.latitude, longitude: coords.longitude}} title={city} pinColor="#fecb2d" />}
                         </MapView>
                         <View style={styles.validateContainer}>
@@ -125,7 +119,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     mapContainer: {
-        height: '86%',
+        height: '77%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
