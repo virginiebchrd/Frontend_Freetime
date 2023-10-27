@@ -14,7 +14,6 @@ export default function CalendarScreen({ navigation }) {
     return null;
   }
 
-
     const handleValidate = () => {
         //dispatch activité
         navigation.navigate('Who');

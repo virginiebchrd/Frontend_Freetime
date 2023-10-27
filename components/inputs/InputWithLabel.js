@@ -8,7 +8,7 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 
 
-function InputWithLabel({ placeholder,autoComplete , keyborardType, label, icon, onChangeText, secureTextEntry, onPress }) {
+function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label, icon, onChangeText, secureTextEntry, onPress }) {
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -31,6 +31,7 @@ function InputWithLabel({ placeholder,autoComplete , keyborardType, label, icon,
         secureTextEntry={secureTextEntry}
         keyborardType={keyborardType} 
         autoComplete={autoComplete}
+        value={value}
 
        />
 

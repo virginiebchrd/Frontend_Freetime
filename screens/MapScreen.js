@@ -10,28 +10,23 @@ import InputWithLabel from '../components/inputs/InputWithLabel';
 import { addCity } from '../reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
-
-
 export default function MapScreen ({navigation}) {
     
     const [myPosition, setMyPosition] = useState({});
-    const [isAuthorized, setIsAuthorized] = useState(false)//useState(3);
+
     const [pressedCoordinates, setPressedCoordinates] = useState(null);
     const [city, setCity] = useState('');
     const [citySearch, setCitySearch] = useState(false);
 
     const dispatch = useDispatch();
-    const coords = useSelector( (state) => state.user.value.city)
+    const coords = useSelector( (state) => state.user.value.city);
     
     useEffect( () => {
-        
             ( async () => {
             const {status} = await Location.requestForegroundPermissionsAsync();
                 console.log(status);
             if(status === 'granted') {
                 const location = await Location.getCurrentPositionAsync({});
-                setIsAuthorized(true);
                 setMyPosition(location.coords);
                 console.log(myPosition);
             }
@@ -47,6 +42,7 @@ export default function MapScreen ({navigation}) {
     }
     
     
+    
     const handleMap = (pressed) => {
         console.log('clicked');
         setPressedCoordinates(pressed.coordinate);
@@ -54,6 +50,7 @@ export default function MapScreen ({navigation}) {
     }
 
     const handleSearch = () => {
+        Keyboard.dismiss()
         console.log('city', city);
         fetch(`https://api-adresse.data.gouv.fr/search/?q=${city}`)
         .then((response) => response.json())
@@ -68,7 +65,9 @@ export default function MapScreen ({navigation}) {
             };
             
             dispatch(addCity(newPlace));
+            setCity('');
         })
+        
     }
 
     const handleValidate = () => {
@@ -82,13 +81,15 @@ export default function MapScreen ({navigation}) {
                 <HeaderReturn iconContext="profil" pages='Who' isNeeded={true} />
                     <View style={styles.bodyContainer}>
                             <View style={styles.inputContainer}>
+                            
                                 <InputWithLabel 
                                     placeholder='Entrer une ville' 
                                     icon={true}
                                     onChangeText={(value) => setCity(value)}
                                     onPress={() => handleSearch()}
+                                    value={city}
                                 />
-
+                            
                             </View>
 
                             <MapView 
