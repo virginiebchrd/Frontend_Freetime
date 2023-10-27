@@ -1,6 +1,4 @@
-
-import { View, StyleSheet, Text, KeyboardAvoidingView, } from "react-native";
-
+import { View, StyleSheet, Text, KeyboardAvoidingView } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
@@ -10,8 +8,7 @@ import InputWithLabel from "../components/inputs/InputWithLabel";
 //pour créer un état et stocker la valeur de l'état
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateEmail } from "../reducers/userReducer";
-
+import { addEmail, login } from "../reducers/userReducer";
 
 //pris sur emailregex.com
 const EMAIL_REGEX =
@@ -29,7 +26,6 @@ export default function FirstConnectionScreen({ navigation }) {
   const [passwordError, setPasswordError] = useState(false);
 
   const [isAllowed, setIsAllowed] = useState(false);
- 
 
   const Valider = "Valider";
   const EmailPlaceholder = "Entrer votre adresse mail";
@@ -68,9 +64,26 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result) {
-            dispatch(updateEmail(mail));
-            console.log("ici");
-            navigation.navigate("Profil");
+            fetch(
+              `https://backend-freetime.vercel.app/users/identity/${data.token}`
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.result) {
+                  console.log(data.identity);
+                  dispatch(
+                    login({
+                      token: data.identity.token,
+                      firstname: data.identity.firstname,
+                      lastname: data.identity.lastname,
+                    })
+                  );
+                  console.log("ici");
+                  navigation.navigate("Profil");
+                } else {
+                  console.log("error identity", data.error);
+                }
+              });
           } else {
             console.log(
               "Échec de la connexion. Message d'erreur du serveur : ",
@@ -95,7 +108,7 @@ export default function FirstConnectionScreen({ navigation }) {
     user.email && user.password && navigation.navigate('Profil');
   }, []);
   */
-  
+
   //text affiché dans le bouton et placeholder des inputs
 
   return (
@@ -107,7 +120,7 @@ export default function FirstConnectionScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn pages='Home' isNeeded={true}/>
+        <HeaderReturn pages="Home" isNeeded={true} />
 
         <View style={styles.InputsContainer}>
           <Text style={styles.title}>Se connecter avec une adresse mail</Text>

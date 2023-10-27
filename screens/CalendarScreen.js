@@ -26,7 +26,7 @@ export default function CalendarScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn isNeeded={true} iconContext="profil" pages="Home" />
+        <HeaderReturn iconContext="profil" pages="Profil" isNeeded={true} />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>

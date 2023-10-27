@@ -5,7 +5,7 @@ const initialState = {
   value: {
     email: "",
     password: "",
-    token: null,
+    token: "",
     civility:"",
     lastname: "",
     firstname: "",
@@ -58,8 +58,10 @@ export const userSlice = createSlice({
     },
     //connect
     login: (state, action) => {
+      console.log(action.payload)
       state.value.token = action.payload.token;
-      state.value.email = action.payload.username;
+      state.value.firstname = action.payload.firstname;
+      state.value.lastname = action.payload.lastname;
     },
     logout: (state) => {
       state.value.token = null;
@@ -78,6 +80,7 @@ export const {
   addPassword,
   removePassword,
   addCity,
+  addFirstname,
   login,
   logout,
 } = userSlice.actions;
