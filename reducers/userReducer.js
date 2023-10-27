@@ -65,10 +65,8 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.value.token = null;
-      state.value.email = "";
-      state.value.password = "";
     },
-    //
+    
   },
 });
 
@@ -80,8 +78,11 @@ export const {
   addPassword,
   removePassword,
   addCity,
-  addFirstname,
   login,
   logout,
+  addCivility,
+  addLastname,
+  addFirstname,
+  addBirthday,
 } = userSlice.actions;
 export default userSlice.reducer;

@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
   borderColor: "#76a696",
   paddingLeft: 5,
   backgroundColor: "#fff",
+  margin: 0,
+  padding: 0,
   },
   placeholder: {
     color: "#004644",

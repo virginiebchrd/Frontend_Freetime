@@ -1,4 +1,11 @@
-import { Text, View, StyleSheet, SafeAreaView } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  SafeAreaView,
+  TextInput,
+  Button,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -7,23 +14,40 @@ import SmallButton from "../components/buttons/SmallButton";
 import BasicInput from "../components/inputs/BasicInput";
 import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addLastname,
   addFirstname,
   addBirthday,
   addCivility,
+  login,
 } from "../reducers/userReducer";
+import DatePickerModal from "react-native-modal-datetime-picker";
 
 export default function CreateProfilScreen({ navigation }) {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
+// récupérer le token de l'utilisateur
+ const userToken = useSelector((state) => state.user.value.token);
+ 
+ const userIdentity = { 
+  token: state.user.value.token,
+  firstname: state.user.value.firstname,
+  lastname: state.user.value.lastname,
+};
+
+ 
+//const token = "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO";
 
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [birthday, setBirthday] = useState(""); //format jj/mm/aaaa
   const [civility, setCivility] = useState(""); // false pour "Madame", true pour "Monsieur"
+ 
+//date format
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  //control errors
+//control errors
   const [birthdayError, setBirthdayError] = useState("");
   const [firstnameError, setFirstnameError] = useState("");
   const [lastnameError, setLastnameError] = useState("");
@@ -37,25 +61,87 @@ export default function CreateProfilScreen({ navigation }) {
     return null;
   }
 
-  const lastnamePlaceholder = "Nom *";
-  const fisrtnamePlaceholder = "Prénom *";
-  const birthdayPlaceholder = "date de naissance ";
-  const birthdayFormatPlaceholder = "jj/mm/aaaa";
+ 
+
+  //Fonction pour afficher ou cacher le sélecteur de date
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (selectedDate) => {
+    console.log("Une date a été sélectionnée : ", selectedDate);
+    hideDatePicker();
+    // Format date: jj/mm/aaaa
+    const formattedDate = `${selectedDate.getDate()}/${
+      selectedDate.getMonth() + 1
+    }/${selectedDate.getFullYear()}`;
+
+    // add date dans le redux store
+    setBirthday(formattedDate);
+  };
+
+ 
+  
 
   const handleValidate = () => {
+    //if (token !== "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO") {  //
+      // Si le token n'est pas valide, sortir de la fonction
+      if (token !== userToken) {
+        console.log("Token invalide");
+        return;
+      }
+      
+
     if (lastname && firstname && civility) {
       console.log("Civilité :", civility);
       console.log("Nom :", lastname);
       console.log("Prénom :", firstname);
       console.log("Date de naissance :", birthday);
-      //  dispatch(addCivility(civility));
-      //  dispatch(addLastname(lastname));
-      // dispatch(addFirstname(firstname));
-      // dispatch(addBirthday(birthday));
-      navigation.navigate("Profil");
+      dispatch(addCivility(civility));
+      dispatch(addLastname(lastname));
+      dispatch(addFirstname(firstname));
+      dispatch(addBirthday(birthday));
+     // navigation.navigate("Profil");
     } else {
       console.log("Champs * vides !");
+      setBirthdayError("");
+      setFirstnameError("");
+      setLastnameError("");
+      setCivilityError("");
     }
+          
+    // fetch(`https://backend-freetime.vercel.app/users/identity/QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO`, {
+    fetch(`https://backend-freetime.vercel.app/users/identity/${userIdentity}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`}, // Ajoutez le token dans l'en-tête Authorization
+        
+        body: JSON.stringify({userToken:token,
+          civility: civility, 
+          lastname: lastname, 
+          firstname: firstname, 
+          birthday: birthday,  }),
+      })
+      .then((response) => response.json())
+    
+      .then((data) => {
+      
+        console.log(data.result);
+        console.log(data.error);
+        // console.log(data);
+          //if (data.result === true) {
+          //  navigation.navigate("Profil");
+
+          //} else {
+          //  console.error(data.error);
+          //  console.log("Conditions non remplies.");
+        //  }
+        });
   };
 
   return (
@@ -96,24 +182,52 @@ export default function CreateProfilScreen({ navigation }) {
                 </View>
               </View>
             </View>
-            <BasicInput
-              style={styles.lastname}
-              placeholder={lastnamePlaceholder}
+            <TextInput
+              style={[styles.input, { fontFamily: "Indie-Flower" }]}
+              placeholder="Nom *"
               onChangeText={(value) => setLastname(value)}
               value={lastname}
             />
-            <BasicInput
-              style={styles.fisrtname}
-              placeholder={fisrtnamePlaceholder}
+            <TextInput
+              style={[styles.input, { fontFamily: "Indie-Flower" }]}
+              placeholder="Prénom *"
               onChangeText={(value) => setFirstname(value)}
               value={firstname}
             />
-            <BasicInput
-              style={styles.birthday}
-              placeholder={birthdayPlaceholder}
-              onChangeText={(value) => setBirthday(value)}
+        
+  
+            <View style={styles.dateContenaire}>
+              <Button 
+                title="choisir sa date de naissance"
+                onPress={showDatePicker}
+              />
+              <DatePickerModal
+              
+                isVisible={isDatePickerVisible}
+                mode="date"
+                locale="en_FR"
+                display="spinner"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+                customStyles={{
+                  pickerIOS: {
+                    backgroundColor: "#fff", // Fond blanc pour le sélecteur de date
+                  }
+                }}
+              />
+            </View>
+
+            <TextInput
+              style={[styles.input, { fontFamily: "Indie-Flower" }]}
+              placeholder="date de naissance"
+              onChangeText={setBirthday}
               value={birthday}
+              editable={false} // Pour empêcher la modification directe de l'input
             />
+
+            <View style={styles.validateContainer}>
+             <SmallButton title="Valider" onPress={handleValidate} />
+           </View>
           </View>
 
           <View style={styles.validateContainer}>
@@ -145,7 +259,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
-    margin: 0,
+    marginBottom: 5,
     padding: 0,
   },
   titleContainer: {
@@ -165,6 +279,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
+    padding: 0,
+    margin: 0,
   },
   civilityContainer: {
     height: "25%",
@@ -175,7 +291,7 @@ const styles = StyleSheet.create({
     borderBlockColor: "#004644",
     borderRadius: 10,
     borderWidth: 2,
-    margin: 10,
+    marginTop: 10,
     padding: 0,
     backgroundColor: "#CAE1DB",
   },
@@ -212,5 +328,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Indie-Flower",
     color: "#004644",
+  },
+  input: {
+       
+    padding: 10,
+    borderWidth: 2,
+    borderColor: "#76a696",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    width: 250,
+    marginBottom: 5,
+    marginTop: 10,
+  },
+  datebtn:{
+    padding: 10,
+    borderWidth: 2,
+    borderColor: "#76a696",
+    backgroundColor: "#fff",
   },
 });

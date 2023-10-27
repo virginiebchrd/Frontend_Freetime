@@ -9,7 +9,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { useDispatch, useSelector } from "react-redux";
-import { addEmail, addPassword, login } from "../reducers/userReducer";
+import { addEmail, addFirstname, addPassword, login } from "../reducers/userReducer";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import BasicInput from "../components/inputs/BasicInput";
@@ -21,11 +21,13 @@ const EMAIL_REGEX =
 export default function FirstConnectionScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-
+  const login = useSelector((state) => state.user.login);
+  
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  
 
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -41,7 +43,7 @@ export default function FirstConnectionScreen({ navigation }) {
       console.log("Conditions remplies.");
       dispatch(addEmail(mail));
       dispatch(addPassword(password));
-    } else {
+      } else {
       console.log("Champs vides ou conditions non remplies.");
       setEmailError(true);
     }
@@ -57,14 +59,14 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result === true) {
+            dispatch(login({token: data.token, lastname: data.lastname, firstname: data.firstname }));
             navigation.navigate("CreateProfil");
-
           } else {
             console.error(data.error);
             console.log("Conditions non remplies.");
           }
         });
-  
+           
   };
 
   const Valider = "Valider";
@@ -94,7 +96,9 @@ export default function FirstConnectionScreen({ navigation }) {
           keyboardType="email-address"
         />
 
-        <BasicInput
+      
+
+         <BasicInput
           placeholder={PasswordLabel}
           label={PasswordLabel}
           onChangeText={(value) => setPassword(value)}
