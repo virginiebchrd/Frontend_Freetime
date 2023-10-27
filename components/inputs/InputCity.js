@@ -3,12 +3,12 @@
 @param {string} label
  */
 import React from "react";
-import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView, Keyboard } from "react-native";
+import { View, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 
 
-function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label, icon, onChangeText, secureTextEntry, onPress }) {
+function InputCity({ value, placeholder, onChangeText, onPress }) {
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -20,22 +20,16 @@ function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label,
     <KeyboardAvoidingView
     behavior={Platform.OS === "ios" ? "padding" : "height"}
     style={styles.container}
-  >
+    >
       <View style={styles.inputContainer}>
-
         <TextInput  style={[styles.input, { fontFamily: "Indie-Flower" }]}
         placeholderTextColor="#cae1db" 
         placeholder={placeholder}
         onChangeText={onChangeText}
         autoCapitalize="none" 
-        secureTextEntry={secureTextEntry}
-        keyborardType={keyborardType} 
-        autoComplete={autoComplete}
         value={value}
-
        />
 
-        {icon && (
           <View style={styles.iconContainer}>
             <FontAwesomeIcon
               name="search"
@@ -45,13 +39,8 @@ function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label,
               onPress={onPress}
             />
           </View>
-        )}
 
       </View>
-      <Text style={[styles.label, { fontFamily: "Indie-Flower" }]}
->
-        {label}
-      </Text>
     </KeyboardAvoidingView>
   );
 }
@@ -111,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InputWithLabel;
+export default InputCity;

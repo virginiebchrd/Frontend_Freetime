@@ -5,6 +5,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
@@ -21,7 +22,6 @@ const EMAIL_REGEX =
 export default function FirstConnectionScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  const login = useSelector((state) => state.user.login);
   
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,6 +39,7 @@ export default function FirstConnectionScreen({ navigation }) {
   //inspiration morningnews
   //premier test en local avec fetch(`http://192.168.0.12:3000/users/signup`,
   const handleRegister = () => {
+    Keyboard.dismiss();
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
       dispatch(addEmail(mail));
@@ -59,14 +60,14 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result === true) {
-            dispatch(login({token: data.token, lastname: data.lastname, firstname: data.firstname }));
+            console.log('token', data.token);
+            dispatch(login({token: data.token, lastname: "", firstname: ""}));
             navigation.navigate("CreateProfil");
           } else {
             console.error(data.error);
             console.log("Conditions non remplies.");
           }
         });
-           
   };
 
   const Valider = "Valider";
@@ -74,16 +75,16 @@ export default function FirstConnectionScreen({ navigation }) {
   const PasswordLabel = "Entrer votre mot de passe";
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    
       <LinearGradient
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
         <HeaderReturn pages="Home" isNeeded={true} />
-
+        <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
         <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
         <BasicInput
@@ -123,8 +124,9 @@ export default function FirstConnectionScreen({ navigation }) {
         )}
 
         <SmallButton title={Valider} onPress={handleRegister} />
+        </KeyboardAvoidingView>
       </LinearGradient>
-    </KeyboardAvoidingView>
+    
   );
 }
 

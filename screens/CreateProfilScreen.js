@@ -29,20 +29,13 @@ export default function CreateProfilScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
 // récupérer le token de l'utilisateur
  const userToken = useSelector((state) => state.user.value.token);
- 
- const userIdentity = { 
-  token: state.user.value.token,
-  firstname: state.user.value.firstname,
-  lastname: state.user.value.lastname,
-};
 
- 
 //const token = "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO";
 
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [birthday, setBirthday] = useState(""); //format jj/mm/aaaa
-  const [civility, setCivility] = useState(""); // false pour "Madame", true pour "Monsieur"
+  const [civility, setCivility] = useState("");
  
 //date format
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -91,21 +84,18 @@ export default function CreateProfilScreen({ navigation }) {
   const handleValidate = () => {
     //if (token !== "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO") {  //
       // Si le token n'est pas valide, sortir de la fonction
-      if (token !== userToken) {
+      /*if (token !== userToken) {
         console.log("Token invalide");
         return;
-      }
+      }*/
       
 
     if (lastname && firstname && civility) {
-      console.log("Civilité :", civility);
+      /*console.log("Civilité :", civility);
       console.log("Nom :", lastname);
       console.log("Prénom :", firstname);
-      console.log("Date de naissance :", birthday);
-      dispatch(addCivility(civility));
-      dispatch(addLastname(lastname));
-      dispatch(addFirstname(firstname));
-      dispatch(addBirthday(birthday));
+      console.log("Date de naissance :", birthday);*/
+      
      // navigation.navigate("Profil");
     } else {
       console.log("Champs * vides !");
@@ -116,23 +106,33 @@ export default function CreateProfilScreen({ navigation }) {
     }
           
     // fetch(`https://backend-freetime.vercel.app/users/identity/QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO`, {
-    fetch(`https://backend-freetime.vercel.app/users/identity/${userIdentity}`, {
+    fetch(`https://backend-freetime.vercel.app/users/identity/${userToken}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`}, // Ajoutez le token dans l'en-tête Authorization
-        
-        body: JSON.stringify({userToken:token,
+        headers: { "Content-Type": "application/json"},
+        //Authorization: `Bearer ${token}`}, // Ajoutez le token dans l'en-tête Authorization
+        body: JSON.stringify({
           civility: civility, 
           lastname: lastname, 
           firstname: firstname, 
-          birthday: birthday,  }),
+          /*birthday: birthday*/  }),
       })
       .then((response) => response.json())
-    
       .then((data) => {
-      
+        console.log('data Create', data);
         console.log(data.result);
-        console.log(data.error);
+
+        if(data.result) {
+          console.log(data.identity.firstname);
+          dispatch(login({token: data.identity.token, 
+            firstname: data.identity.firstname,
+            lastname: data.identity.lastname
+          }));
+          navigation.navigate("Profil");
+        }
+        else {
+          console.error(data.error);
+          console.log("Conditions non remplies.");
+        }
         // console.log(data);
           //if (data.result === true) {
           //  navigation.navigate("Profil");
@@ -224,10 +224,6 @@ export default function CreateProfilScreen({ navigation }) {
               value={birthday}
               editable={false} // Pour empêcher la modification directe de l'input
             />
-
-            <View style={styles.validateContainer}>
-             <SmallButton title="Valider" onPress={handleValidate} />
-           </View>
           </View>
 
           <View style={styles.validateContainer}>

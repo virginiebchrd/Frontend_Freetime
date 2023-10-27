@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, KeyboardAvoidingView } from "react-native";
+import { View, StyleSheet, Text, KeyboardAvoidingView, Keyboard } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
@@ -42,6 +42,7 @@ export default function FirstConnectionScreen({ navigation }) {
   }
   //inspiration morningnews
   const handleConnection = () => {
+    Keyboard.dismiss();
     console.log("E-mail:", mail);
     console.log("Password:", password);
     console.log("isAllowed:", isAllowed);
@@ -112,16 +113,16 @@ export default function FirstConnectionScreen({ navigation }) {
   //text affiché dans le bouton et placeholder des inputs
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    
       <LinearGradient
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
         <HeaderReturn pages="Home" isNeeded={true} />
-
+        <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
         <View style={styles.InputsContainer}>
           <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
@@ -160,8 +161,9 @@ export default function FirstConnectionScreen({ navigation }) {
             <SmallButton title={Valider} onPress={handleConnection} />
           </View>
         )}
+        </KeyboardAvoidingView>
       </LinearGradient>
-    </KeyboardAvoidingView>
+    
   );
 }
 

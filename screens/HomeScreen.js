@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.buttonBackgroundUp}>
             <LoginButtons
               title="S'inscrire"
-              onPress={() => navigation.navigate("CreateProfil")}
+              onPress={() => navigation.navigate("FirstConnection")}
             ></LoginButtons>
           </View>
 
@@ -94,16 +94,19 @@ const styles = StyleSheet.create({
   },
 
   buttonBackgroundUp: {
-    height: 110,
+    height: '40%',
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     fontSize: 16,
+    marginTop: -40, 
+    
   },
   buttonBackgroundIn: {
-    height: 110,
+    height: '40%',
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: -40,
   },
 });

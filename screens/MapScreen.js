@@ -1,4 +1,4 @@
-import {TouchableOpacity, Keyboard, Text, TextInput, View, StyleSheet, Image, TouchableWithoutFeedback} from 'react-native';
+import {TouchableOpacity, Keyboard, KeyboardAvoidingView, TextInput, View, StyleSheet} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
@@ -6,9 +6,10 @@ import SmallButton from '../components/buttons/SmallButton';
 import MapView, { Marker } from 'react-native-maps';
 import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
-import InputWithLabel from '../components/inputs/InputWithLabel';
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { addCity } from '../reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import InputCity from '../components/inputs/InputCity';
 
 export default function MapScreen ({navigation}) {
     
@@ -80,16 +81,13 @@ export default function MapScreen ({navigation}) {
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
                 <HeaderReturn iconContext="profil" pages='Who' isNeeded={true} />
                     <View style={styles.bodyContainer}>
-                            <View style={styles.inputContainer}>
-                            
-                                <InputWithLabel 
-                                    placeholder='Entrer une ville' 
-                                    icon={true}
-                                    onChangeText={(value) => setCity(value)}
-                                    onPress={() => handleSearch()}
-                                    value={city}
-                                />
-                            
+                            <View style={styles.inputContainer1}>
+
+                                <InputCity 
+                                value = {city}
+                                placeholder = 'Entrer une ville'
+                                onChangeText = {(value) => setCity(value)}
+                                onPress={() => handleSearch()} />
                             </View>
 
                             <MapView 
@@ -98,10 +96,10 @@ export default function MapScreen ({navigation}) {
                                 onLongPress={(e) => handleMap(e.nativeEvent)}
                             >
                             {citySearch && <Marker coordinate={{latitude: coords.latitude, longitude: coords.longitude}} title={city} pinColor="#fecb2d" />}
-                        </MapView>
-                        <View style={styles.validateContainer}>
-                            <SmallButton title="Valider" onPress={handleValidate} />
-                        </View>
+                            </MapView>
+                            <View style={styles.validateContainer}>
+                                <SmallButton title="Valider" onPress={handleValidate} />
+                            </View>
                     </View>
             </LinearGradient>
         </View>
@@ -153,7 +151,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: '#004644',
     },
-    inputContainer: {
+    inputContainer1: {
         height: '10%',
         width: '100%',
         alignItems: 'center',
@@ -170,5 +168,54 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+
+    containerInput: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    flex:1,
+    height: 40,
+    borderColor: "#76a696",
+    paddingLeft: 5,
+    backgroundColor: "#fff",
+  },
+
+  label: {
+    position: "absolute",
+    left: 10, // Ajustez la position à gauche selon vos besoins
+    top: 10, // Ajustez la position vers le haut selon vos besoins
+    color: "#004644",
+    fontSize: 12,
+    backgroundColor: "#bbd1b0",
+    borderRadius: 5,
+    padding: 3,
+    },
+
+  placeholder: {
+    color: "#004644",
+    fontSize: 12,
+    backgroundColor: "#bbd1b0",
+    borderRadius: 5,
+    paddingLeft: 10,
+  },
+
+  searchIcon: {
+    margin: 5,
+    color: "#004644",
+  
+  },
+
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#76a696",
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    width: 250, // Ajustez la largeur de l'input
+    padding:5,
+  },
   });
