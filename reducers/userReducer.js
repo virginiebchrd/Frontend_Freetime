@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+
   value: {
     email: "",
     password: "",
-    token: null,
+    token: "",
     civility:"",
     lastname: "",
     firstname: "",
-    birthday: new Date(),
+    birthday: "",
+    city: {},
   },
+
 };
 
 export const userSlice = createSlice({
@@ -18,7 +21,8 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     //email
-    addEmail: (state, action) => {
+
+  addEmail: (state, action) => {
       state.value.email = action.payload; //state.value.email.push(action.payload);
     },
     removeEmail: (state, action) => {
@@ -48,11 +52,16 @@ export const userSlice = createSlice({
     addBirthday: (state, action) => {
       state.value.birthday = action.payload;
     },
-
+    addCity: (state,action) => {
+      console.log('city', action.payload);
+      state.value.city = action.payload;
+    },
     //connect
     login: (state, action) => {
+      console.log(action.payload)
       state.value.token = action.payload.token;
-      state.value.email = action.payload.username;
+      state.value.firstname = action.payload.firstname;
+      state.value.lastname = action.payload.lastname;
     },
     logout: (state) => {
       state.value.token = null;
@@ -70,6 +79,8 @@ export const {
   updatePassword,
   addPassword,
   removePassword,
+  addCity,
+  addFirstname,
   login,
   logout,
 } = userSlice.actions;

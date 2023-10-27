@@ -5,7 +5,7 @@ import Logout from './Logout';
 import Profil from './Profil';
 import Return from './Return';
 
-function HeaderReturn ({iconContext, pages}) {
+function HeaderReturn ({iconContext, pages, isNeeded}) {
     const navigation = useNavigation();
 
     const handleReturn = () => {
@@ -38,11 +38,13 @@ function HeaderReturn ({iconContext, pages}) {
     else if(iconContext === 'profil') {
         icon = <Profil onPress={handleProfil}/>
     }
+
+
     return (
         <View style={styles.headerContainer}>
             <LinearGradient colors={['#004644', 'transparent']}  style={styles.headerGradient} >
                 <View style={styles.returnContainer}>
-                    <Return onPress={handleReturn}/>
+                    {isNeeded && <Return onPress={handleReturn}/>}
                 </View>
                 <View style={styles.logoContainer}>
                     <TouchableOpacity style={styles.logoTouchable} onPress={()=>handleLogo()}>
@@ -59,7 +61,7 @@ function HeaderReturn ({iconContext, pages}) {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '20%',
+        height: '15%',
         width: '100%',
     },
     headerGradient: {
@@ -68,9 +70,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection:'row',
+        paddingTop: 20
     },
     logo: {
-        height: '100%',
+        height: '140%',
         width: '100%',
     },
     returnContainer: {

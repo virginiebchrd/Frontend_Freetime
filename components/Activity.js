@@ -2,16 +2,18 @@ import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import PinMarker from './PinMarker';
 import { useFonts } from 'expo-font';
 
+
 function Activity (props) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
+    console.log('propsActivity', props);
 
     return (
         <View style={styles.headerContainer}>
             <View style={styles.activityContainer} >
             <View style={styles.pinContainer}>
-                <PinMarker color={props.activity.pinColor} />
+                <PinMarker />
             </View>
             <View style={styles.activityDetail}>
                 <Text style={styles.text}>Activité {props.activity.key+1} : {props.activity.activityName}</Text>

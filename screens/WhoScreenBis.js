@@ -4,7 +4,7 @@ import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
 import LargeButton from "../components/buttons/LargeButton";
 
-export default function WhoScreen ({navigation}) {
+export default function WhoScreenBis ({navigation}) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -13,27 +13,12 @@ export default function WhoScreen ({navigation}) {
     return null;
     }
     //text affiché dans les boutons
-    const seulementMoi = "Seulement Moi";
-    const avecMaFamille = "Avec Ma Famille";
-    const avecMesAmis = "Avec Mes Amis";
+    const partenaire = "Mon/Ma partenaire";
+    const enfant1 = "Mon premier enfant";
+    const enfant2 = "Mon deuxième enfant";
+    //TODO a mettre à jour 
     const uniquementCertainesPersonnes = "Uniquement Certaines Personnes";
 
-    //les fonctions qui sont utilisées dans les boutons
-    const handleOnlyME = () => {
-        navigation.navigate("Map")
-    }
-
-    const handleWithFamily = () => {
-        navigation.navigate("Map")
-    }
-
-    const handleWithFriends = () => {
-        navigation.navigate("Map")
-    }
-
-    const handleOtherPerson = () => {
-        navigation.navigate("Map")
-    }
     
     return (
         <View style={styles.container}>
@@ -44,13 +29,13 @@ export default function WhoScreen ({navigation}) {
                     <Text style={styles.titlePage}>Qui va participer ?</Text>
                      
                 <View style={styles.buttonContainer}>
-                    <LargeButton title={seulementMoi} onPress={handleOnlyME}/>
+                    <LargeButton title={partenaire} onPress={handleOnlyME}/>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <LargeButton title={avecMaFamille} onPress={handleWithFamily}/>
+                    <LargeButton title={enfant1} onPress={handleWithFamily}/>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <LargeButton title={avecMesAmis} onPress={handleWithFriends}/>
+                    <LargeButton title={enfant2} onPress={handleWithFriends}/>
                 </View>
                 <View style={styles.buttonContainer}>
                     <LargeButton title={uniquementCertainesPersonnes} onPress={handleOtherPerson}/>

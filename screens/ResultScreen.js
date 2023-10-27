@@ -39,15 +39,21 @@ export default function ResultScreen ({navigation}) {
 
     useEffect ( () => {
         //TODO Ajouter le tableau récupérer d'ID
-            fetch(`http://192.168.1.12:3000/hobbies/each/${hobbies}`,)
-            .then(response => response.json())
-            .then (data => {
-                    if(data.result) {
-                        console.log('hobbies',data.hobby);
-                        setActivityData(data.hobby);
-                    }
-        })
-    }, [])
+            if(hobbies.length !== 0) {
+                console.log('test');
+                fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbies}`,)
+                .then(response => response.json())
+                .then (data => {
+                        if(data.result) {
+                            console.log('hobbies',data.hobby);
+                            setActivityData(data.hobby);
+                        }
+                })
+            }
+            else {
+                setActivityData([]);
+            }
+    }, [hobbies])
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -73,33 +79,27 @@ export default function ResultScreen ({navigation}) {
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Activities' />
+                <HeaderReturn iconContext="profil" pages='Activities' isNeeded={true} />
+                
+                <Text style={styles.title}>Vos résultats</Text>
+                <MapView 
+                    initialRegion={{
+                        latitude: city.latitude,
+                        longitude: city.longitude,
+                        latitudeDelta: 0.05,
+                        longitudeDelta: 0.05,
+                    }}
+                    style={styles.map}
+                >
+                    {markers}
+                </MapView>
 
-                <View style={styles.bodyContainer}>
-                    <View style={styles.titleContainer}>
-                    <TouchableOpacity>
-                        <Text style={styles.title}>Vos résultats</Text>
-                        </TouchableOpacity>
+                <ScrollView>
+                    <View style={styles.activitiesContainer}>
+                        {activities}
                     </View>
-                    <View style={styles.mapContainer} >
-                    <MapView 
-                        initialRegion={{
-                            latitude: city.latitude,
-                            longitude: city.longitude,
-                            latitudeDelta: 0.05,
-                            longitudeDelta: 0.05,
-                        }}
-                        style={styles.map}
-                        >
-                            {markers}
-                        </MapView>
-                    </View>
-                    <ScrollView>
-                        <View style={styles.activitiesContainer}>
-                            {activities}
-                        </View>
-                    </ScrollView>
-                </View>
+                </ScrollView>
+
                 
 
                 
@@ -136,25 +136,23 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 22,
         fontFamily: 'Indie-Flower',
-        color: '#004644'
+        color: '#004644',
+        margin: 10,
     },
     mapContainer: {
         height: '40%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
     },
     map: {
-        height: '100%',
-        width: '100%',
+        height: '40%',
+        width: '99%',
     },
     activitiesContainer: {
-        height: '70%',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+        flex: 1,
         padding: 10,
-        alignContent: 'space-between',
+        justifyContent: 'space-between',
     },
     
   });

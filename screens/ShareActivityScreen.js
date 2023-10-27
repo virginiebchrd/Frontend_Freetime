@@ -6,17 +6,16 @@ import SmallButton from '../components/buttons/SmallButton';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeHobbies } from '../reducers/hobbiesReducer';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const token = 'EnV8RoBmpHTaLSBCV7qvgHHD58SeazTH';
-
-export default function ShowActivityScreen ({navigation, route}) {
-    const [isExisted, setIsExisted] = useState(false);
-    const dispatch = useDispatch();
+export default function ShareActivityScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
-    console.log('dataAct', dataActivity);
+    const dispatch = useDispatch();
+    console.log('share',dataActivity);
 
+    const hobbies = useSelector((state) => state.hobbies.value.hobbies);
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -24,43 +23,28 @@ export default function ShowActivityScreen ({navigation, route}) {
     if (!fontsLoaded) {
     return null;
     }
-
-    const handleValidate = () => {
-        fetch(`https://backend-freetime.vercel.app/users/hobbies/${token}`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({hobbies : dataActivity.id})
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if(data.result) {
-                setIsExisted(false);
-                navigation.navigate('ShareActivity',{activity: dataActivity});
-            }
-            else {
-                console.log(data.error);
-                setIsExisted(true);
-            }
-        })
-        
-    }
-
-    if(isExisted) {
+    
+    const handleReturn  = () => {
         dispatch(removeHobbies(dataActivity.id));
+        console.log("after dispatch",hobbies);
+        navigation.navigate('Result');
     }
 
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Result' isNeeded={true}/>
+                <HeaderReturn iconContext="profil" pages='Result' isNeeded={false} />
 
                 <View style={styles.bodyContainer}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Activité sélectionnée</Text>
-                    </View>
+
+                        <TouchableOpacity style={styles.titleContainer} onPress={() => handleReturn()}>
+                            <FontAwesome name= 'arrow-left' size={25} color='#cae1db' />
+                            <Text style={styles.returnText}>Retour vers Résultats</Text>
+                        </TouchableOpacity>
+
+                        <Text style={styles.title}>Partager votre activité</Text>
+
                     <View style={styles.mapContainer}>
-                        {/*TODO mettre coordonnée du useSelector */}
                         <MapView 
                         initialRegion={{
                             latitude: dataActivity.latitude,
@@ -78,8 +62,7 @@ export default function ShowActivityScreen ({navigation, route}) {
                     </View>
                     
                     <View style={styles.validateContainer}>
-                        {isExisted && <Text style={styles.textError}>Activité déjà ajoutée</Text>}
-                        <SmallButton title='Valider' onPress={handleValidate} />
+
                     </View>
                 </View>
             </LinearGradient>
@@ -107,22 +90,34 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     titleContainer: {
-        height: '10%',
-        width: '100%',
+        height: '5%',
+        width: '60%',
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
+        borderWidth: 1,
+        backgroundColor: "#004644",
+        borderRadius: 20,
+        borderColor: '#004644',
+    },
+    returnText: {
+        fontSize: 18,
+        fontFamily: 'Indie-Flower',
+        color: '#cae1db',
     },
     title: {
         fontSize: 22,
         fontFamily: 'Indie-Flower',
         color: '#004644',
+        marginTop : 15,
+        marginBottom: 15,
     },
     mapContainer: {
         height: '40%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
+
     },
     map: {
         height: '100%',
@@ -130,19 +125,14 @@ const styles = StyleSheet.create({
     },
     activityContainer: {
         height: '30%',
-        width: '100%',
+        width: '90%',
+        marginTop: 15,
     },
     validateContainer: {
         height: '20%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    textError: {
-        marginTop: 10,
-        fontSize: 18,
-        fontFamily: 'Indie-Flower',
-        color: '#004644',
     },
 
   });

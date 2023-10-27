@@ -1,13 +1,16 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity, Keyboard, Text, TextInput, View, StyleSheet, Image, TouchableWithoutFeedback} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
-import LargeButton from '../components/buttons/LargeButton';
 import SmallButton from '../components/buttons/SmallButton';
-import MapView from 'react-native-maps';
-import { Marker } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
+import InputWithLabel from '../components/inputs/InputWithLabel';
+import { addCity } from '../reducers/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
+
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 
 export default function MapScreen ({navigation}) {
@@ -15,7 +18,11 @@ export default function MapScreen ({navigation}) {
     const [myPosition, setMyPosition] = useState({});
     const [isAuthorized, setIsAuthorized] = useState(false)//useState(3);
     const [pressedCoordinates, setPressedCoordinates] = useState(null);
+    const [city, setCity] = useState('');
+    const [citySearch, setCitySearch] = useState(false);
 
+    const dispatch = useDispatch();
+    const coords = useSelector( (state) => state.user.value.city)
     
     useEffect( () => {
         
@@ -27,8 +34,6 @@ export default function MapScreen ({navigation}) {
                 setIsAuthorized(true);
                 setMyPosition(location.coords);
                 console.log(myPosition);
-            } else if( status === 'denied') {
-                setIsAuthorized(2);
             }
         }) ()
     }, [])
@@ -48,6 +53,24 @@ export default function MapScreen ({navigation}) {
         console.log(pressedCoordinates);
     }
 
+    const handleSearch = () => {
+        console.log('city', city);
+        fetch(`https://api-adresse.data.gouv.fr/search/?q=${city}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            setCitySearch(true);
+            const firstCity = data.features[0];
+            const newPlace = {
+            name: firstCity.properties.city,
+            latitude: firstCity.geometry.coordinates[1],
+            longitude: firstCity.geometry.coordinates[0],
+            };
+            
+            dispatch(addCity(newPlace));
+        })
+    }
+
     const handleValidate = () => {
         //dispatch coordonnées + ville si recherche par input
         navigation.navigate('Activities');
@@ -56,19 +79,24 @@ export default function MapScreen ({navigation}) {
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Who' />
+                <HeaderReturn iconContext="profil" pages='Who' isNeeded={true} />
                     <View style={styles.bodyContainer}>
-                            {!isAuthorized && <View style={styles.inputContainer}><Text>INPUT</Text></View>}
-                            <MapView initialRegion={{
-                                latitude: 50,
-                                longitude: 1.332240497502353,
-                                latitudeDelta: 12,
-                                longitudeDelta: 12,
-                                }}
-                                style={ isAuthorized? styles.mapContainer : styles.mapContainerNoGeo}
+                            <View style={styles.inputContainer}>
+                                <InputWithLabel 
+                                    placeholder='Entrer une ville' 
+                                    icon={true}
+                                    onChangeText={(value) => setCity(value)}
+                                    onPress={() => handleSearch()}
+                                />
+
+                            </View>
+
+                            <MapView 
+                                style= {styles.mapContainer}
+                                showsUserLocation
                                 onLongPress={(e) => handleMap(e.nativeEvent)}
-                        >
-                            {isAuthorized && <Marker coordinate={{latitude: myPosition.latitude, longitude: myPosition.longitude}} />}
+                            >
+                            {citySearch && <Marker coordinate={{latitude: coords.latitude, longitude: coords.longitude}} title={city} pinColor="#fecb2d" />}
                         </MapView>
                         <View style={styles.validateContainer}>
                             <SmallButton title="Valider" onPress={handleValidate} />
@@ -93,7 +121,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     mapContainer: {
-        height: '80%',
+        height: '77%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -131,7 +159,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     mapContainerNoGeo: {
-        height: '60%',
+        height: '77%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',

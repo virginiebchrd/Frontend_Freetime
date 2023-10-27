@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image, Pressable} from 'react-native';
+import {Dimensions, TouchableOpacity, Text, View, StyleSheet, Image, Pressable} from 'react-native';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -33,16 +33,19 @@ function ChooseActivity (props) {
     )
 };
 
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '40%',
-        width: '90%',
+        width: (windowWidth*0.9)  - 10,
+        maxHeight: 100,
         flexDirection: 'row',
         backgroundColor: '#004644',
         fontFamily: 'Indie-Flower',
         color: '#cae1db',
         marginLeft: 10,
+        marginTop:5,
+        marginBotton: 5,
     },
     activityContainer: {
         height: '100%',
