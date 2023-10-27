@@ -8,7 +8,7 @@ import InputWithLabel from "../components/inputs/InputWithLabel";
 //pour créer un état et stocker la valeur de l'état
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addEmail } from "../reducers/userReducer";
+import { addEmail, login } from "../reducers/userReducer";
 
 //pris sur emailregex.com
 const EMAIL_REGEX =
@@ -64,9 +64,26 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result) {
-            dispatch(addEmail(mail));
-            console.log("ici");
-            navigation.navigate("Profil");
+            fetch(
+              `https://backend-freetime.vercel.app/users/identity/${data.token}`
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.result) {
+                  console.log(data.identity);
+                  dispatch(
+                    login({
+                      token: data.identity.token,
+                      firstname: data.identity.firstname,
+                      lastname: data.identity.lastname,
+                    })
+                  );
+                  console.log("ici");
+                  navigation.navigate("Profil");
+                } else {
+                  console.log("error identity", data.error);
+                }
+              });
           } else {
             console.log(
               "Échec de la connexion. Message d'erreur du serveur : ",
