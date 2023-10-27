@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonText: {
-    fontSize: 22,
+    fontSize: 19,
     color: "#004644",
     fontWeight: "600",
     fontFamily: "Indie-Flower",
