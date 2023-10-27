@@ -197,7 +197,7 @@ export default function CreateProfilScreen({ navigation }) {
         
   
             <View style={styles.dateContenaire}>
-              <Button 
+              <Button   style={styles.customButton}
                 title="choisir sa date de naissance"
                 onPress={showDatePicker}
               />
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 10,
   },
-  datebtn:{
+  customButton:{
     padding: 10,
     borderWidth: 2,
     borderColor: "#76a696",
