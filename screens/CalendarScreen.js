@@ -14,7 +14,6 @@ export default function CalendarScreen({ navigation }) {
     return null;
   }
 
-
     const handleValidate = () => {
         //dispatch activité
         navigation.navigate('Who');
@@ -26,7 +25,7 @@ export default function CalendarScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn isNeeded={true} iconContext="profil" pages="Home" />
+        <HeaderReturn iconContext="profil" pages="Profil" />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>

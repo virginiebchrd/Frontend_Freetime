@@ -7,6 +7,8 @@ import CheckBoxContainer from '../components/CheckBoxContainer';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+
+
 const city = {latitude: 45.83, longitude: 1.26} //test avec Limoges avec des données brutes imaginaires
 
 const ActivityDataTest = [
@@ -65,7 +67,7 @@ export default function ResultScreen ({navigation}) {
     
     const activities = ActivityData.map((data,i) => {
         //const activities = ActivityDataTest.map((data,i) => {
-        return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, id:data._id, activityName: data.name, email:data.email, adress: data.address.street, zipCode: data.address.zipCode, phoneNumber: data.phoneNumber, city: data.address.city, activity: data.category, latitude: data.address.latitude, longitude: data.address.longitude}} />
+        return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, id:data._id, activityName: data.name, email:data.email, adress: data.address.street, zipCode: data.address.zipCode, phoneNumber: data.phoneNumber, city: data.address.city, activity: data.category, latitude: data.address.latitude, longitude: data.address.longitude, site: data.site}} />
         //return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, activityName: data.name, email:data.activity.email, adress: data.activity.street, zipCode: data.activity.zipCode, phoneNumber: data.activity.phoneNumber, city: data.activity.city, activity: data.category, latitude: data.latitude, longitude: data.longitude, pinColor: data.colorPin}} />
     })
 

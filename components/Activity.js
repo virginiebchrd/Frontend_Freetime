@@ -2,12 +2,15 @@ import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import PinMarker from './PinMarker';
 import { useFonts } from 'expo-font';
 
+import * as Linking from 'expo-linking';
 
 function Activity (props) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
     console.log('propsActivity', props);
+
+    //const siteWeb = props.activity.site
 
     return (
         <View style={styles.headerContainer}>
@@ -20,7 +23,14 @@ function Activity (props) {
                 <Text style={styles.text}>Adresse : {props.activity.adress}</Text>
                 <Text style={styles.text}>{props.activity.zipCode} {props.activity.city}</Text>
                 <Text style={styles.text}>mail: {props.activity.email}</Text>
-                <Text style={styles.text}>Tél. : {props.activity.phoneNumber}</Text>
+                <Text style={styles.text}>Tél. : </Text>
+                <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(`tel:${props.activity.phoneNumber}`)}>
+                <Text style={styles.text}>{props.activity.phoneNumber}</Text>
+                </TouchableOpacity>
+                <Text style={styles.text}>Site Web: </Text>
+                <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(props.activity.site)}>
+                <Text style={styles.text}>{props.activity.site}</Text>
+                </TouchableOpacity>
             </View>
             </View>
         </View>
