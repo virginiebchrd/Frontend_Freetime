@@ -25,7 +25,7 @@ export default function HomeScreen ({navigation}) {
                 <View style={styles.buttonContainer}>
                     <View style={styles.gradientContainer}>
                         <LinearGradient colors={['transparent', '#004644']}  style={styles.background}>
-                            <TouchableOpacity style={styles.buttonBackground} onPress={() => navigation.navigate('CreateProfil')}>
+                            <TouchableOpacity style={styles.buttonBackground} onPress={() => navigation.navigate('FirstConnection')}>
                                 <Text>First</Text>
                             </TouchableOpacity>
                         </LinearGradient>
@@ -43,7 +43,7 @@ export default function HomeScreen ({navigation}) {
         </View>
     )
 }
-//FirstConnection
+//FirstConnection//CreateProfil
 const styles = StyleSheet.create({
     container: {
       flex: 1,

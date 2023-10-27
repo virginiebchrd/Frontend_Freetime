@@ -27,19 +27,27 @@ import DatePickerModal from "react-native-modal-datetime-picker";
 export default function CreateProfilScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  // récupérer le token de l'utilisateur
- // const userToken = useSelector((state) => state.user.token);
- const token = "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO";
+// récupérer le token de l'utilisateur
+ const userToken = useSelector((state) => state.user.value.token);
+ 
+ const userIdentity = { 
+  token: state.user.value.token,
+  firstname: state.user.value.firstname,
+  lastname: state.user.value.lastname,
+};
+
+ 
+//const token = "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO";
 
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [birthday, setBirthday] = useState(""); //format jj/mm/aaaa
   const [civility, setCivility] = useState(""); // false pour "Madame", true pour "Monsieur"
+ 
+//date format
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  //date format
-   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  //control errors
+//control errors
   const [birthdayError, setBirthdayError] = useState("");
   const [firstnameError, setFirstnameError] = useState("");
   const [lastnameError, setLastnameError] = useState("");
@@ -53,10 +61,7 @@ export default function CreateProfilScreen({ navigation }) {
     return null;
   }
 
-  const lastnamePlaceholder = "Nom *";
-  const firstnamePlaceholder = "Prénom *";
-  //const birthdayPlaceholder = 'date de naissance ';
-  //const birthdayFormatPlaceholder = 'jj/mm/aaaa';
+ 
 
   //Fonction pour afficher ou cacher le sélecteur de date
 
@@ -80,12 +85,17 @@ export default function CreateProfilScreen({ navigation }) {
     setBirthday(formattedDate);
   };
 
+ 
+  
+
   const handleValidate = () => {
-    if (token !== "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO") {
+    //if (token !== "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO") {  //
       // Si le token n'est pas valide, sortir de la fonction
-      console.log("Token invalide");
-      return;
-    }
+      if (token !== userToken) {
+        console.log("Token invalide");
+        return;
+      }
+      
 
     if (lastname && firstname && civility) {
       console.log("Civilité :", civility);
@@ -104,27 +114,20 @@ export default function CreateProfilScreen({ navigation }) {
       setLastnameError("");
       setCivilityError("");
     }
-    
-    const userData = {
-      civility: civility, 
-      lastname: lastname, 
-      firstname: firstname, 
-      birthday: birthday, 
-    };
-   
-      fetch(`https://backend-freetime.vercel.app/users/identity/QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO`, {
-    // fetch(`https://backend-freetime.vercel.app/users/identity/${userToken}`, {
+          
+    // fetch(`https://backend-freetime.vercel.app/users/identity/QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO`, {
+    fetch(`https://backend-freetime.vercel.app/users/identity/${userIdentity}`, {
         method: "POST",
         headers: { "Content-Type": "application/json",
         Authorization: `Bearer ${token}`}, // Ajoutez le token dans l'en-tête Authorization
         
-        body: JSON.stringify({token:token,
-           civility: civility, 
+        body: JSON.stringify({userToken:token,
+          civility: civility, 
           lastname: lastname, 
           firstname: firstname, 
           birthday: birthday,  }),
       })
-        .then((response) => response.json())
+      .then((response) => response.json())
     
       .then((data) => {
       
@@ -139,7 +142,6 @@ export default function CreateProfilScreen({ navigation }) {
           //  console.log("Conditions non remplies.");
         //  }
         });
-
   };
 
   return (
@@ -192,6 +194,28 @@ export default function CreateProfilScreen({ navigation }) {
               onChangeText={(value) => setFirstname(value)}
               value={firstname}
             />
+        
+  
+            <View style={styles.dateContenaire}>
+              <Button 
+                title="choisir sa date de naissance"
+                onPress={showDatePicker}
+              />
+              <DatePickerModal
+              
+                isVisible={isDatePickerVisible}
+                mode="date"
+                locale="en_FR"
+                display="spinner"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+                customStyles={{
+                  pickerIOS: {
+                    backgroundColor: "#fff", // Fond blanc pour le sélecteur de date
+                  }
+                }}
+              />
+            </View>
 
             <TextInput
               style={[styles.input, { fontFamily: "Indie-Flower" }]}
@@ -200,20 +224,10 @@ export default function CreateProfilScreen({ navigation }) {
               value={birthday}
               editable={false} // Pour empêcher la modification directe de l'input
             />
-            <View>
-              <Button
-                title="choisir sa date de naissance"
-                onPress={showDatePicker}
-              />
-              <DatePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                locale="en_FR"
-                display="spinner"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-              />
-            </View>
+
+            <View style={styles.validateContainer}>
+             <SmallButton title="Valider" onPress={handleValidate} />
+           </View>
           </View>
 
           <View style={styles.validateContainer}>
@@ -316,10 +330,7 @@ const styles = StyleSheet.create({
     color: "#004644",
   },
   input: {
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: "#004644",
-    margin: 5,
+       
     padding: 10,
     borderWidth: 2,
     borderColor: "#76a696",
@@ -328,5 +339,11 @@ const styles = StyleSheet.create({
     width: 250,
     marginBottom: 5,
     marginTop: 10,
+  },
+  datebtn:{
+    padding: 10,
+    borderWidth: 2,
+    borderColor: "#76a696",
+    backgroundColor: "#fff",
   },
 });

@@ -9,7 +9,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { useDispatch, useSelector } from "react-redux";
-import { addEmail, addPassword, login } from "../reducers/userReducer";
+import { addEmail, addFirstname, addPassword, login } from "../reducers/userReducer";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import BasicInput from "../components/inputs/BasicInput";
@@ -21,7 +21,8 @@ const EMAIL_REGEX =
 export default function FirstConnectionScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-
+  const login = useSelector((state) => state.user.login);
+  
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -40,14 +41,11 @@ export default function FirstConnectionScreen({ navigation }) {
   const handleRegister = () => {
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
-      setEmailError(false);
       dispatch(addEmail(mail));
       dispatch(addPassword(password));
-      setPasswordError(false);
-    } else {
+      } else {
       console.log("Champs vides ou conditions non remplies.");
       setEmailError(true);
-      return; // Sortir de la fonction si l'e-mail n'est pas valide//
     }
 
       fetch(`https://backend-freetime.vercel.app/users/signup`, {
@@ -61,18 +59,14 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result === true) {
+            dispatch(login({token: data.token, lastname: data.lastname, firstname: data.firstname }));
             navigation.navigate("CreateProfil");
-
           } else {
             console.error(data.error);
-            if (data.error === "user  existe déjà") {
-               setEmailError(true);
-            } else {
-              console.log("Conditions non remplies.");
-            }
+            console.log("Conditions non remplies.");
           }
         });
-  
+           
   };
 
   const Valider = "Valider";
@@ -102,13 +96,9 @@ export default function FirstConnectionScreen({ navigation }) {
           keyboardType="email-address"
         />
 
-          {emailError && (
-          <Text style={styles.TextError}>
-           Ce mail existe déjà !
-          </Text>
-        )}
+      
 
-        <BasicInput
+         <BasicInput
           placeholder={PasswordLabel}
           label={PasswordLabel}
           onChangeText={(value) => setPassword(value)}
