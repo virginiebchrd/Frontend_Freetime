@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.buttonBackgroundUp}>
             <LoginButtons
               title="S'inscrire"
-              onPress={() => navigation.navigate("CreateProfil")}
+              onPress={() => navigation.navigate("FirstConnection")}
             ></LoginButtons>
           </View>
 

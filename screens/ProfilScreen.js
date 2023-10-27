@@ -19,6 +19,8 @@ export default function ProfilScreen({ navigation }) {
   const userFirstname = useSelector((state) => state.user.value.firstname);
   const token = useSelector((state) => state.user.value.token);
   const userLastname = useSelector((state) => state.user.value.lastname);
+  console.log('tokenProfil', token);
+  const [hobbiesSaved, setHobbiesSaved] = useState(false);
 
   const [activitiesData, setActivitiesData] = useState([]);
 
@@ -31,8 +33,16 @@ export default function ProfilScreen({ navigation }) {
         const data = await response.json();
         console.log("data", data);
         if (data.result) {
+          
           console.log("hobbies", data.hobbies);
+          setHobbiesSaved(true);
           setActivitiesData(data.hobbies);
+        }
+        else {
+          if(data.error === 'no hobbies') {
+            console.log('nohobbies');
+            setHobbiesSaved(false);
+          }
         }
       } catch (error) {
         console.error("Erreur lors de la récupération des hobbies :", error);
@@ -40,23 +50,34 @@ export default function ProfilScreen({ navigation }) {
     };
 
     fetchHobbies();
-  }, []);
+  }, [hobbies]);
 
   const handleValidate = () => {
     //dispatch activité
     navigation.navigate("Calendar");
   };
-  // const activities = activitiesData.map((data, i) => {
-  //   const isChecked = hobbies.some((e) => e === data._id);
-  //   return (
-  //     <ChooseActivity
-  //       key={i}
-  //       activityName={data.name}
-  //       id={data._id}
-  //       isChecked={isChecked}
-  //     />
-  //   );
-  // });
+  
+  let activities
+  if(hobbiesSaved) {
+    activities = activitiesData.map((data, i) => {
+
+         return (
+           <ChooseActivity
+             key={i}
+             activityName={data.name}
+             id={data._id}
+             isChecked={false}
+           />
+         );
+       });
+  }
+  else {
+    activities = 
+    <View style={styles.noHobbiesContainer}>
+      <Text style={styles.oldActivities}>Pas d'activités sauvegardées</Text>
+    </View>
+  }
+
 
   if (!fontsLoaded) {
     return null;
@@ -81,7 +102,7 @@ export default function ProfilScreen({ navigation }) {
           <Text style={styles.oldActivities}>Anciennes activités :</Text>
         </View>
         <ScrollView>
-          <View style={styles.scrollView}>{/*activities*/}</View>
+          <View style={styles.scrollView}>{activities}</View>
         </ScrollView>
 
         <View style={styles.validateContainer}>
@@ -127,7 +148,7 @@ const styles = StyleSheet.create({
   oldActivities: {
     marginBottom: 10,
     fontFamily: "Indie-Flower",
-
+    fontSize: 15,
     color: "#004644",
   },
   validateContainer: {
@@ -135,5 +156,5 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-  },
+  },  
 });

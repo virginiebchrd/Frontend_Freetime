@@ -21,7 +21,6 @@ const EMAIL_REGEX =
 export default function FirstConnectionScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  const login = useSelector((state) => state.user.login);
   
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,14 +58,14 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result === true) {
-            dispatch(login({token: data.token, lastname: data.lastname, firstname: data.firstname }));
+            console.log('token', data.token);
+            dispatch(login({token: data.token, lastname: "", firstname: ""}));
             navigation.navigate("CreateProfil");
           } else {
             console.error(data.error);
             console.log("Conditions non remplies.");
           }
         });
-           
   };
 
   const Valider = "Valider";

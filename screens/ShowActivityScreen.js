@@ -6,12 +6,14 @@ import SmallButton from '../components/buttons/SmallButton';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeHobbies } from '../reducers/hobbiesReducer';
 
-const token = 'EnV8RoBmpHTaLSBCV7qvgHHD58SeazTH';
+//const token = 'EnV8RoBmpHTaLSBCV7qvgHHD58SeazTH';
 
 export default function ShowActivityScreen ({navigation, route}) {
+    const token = useSelector((state) => state.user.value.token)
+    console.log(token);
     const [isExisted, setIsExisted] = useState(false);
     const dispatch = useDispatch();
     const dataActivity = route.params.activity;
