@@ -12,8 +12,13 @@ function MyCheckboxResult(props) {
     const handlePress = () => {
         setChecked(!checked)
         if(!checked) {
-          console.log('add');
-          navigation.navigate('ShowActivity',{activity: props.activity})
+          if(props.resultPages) {
+            console.log('add');
+            navigation.navigate('ShowActivity',{activity: props.activity})
+          }
+          else {
+            navigation.navigate('Marks',{activity: props.activity})
+          }
           setChecked(false);
       }
     }

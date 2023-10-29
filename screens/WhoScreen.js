@@ -52,9 +52,9 @@ export default function WhoScreen ({navigation}) {
                 <View style={styles.buttonContainer}>
                     <LargeButton title={avecMesAmis} onPress={handleWithFriends}/>
                 </View>
-                <View style={styles.buttonContainer}>
+                {/*<View style={styles.buttonContainer}>
                     <LargeButton title={uniquementCertainesPersonnes} onPress={handleOtherPerson}/>
-                </View>
+                </View>*/}
                 </View>
                                                
             </LinearGradient>

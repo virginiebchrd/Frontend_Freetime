@@ -34,6 +34,7 @@ function CheckBoxContainer (props) {
                 <MyCheckboxResult 
                     isChecked={isToggled}
                     activity={props.activity}
+                    resultPages={props.activity.resultPages}
                     />
             </View>
         </View>

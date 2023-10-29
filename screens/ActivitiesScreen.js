@@ -8,10 +8,16 @@ import { useState } from 'react';
 import ChooseActivity from '../components/ChooseActivity';
 import { useDispatch, useSelector } from 'react-redux';
 
+
+const cityTest = 'Limoges';
+const day = 'mardi'
 export default function ActivitiesScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
+
+    const city = useSelector((state) => state.user.value.city.name)
+    console.log('city', city);
 
     if (!fontsLoaded) {
     return null;
@@ -20,7 +26,9 @@ export default function ActivitiesScreen ({navigation}) {
     const handleSports = () => {
         //setIsShownSports(true)
         console.log('sports');
-        fetch(`https://backend-freetime.vercel.app/hobbies/sports`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/sports/${city}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/sports/${city}`)
+        fetch(`http://192.168.1.12:3000/hobbies/test/query?category=sports&city=${city}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){

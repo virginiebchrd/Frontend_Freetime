@@ -21,6 +21,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/userReducer";
 import hobbies from './reducers/hobbiesReducer';
 import ShareActivityScreen from "./screens/ShareActivityScreen";
+import MarksScreen from "./screens/MarksScreen";
 
 const store = configureStore({
   reducer: { user: userReducer, hobbies },
@@ -38,6 +39,7 @@ export default function App() {
           <Stack.Screen name="Connection" component={ConnectionScreen} />
           <Stack.Screen name="CreateProfil" component={CreateProfilScreen} />
           <Stack.Screen name="Profil" component={ProfilScreen} />
+          <Stack.Screen name="Marks" component={MarksScreen} />
           <Stack.Screen name="Calendar" component={CalendarScreen} />
           <Stack.Screen name="Who" component={WhoScreen} />
           <Stack.Screen name="WhoBis" component={WhoScreenBis} />

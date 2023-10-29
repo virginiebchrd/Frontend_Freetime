@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import CalendarContainer from "../components/CalendarContainer";
+import CalendarPicker from "react-native-calendar-picker";
 
 export default function CalendarScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -35,7 +36,14 @@ export default function CalendarScreen({ navigation }) {
           </View>
 
           <View style={styles.infoContainer}>
-            <CalendarContainer />
+            <CalendarPicker 
+              startFromMonday={true}
+              textStyle={{color: '#004644', fontFamily: 'Indie-Flower'}}
+              previousTitle='<'
+              nextTitle=">"
+              previousTitleStyle={{color: '#004644'}}
+
+            />
           </View>
 
           <View style={styles.validateContainer}>

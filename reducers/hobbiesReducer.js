@@ -4,6 +4,7 @@ const initialState = {
     value: {
         hobbies: [],
         date: "",
+        hobbiesSaved: [],
     }
 }
 
@@ -24,9 +25,13 @@ export const hobbiesSlice = createSlice({
         addDate : (state, action) => {
             console.log('addDate', action.payload);
             state.value.date = action.payload;
+        },
+        storeHobbiesSaved: (state, action) => {
+            console.log(action.payload);
+            state.value.hobbiesSaved.push(action.payload);
         }
     }
 });
 
-export const { addHobbies, removeHobbies, addDate } = hobbiesSlice.actions;
+export const { addHobbies, removeHobbies, addDate, storeHobbiesSaved } = hobbiesSlice.actions;
 export default hobbiesSlice.reducer;

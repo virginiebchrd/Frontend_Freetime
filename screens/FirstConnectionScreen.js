@@ -39,15 +39,10 @@ export default function FirstConnectionScreen({ navigation }) {
   //inspiration morningnews
   //premier test en local avec fetch(`http://192.168.0.12:3000/users/signup`,
   const handleRegister = () => {
-    Keyboard.dismiss();
+    //Keyboard.dismiss();
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
-      dispatch(addEmail(mail));
-      dispatch(addPassword(password));
-      } else {
-      console.log("Champs vides ou conditions non remplies.");
-      setEmailError(true);
-    }
+      /*dispatch(addEmail(mail));*/
 
       fetch(`https://backend-freetime.vercel.app/users/signup`, {
         method: "POST",
@@ -55,8 +50,6 @@ export default function FirstConnectionScreen({ navigation }) {
         body: JSON.stringify({ email: mail, password: password }),
       })
         .then((response) => response.json())
-        //console.log("E-mail:", mail);
-        //console.log("Password:", password);
         .then((data) => {
           console.log(data);
           if (data.result === true) {
@@ -68,6 +61,10 @@ export default function FirstConnectionScreen({ navigation }) {
             console.log("Conditions non remplies.");
           }
         });
+      } else {
+        console.log("Champs vides ou conditions non remplies.");
+        setEmailError(true);
+      }
   };
 
   const Valider = "Valider";
