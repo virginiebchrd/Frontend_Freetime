@@ -16,8 +16,8 @@ import SmallButton from "../components/buttons/SmallButton";
 import BasicInput from "../components/inputs/BasicInput";
 
 const BACKEND_ADDRESS = "http://192.168.0.12:3000"; //'http://BACKEND_IP:3000';
-const EMAIL_REGEX =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
 export default function FirstConnectionScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -42,14 +42,8 @@ export default function FirstConnectionScreen({ navigation }) {
     Keyboard.dismiss();
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
-      dispatch(addEmail(mail));
-      dispatch(addPassword(password));
-      } else {
-      console.log("Champs vides ou conditions non remplies.");
-      setEmailError(true);
-    }
-
-      fetch(`https://backend-freetime.vercel.app/users/signup`, {
+   
+        fetch(`https://backend-freetime.vercel.app/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: mail, password: password }),
@@ -68,6 +62,11 @@ export default function FirstConnectionScreen({ navigation }) {
             console.log("Conditions non remplies.");
           }
         });
+      } else {
+        console.error("Champs vides ou conditions non remplies.");
+      setEmailError(true);
+      };
+
   };
 
   const Valider = "Valider";

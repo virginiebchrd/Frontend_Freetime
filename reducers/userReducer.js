@@ -9,7 +9,6 @@ const initialState = {
     civility:"",
     lastname: "",
     firstname: "",
-    birthday: "",
     city: {},
   },
 
@@ -49,9 +48,7 @@ export const userSlice = createSlice({
     addFirstname: (state, action) => {
       state.value.firstname = action.payload;
     },
-    addBirthday: (state, action) => {
-      state.value.birthday = action.payload;
-    },
+ 
     addCity: (state,action) => {
       console.log('city', action.payload);
       state.value.city = action.payload;
@@ -83,6 +80,5 @@ export const {
   addCivility,
   addLastname,
   addFirstname,
-  addBirthday,
-} = userSlice.actions;
+  } = userSlice.actions;
 export default userSlice.reducer;

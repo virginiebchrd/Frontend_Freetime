@@ -4,8 +4,17 @@ import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import CalendarContainer from "../components/CalendarContainer";
+import DateSelector from "../components/CalendarPicker";
+import { useDispatch } from "react-redux";
+import { addDate } from "../reducers/hobbiesReducer";
+import React, { useState } from "react";
+import moment from "moment";
+import "moment/locale/fr";
 
 export default function CalendarScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const [selectedDate, setSelectedDate] = useState(null);
+
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -14,10 +23,21 @@ export default function CalendarScreen({ navigation }) {
     return null;
   }
 
-    const handleValidate = () => {
-        //dispatch activité
-        navigation.navigate('Who');
-    }
+  const onDateChange = (date) => {
+    const formattedDate = moment(date).locale("fr").format("dddd D MMMM YYYY");
+    const formattedDay = moment(date).locale("fr").format("dddd").split(" ");
+    console.log("La date sélectionnée : ", formattedDate);
+    console.log("Le jour sélectionné : ", formattedDay);
+    setSelectedDate(moment(date));
+  };
+
+  const handleValidate = () => {
+    console.log("La date qui est dans le reducer", selectedDate);
+    // Convertir la date en tant que chaîne au Redux store
+    const dateStr = selectedDate.toISOString();
+    dispatch(addDate(dateStr));
+    navigation.navigate("Who");
+  };
 
   return (
     <View style={styles.container}>
@@ -35,7 +55,16 @@ export default function CalendarScreen({ navigation }) {
           </View>
 
           <View style={styles.infoContainer}>
-            <CalendarContainer />
+            <DateSelector
+              setSelectedDate={setSelectedDate}
+              onDateChange={onDateChange}
+            />
+            {selectedDate && (
+              <Text style={styles.textCalendar}>
+                Date sélectionnée :{" "}
+                {moment(selectedDate).locale("fr").format("dddd D MMMM YYYY")}
+              </Text>
+            )}
           </View>
 
           <View style={styles.validateContainer}>
@@ -83,8 +112,10 @@ const styles = StyleSheet.create({
     height: "60%",
     width: "100%",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "top",
     borderWidth: 1,
+    margin: 0,
+    paddingBottom: 0,
   },
   validateContainer: {
     height: "20%",

@@ -47,7 +47,7 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
-//FirstConnection//CreateProfil
+//FirstConnection
 const styles = StyleSheet.create({
   container: {
     flex: 1,
