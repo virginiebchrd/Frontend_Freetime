@@ -1,4 +1,10 @@
-import { View, StyleSheet, Text, KeyboardAvoidingView, Keyboard } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
@@ -32,7 +38,6 @@ export default function FirstConnectionScreen({ navigation }) {
 
   const Valider = "Valider";
 
-
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -55,7 +60,7 @@ export default function FirstConnectionScreen({ navigation }) {
         password: password,
       };
       fetch(`https://backend-freetime.vercel.app/users/signin/`, {
-      //fetch(`http://192.168.1.12:3000/users/signin/`, {
+        //fetch(`http://192.168.1.12:3000/users/signin/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,18 +72,18 @@ export default function FirstConnectionScreen({ navigation }) {
           console.log(data);
           if (data.result) {
             console.log(data.email);
-            dispatch(addEmail(data.email))
+            dispatch(addEmail(data.email));
             fetch(
               `https://backend-freetime.vercel.app/users/identity/${data.token}`
             )
-            /*fetch(
+              /*fetch(
               `http://192.168.1.12:3000/users/identity/${data.token}`
             )*/
               .then((response) => response.json())
               .then((data) => {
                 if (data.result) {
                   console.log(data.identity);
-                  
+
                   dispatch(
                     login({
                       token: data.identity.token,
@@ -111,55 +116,43 @@ export default function FirstConnectionScreen({ navigation }) {
       setPassword("");
     }
   };
- 
 
   return (
-    
-      <LinearGradient
-        colors={["#D9F2B1", "transparent"]}
-        style={styles.background}
-      >
-        <HeaderReturn pages="Home" isNeeded={true} />
-        <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <LinearGradient
+      colors={["#D9F2B1", "transparent"]}
+      style={styles.background}
     >
-        <View style={styles.InputsContainer}>
-          <Text style={styles.title}>Se connecter avec une adresse mail</Text>
+      <HeaderReturn pages="Home" isNeeded={true} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={styles.InputsContainer}>
+            <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
-         
-          <EmailInput
-            onChangeText={(value) => setMail(value)}
-            value={mail}
-          />
+            <EmailInput onChangeText={(value) => setMail(value)} value={mail} />
 
-          <Text style={styles.label}>Mot de passe</Text>
+            <Text style={styles.label}>Mot de passe</Text>
 
-          <PasswordInput        
-            onChangeText={(value) => setPassword(value)}
-           
-          />
+            <PasswordInput onChangeText={(value) => setPassword(value)} />
 
-          {(emailError || passwordError) && (
-            <Text style={styles.TextError}>Erreur mot de passe ou mail ?</Text>
+            {(emailError || passwordError) && (
+              <Text style={styles.TextError}>
+                Erreur mot de passe ou mail ?
+              </Text>
+            )}
+          </View>
+
+          {isAllowed ? (
+            <View style={styles.buttonContainer}>
+              <SmallButton title={Valider} onPress={onPress} />
+            </View>
+          ) : (
+            <View style={styles.buttonContainer}>
+              <SmallButton title={Valider} onPress={handleConnection} />
+            </View>
           )}
         </View>
-
-        {isAllowed ? (
-          <View style={styles.buttonContainer}>
-            <SmallButton
-              title={Valider}
-              onPress={onPress}
-            />
-          </View>
-        ) : (
-          <View style={styles.buttonContainer}>
-            <SmallButton title={Valider} onPress={handleConnection} />
-          </View>
-        )}
-        </KeyboardAvoidingView>
-      </LinearGradient>
-    
+      </TouchableWithoutFeedback>
+    </LinearGradient>
   );
 }
 
@@ -188,7 +181,7 @@ const styles = StyleSheet.create({
     width: 500,
     alignItems: "center",
     marginBottom: 0,
-    marginTop:5,
+    marginTop: 5,
   },
   title: {
     color: "#004644",
@@ -196,11 +189,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
   },
-  label:{
+  label: {
     color: "#004644",
     fontFamily: "Indie-Flower",
     fontSize: 16,
-    marginTop:5,
+    marginTop: 15,
     marginBottom: 0,
     marginLeft: 10,
     fontWeight: "600",

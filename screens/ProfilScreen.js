@@ -7,7 +7,6 @@ import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
-import ChooseActivity from "../components/ChooseActivity";
 import CheckBoxContainer from "../components/CheckBoxContainer";
 import { storeHobbiesSaved } from "../reducers/hobbiesReducer";
 
@@ -28,6 +27,7 @@ export default function ProfilScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
+
   useEffect(() => {
     const fetchHobbies = async () => {
       try {
@@ -61,36 +61,34 @@ export default function ProfilScreen({ navigation }) {
 
   if (hobbiesSaved) {
     activities = activitiesData.map((data, i) => {
-      dispatch(storeHobbiesSaved(data._id));
-      return (
-        <CheckBoxContainer
-          key={i}
-          activityName={data.name}
-          activity={{
-            key: i,
-            id: data._id,
-            activityName: data.name,
-            email: data.email,
-            adress: data.address.street,
-            zipCode: data.address.zipCode,
-            phoneNumber: data.phoneNumber,
-            city: data.address.city,
-            activity: data.category,
-            latitude: data.address.latitude,
-            longitude: data.address.longitude,
-            site: data.site,
-            resultPages: false,
-            pinColor: "green",
-          }}
-        />
-      );
-    });
-  } else {
-    activities = (
-      <View style={styles.noHobbiesContainer}>
-        <Text style={styles.oldActivities}>Pas d'activités sauvegardées</Text>
-      </View>
-    );
+       dispatch(storeHobbiesSaved(data._id));
+         return (
+          <CheckBoxContainer 
+            key={i} 
+            activityName={data.name} 
+            activity={{key:i, 
+                    id:data._id, 
+                    activityName: data.name, 
+                    email:data.email, 
+                    adress: data.address.street, 
+                    zipCode: data.address.zipCode, 
+                    phoneNumber: data.phoneNumber, 
+                    city: data.address.city, 
+                    activity: data.category, 
+                    latitude: data.address.latitude, 
+                    longitude: data.address.longitude, 
+                    site: data.site, 
+                    resultPages: false, 
+                    pinColor: 'red'
+                    }} />
+         );
+       });
+  }
+  else {
+    activities = 
+    <View style={styles.noHobbiesContainer}>
+      <Text style={styles.oldActivities}>Pas d'activités sauvegardées</Text>
+    </View>
   }
 
   if (!fontsLoaded) {
@@ -111,7 +109,7 @@ export default function ProfilScreen({ navigation }) {
             <Text style={styles.title}>
               {userFirstname && userLastname
                 ? `Welcome, ${userFirstname} ${userLastname}`
-                : `Welcome, your email: ${userEmail}`}
+                : `Welcome, ${userEmail}`}
             </Text>
           </View>
 
