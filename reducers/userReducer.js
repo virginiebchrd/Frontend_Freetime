@@ -21,7 +21,7 @@ export const userSlice = createSlice({
   reducers: {
     //email
 
-  addEmail: (state, action) => {
+   addEmail: (state, action) => {
       state.value.email = action.payload; //state.value.email.push(action.payload);
     },
     removeEmail: (state, action) => {

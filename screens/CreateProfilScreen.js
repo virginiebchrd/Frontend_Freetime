@@ -182,6 +182,7 @@ export default function CreateProfilScreen({ navigation }) {
                 </View>
               </View>
             </View>
+            
             <TextInput
               style={[styles.input, { fontFamily: "Indie-Flower" }]}
               placeholder="Nom *"
@@ -195,35 +196,6 @@ export default function CreateProfilScreen({ navigation }) {
               value={firstname}
             />
         
-  
-            <View style={styles.dateContenaire}>
-              <Button 
-                title="choisir sa date de naissance"
-                onPress={showDatePicker}
-              />
-              <DatePickerModal
-              
-                isVisible={isDatePickerVisible}
-                mode="date"
-                locale="en_FR"
-                display="spinner"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-                customStyles={{
-                  pickerIOS: {
-                    backgroundColor: "#fff", // Fond blanc pour le sélecteur de date
-                  }
-                }}
-              />
-            </View>
-
-            <TextInput
-              style={[styles.input, { fontFamily: "Indie-Flower" }]}
-              placeholder="date de naissance"
-              onChangeText={setBirthday}
-              value={birthday}
-              editable={false} // Pour empêcher la modification directe de l'input
-            />
           </View>
 
           <View style={styles.validateContainer}>

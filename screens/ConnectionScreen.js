@@ -129,19 +129,20 @@ export default function FirstConnectionScreen({ navigation }) {
         <View style={styles.InputsContainer}>
           <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
+         
           <InputWithLabel
             placeholder={EmailPlaceholder}
-            label={EmailLabel}
+            
             onChangeText={(value) => setMail(value)}
             value={mail}
             icon={false}
             autoComplete="email"
             keyboardType="email-address"
           />
-
+          <Text style={styles.label}>Mot de passe</Text>
           <InputWithLabel
             placeholder={Password}
-            label={PasswordLabel}
+           
             icon={false}
             onChangeText={(value) => setPassword(value)}
             secureTextEntry
@@ -195,6 +196,7 @@ const styles = StyleSheet.create({
     width: 500,
     alignItems: "center",
     marginBottom: 0,
+    marginTop:5,
   },
   title: {
     color: "#004644",
@@ -202,7 +204,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
   },
-
+  label:{
+    color: "#004644",
+    fontFamily: "Indie-Flower",
+    fontSize: 16,
+    marginTop:5,
+    marginBottom: 0,
+    marginLeft: 10,
+    fontWeight: "600",
+  },
   TextError: {
     color: "#da122a",
     fontFamily: "Indie-Flower",

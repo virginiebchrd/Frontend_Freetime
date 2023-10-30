@@ -26,6 +26,7 @@ export default function FirstConnectionScreen({ navigation }) {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [passwordConfirmation, setPasswordConfirmation] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const Valider = "Valider";
   const EmailPlaceholder = "Entrer votre adresse mail";
@@ -44,7 +45,12 @@ export default function FirstConnectionScreen({ navigation }) {
     //Keyboard.dismiss();
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
-   
+      
+      if (password !== passwordConfirmation) {
+        setPasswordError(true);
+      }else {
+        setPasswordError(false);
+      }
         fetch(`https://backend-freetime.vercel.app/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -86,7 +92,6 @@ export default function FirstConnectionScreen({ navigation }) {
 
         <BasicInput
           placeholder={EmailPlaceholder}
-          label="Mail"
           onChangeText={(value) => setMail(value)}
           value={mail}
           icon={false}
@@ -98,7 +103,6 @@ export default function FirstConnectionScreen({ navigation }) {
 
          <BasicInput
           placeholder={PasswordLabel}
-          label={PasswordLabel}
           onChangeText={(value) => setPassword(value)}
           value={password}
           secureTextEntry
@@ -108,8 +112,7 @@ export default function FirstConnectionScreen({ navigation }) {
 
         <BasicInput
           placeholder={PasswordLabel}
-          label={PasswordLabel}
-          onChangeText={(value) => setPassword(value)}
+          onChangeText={(value) => setPasswordConfirmation(value)}
           value={password}
           secureTextEntry
         />

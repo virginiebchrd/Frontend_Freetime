@@ -48,10 +48,7 @@ function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label,
         )}
 
       </View>
-      <Text style={[styles.label, { fontFamily: "Indie-Flower" }]}
->
-        {label}
-      </Text>
+      
     </KeyboardAvoidingView>
   );
 }
@@ -70,18 +67,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     backgroundColor: "#fff",
   },
-
-  label: {
-    position: "absolute",
-    left: 10, // Ajustez la position à gauche selon vos besoins
-    top: 10, // Ajustez la position vers le haut selon vos besoins
-    color: "#004644",
-    fontSize: 12,
-    backgroundColor: "#bbd1b0",
-    borderRadius: 5,
-    padding: 3,
-    },
-
+  
   placeholder: {
     color: "#004644",
     fontSize: 12,
@@ -106,8 +92,8 @@ const styles = StyleSheet.create({
     width: 250, // Ajustez la largeur de l'input
     padding:5,
   },
-  iconContainer:{
 
+  iconContainer:{
   },
 });
 
