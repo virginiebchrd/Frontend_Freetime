@@ -9,7 +9,9 @@ import { useSelector } from 'react-redux';
 
 
 
-const city = {latitude: 45.83, longitude: 1.26} //test avec Limoges avec des données brutes imaginaires
+//const city = { latitude: 45.7578137, longitude: 4.8320114 } //test avec Lyon avec des données brutes imaginaires
+const city = { latitude: 45.8354243, longitude: 1.2644847 } //test avec Limoges avec des données brutes imaginaires
+
 
 const ActivityDataTest = [
     {colorPin: 'red',name: "Boxe", latitude: 45.8359, longitude: 1.2635, activity:{
@@ -93,8 +95,8 @@ export default function ResultScreen ({navigation}) {
                     initialRegion={{
                         latitude: city.latitude,
                         longitude: city.longitude,
-                        latitudeDelta: 0.05,
-                        longitudeDelta: 0.05,
+                        latitudeDelta: 0.10, //0.10 au lieu de 0.05 => affichage de la périphérie de la ville
+                        longitudeDelta: 0.10,
                     }}
                     style={styles.map}
                 >

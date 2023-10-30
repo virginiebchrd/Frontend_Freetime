@@ -7,9 +7,13 @@ import SmallButton from '../components/buttons/SmallButton';
 import { useState } from 'react';
 import ChooseActivity from '../components/ChooseActivity';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from "moment";
+import "moment/locale/fr";
 
 
+//const cityTest = 'Lyon';
 const cityTest = 'Limoges';
+
 const day = 'mardi'
 export default function ActivitiesScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
@@ -18,6 +22,12 @@ export default function ActivitiesScreen ({navigation}) {
 
     const city = useSelector((state) => state.user.value.city.name)
     console.log('city', city);
+
+    let date = useSelector((state) => state.hobbies.value.date);
+    date = new Date(date);
+    let day = moment(date).locale("fr").format("dddd")
+    day= day.toLowerCase();
+    console.log('date', day);
 
     if (!fontsLoaded) {
     return null;
@@ -47,6 +57,7 @@ export default function ActivitiesScreen ({navigation}) {
     const handleArtistics = () => {
         console.log('artistique');
         fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
         //fetch(`https://backend-freetime.vercel.app/hobbies/artistique`)
         .then(response => response.json())
         .then(data => {

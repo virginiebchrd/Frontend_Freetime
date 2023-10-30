@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "top",
-    borderWidth: 1,
     margin: 0,
     paddingBottom: 0,
   },
