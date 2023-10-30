@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   TextInput,
   Button,
-  KeyboardAvoidingView
+  TouchableWithoutFeedback,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
@@ -147,62 +147,61 @@ export default function CreateProfilScreen({ navigation }) {
       style={styles.background}
     >
       <HeaderReturn pages="ComeFromProfil" isNeeded={true} />
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <View style={styles.bodyContainer}>
-          <View style={styles.titleContainer}>
-            <FontAwesome name="user" size={75} color="#004644" />
-            <Text style={styles.title}>Création du profil</Text>
-          </View>
-
-          <View style={styles.infoContainer}>
-            <View style={styles.civilityContainer}>
-              <View style={styles.leftCivilityContainer}>
-                <Text style={styles.civilityText}>Civilité* :</Text>
-              </View>
-              <View style={styles.rightCivilityContainer}>
-                <View style={styles.CheckboxMonsieur}>
-                  <Checkbox
-                    value={civility === "Monsieur"}
-                    onValueChange={() => setCivility("Monsieur")}
-                    color="#004644"
-                  />
-                  <Text style={styles.civilityText}> Monsieur</Text>
-                </View>
-                <View style={styles.CheckboxMadame}>
-                  <Checkbox
-                    value={civility === "Madame"}
-                    onValueChange={() => setCivility("Madame")}
-                    color="#004644"
-                  />
-                  <Text style={styles.civilityText}> Madame </Text>
-                </View>
-              </View>
+      <TouchableWithoutFeedback onPress={()=>{}}>
+        <View style={styles.container}>
+          <View style={styles.bodyContainer}>
+            <View style={styles.titleContainer}>
+              <FontAwesome name="user" size={75} color="#004644" />
+              <Text style={styles.title}>Création du profil</Text>
             </View>
 
-            <TextInput
-              style={[styles.input, { fontFamily: "Indie-Flower" }]}
-              placeholder="Nom *"
-              onChangeText={(value) => setLastname(value)}
-              value={lastname}
-              placeholderTextColor="#cae1db" 
-            />
-            <TextInput
-              style={[styles.input, { fontFamily: "Indie-Flower" }]}
-              placeholder="Prénom *"
-              onChangeText={(value) => setFirstname(value)}
-              value={firstname}
-              placeholderTextColor="#cae1db" 
-            />
-          </View>
+            <View style={styles.infoContainer}>
+              <View style={styles.civilityContainer}>
+                <View style={styles.leftCivilityContainer}>
+                  <Text style={styles.civilityText}>Civilité* :</Text>
+                </View>
+                <View style={styles.rightCivilityContainer}>
+                  <View style={styles.CheckboxMonsieur}>
+                    <Checkbox
+                      value={civility === "Monsieur"}
+                      onValueChange={() => setCivility("Monsieur")}
+                      color="#004644"
+                    />
+                    <Text style={styles.civilityText}> Monsieur</Text>
+                  </View>
+                  <View style={styles.CheckboxMadame}>
+                    <Checkbox
+                      value={civility === "Madame"}
+                      onValueChange={() => setCivility("Madame")}
+                      color="#004644"
+                    />
+                    <Text style={styles.civilityText}> Madame </Text>
+                  </View>
+                </View>
+              </View>
 
-          <View style={styles.validateContainer}>
-            <SmallButton title="Valider" onPress={handleValidate} />
+              <TextInput
+                style={[styles.input, { fontFamily: "Indie-Flower" }]}
+                placeholder="Nom *"
+                onChangeText={(value) => setLastname(value)}
+                value={lastname}
+                placeholderTextColor="#cae1db"
+              />
+              <TextInput
+                style={[styles.input, { fontFamily: "Indie-Flower" }]}
+                placeholder="Prénom *"
+                onChangeText={(value) => setFirstname(value)}
+                value={firstname}
+                placeholderTextColor="#cae1db"
+              />
+            </View>
+
+            <View style={styles.validateContainer}>
+              <SmallButton title="Valider" onPress={handleValidate} />
+            </View>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </LinearGradient>
   );
 }
@@ -235,7 +234,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around",
-    
   },
   title: {
     fontSize: 22,
@@ -247,7 +245,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    
+
     padding: 10,
     margin: 0,
   },
