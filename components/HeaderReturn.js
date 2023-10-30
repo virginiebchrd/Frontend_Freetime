@@ -61,7 +61,7 @@ function HeaderReturn ({iconContext, pages, isNeeded}) {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '15%',
+        height: '18%',
         width: '100%',
     },
     headerGradient: {
