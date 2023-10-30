@@ -47,7 +47,7 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
-//FirstConnection
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
