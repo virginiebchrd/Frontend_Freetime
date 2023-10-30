@@ -11,7 +11,9 @@ import moment from "moment";
 import "moment/locale/fr";
 
 
+//const cityTest = 'Lyon';
 const cityTest = 'Limoges';
+
 const day = 'mardi'
 export default function ActivitiesScreen ({navigation}) {
     const [fontsLoaded] = useFonts({

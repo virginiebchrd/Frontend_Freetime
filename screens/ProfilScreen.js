@@ -11,10 +11,7 @@ import ChooseActivity from "../components/ChooseActivity";
 import CheckBoxContainer from "../components/CheckBoxContainer";
 import { storeHobbiesSaved } from "../reducers/hobbiesReducer";
 
-
 export default function ProfilScreen({ navigation }) {
-  
-
   const dispatch = useDispatch();
   const hobbies = useSelector((state) => state.hobbies.value.hobbies);
   const user = useSelector((state) => state.user);
@@ -22,7 +19,8 @@ export default function ProfilScreen({ navigation }) {
   const userFirstname = useSelector((state) => state.user.value.firstname);
   const token = useSelector((state) => state.user.value.token);
   const userLastname = useSelector((state) => state.user.value.lastname);
-  console.log('tokenProfil', token);
+  const userEmail = useSelector((state) => state.user.value.email);
+  console.log("tokenProfil", token);
   const [hobbiesSaved, setHobbiesSaved] = useState(false);
 
   const [activitiesData, setActivitiesData] = useState([]);
@@ -39,14 +37,12 @@ export default function ProfilScreen({ navigation }) {
         const data = await response.json();
         console.log("data", data);
         if (data.result) {
-          
           console.log("hobbies", data.hobbies);
           setHobbiesSaved(true);
           setActivitiesData(data.hobbies);
-        }
-        else {
-          if(data.error === 'no hobbies') {
-            console.log('nohobbies');
+        } else {
+          if (data.error === "no hobbies") {
+            console.log("nohobbies");
             setHobbiesSaved(false);
           }
         }
@@ -62,40 +58,40 @@ export default function ProfilScreen({ navigation }) {
     //dispatch activité
     navigation.navigate("Calendar");
   };
-  
-  
-  if(hobbiesSaved) {
-    activities = activitiesData.map((data, i) => {
-       dispatch(storeHobbiesSaved(data._id));
-         return (
-          <CheckBoxContainer 
-            key={i} 
-            activityName={data.name} 
-            activity={{key:i, 
-                    id:data._id, 
-                    activityName: data.name, 
-                    email:data.email, 
-                    adress: data.address.street, 
-                    zipCode: data.address.zipCode, 
-                    phoneNumber: data.phoneNumber, 
-                    city: data.address.city, 
-                    activity: data.category, 
-                    latitude: data.address.latitude, 
-                    longitude: data.address.longitude, 
-                    site: data.site, 
-                    resultPages: false, 
-                    pinColor: 'green'
-                    }} />
-         );
-       });
-  }
-  else {
-    activities = 
-    <View style={styles.noHobbiesContainer}>
-      <Text style={styles.oldActivities}>Pas d'activités sauvegardées</Text>
-    </View>
-  }
 
+  if (hobbiesSaved) {
+    activities = activitiesData.map((data, i) => {
+      dispatch(storeHobbiesSaved(data._id));
+      return (
+        <CheckBoxContainer
+          key={i}
+          activityName={data.name}
+          activity={{
+            key: i,
+            id: data._id,
+            activityName: data.name,
+            email: data.email,
+            adress: data.address.street,
+            zipCode: data.address.zipCode,
+            phoneNumber: data.phoneNumber,
+            city: data.address.city,
+            activity: data.category,
+            latitude: data.address.latitude,
+            longitude: data.address.longitude,
+            site: data.site,
+            resultPages: false,
+            pinColor: "green",
+          }}
+        />
+      );
+    });
+  } else {
+    activities = (
+      <View style={styles.noHobbiesContainer}>
+        <Text style={styles.oldActivities}>Pas d'activités sauvegardées</Text>
+      </View>
+    );
+  }
 
   if (!fontsLoaded) {
     return null;
@@ -112,9 +108,11 @@ export default function ProfilScreen({ navigation }) {
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
             <FontAwesome name="user" size={75} color="#004644" />
-            <Text
-              style={styles.title}
-            >{`Welcome, ${userFirstname} ${userLastname}`}</Text>
+            <Text style={styles.title}>
+              {userFirstname && userLastname
+                ? `Welcome, ${userFirstname} ${userLastname}`
+                : `Welcome, your email: ${userEmail}`}
+            </Text>
           </View>
 
           <Text style={styles.oldActivities}>Anciennes activités :</Text>
@@ -174,5 +172,5 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-  },  
+  },
 });
