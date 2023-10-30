@@ -9,7 +9,9 @@ import ChooseActivity from '../components/ChooseActivity';
 import { useDispatch, useSelector } from 'react-redux';
 
 
+//const cityTest = 'Lyon';
 const cityTest = 'Limoges';
+
 const day = 'mardi'
 export default function ActivitiesScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
