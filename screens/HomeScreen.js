@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
-    borderRadius: 50,
   },
   welcomeContainer: {
     height: "25%",

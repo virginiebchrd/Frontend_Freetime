@@ -27,7 +27,9 @@ export default function FirstConnectionScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  
+  const Valider = "Valider";
+  const EmailPlaceholder = "Entrer votre adresse mail";
+  const PasswordLabel = "Entrer votre mot de passe";
 
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -67,9 +69,7 @@ export default function FirstConnectionScreen({ navigation }) {
       }
   };
 
-  const Valider = "Valider";
-  const EmailPlaceholder = "Entrer votre adresse mail";
-  const PasswordLabel = "Entrer votre mot de passe";
+  
 
   return (
     

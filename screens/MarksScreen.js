@@ -28,7 +28,7 @@ export default function MarksScreen ({navigation, route}) {
 
     //UseEffect pour récupérer la note moyenne au démarraeg et a chaque nouvelle note personnelle
     useEffect( () => {
-        fetch(`http://192.168.1.12:3000/hobbies/averageMarks/${dataActivity.id}`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/${dataActivity.id}`)
         .then(response => response.json())
         .then(data => {
             console.log('ave',data);
@@ -49,7 +49,8 @@ export default function MarksScreen ({navigation, route}) {
         console.log(num);
         
         
-        fetch(`http://192.168.1.12:3000/hobbies/rating/${dataActivity.id}`,{
+        //fetch(`http://192.168.1.12:3000/hobbies/rating/${dataActivity.id}`,{
+        fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({myMark: num+1})

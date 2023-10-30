@@ -26,6 +26,7 @@ export default function ProfilScreen({ navigation }) {
   const [hobbiesSaved, setHobbiesSaved] = useState(false);
 
   const [activitiesData, setActivitiesData] = useState([]);
+  let activities;
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -62,7 +63,7 @@ export default function ProfilScreen({ navigation }) {
     navigation.navigate("Calendar");
   };
   
-  let activities
+  
   if(hobbiesSaved) {
     activities = activitiesData.map((data, i) => {
        dispatch(storeHobbiesSaved(data._id));

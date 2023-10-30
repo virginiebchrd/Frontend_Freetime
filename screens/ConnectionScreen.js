@@ -65,12 +65,12 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result) {
-            /*fetch(
-              `https://backend-freetime.vercel.app/users/identity/${data.token}`
-            )*/
             fetch(
-              `http://192.168.1.12:3000/users/identity/${data.token}`
+              `https://backend-freetime.vercel.app/users/identity/${data.token}`
             )
+            /*fetch(
+              `http://192.168.1.12:3000/users/identity/${data.token}`
+            )*/
               .then((response) => response.json())
               .then((data) => {
                 if (data.result) {
