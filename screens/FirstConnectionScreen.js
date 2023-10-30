@@ -10,27 +10,34 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { useDispatch, useSelector } from "react-redux";
-import { addEmail, addFirstname, addPassword, login } from "../reducers/userReducer";
+import {
+  addEmail,
+  addFirstname,
+  addPassword,
+  login,
+} from "../reducers/userReducer";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
-import BasicInput from "../components/inputs/BasicInput";
+
+import EmailInput from "../components/inputs/EmailInput";
+import PasswordInput from "../components/inputs/PasswordInput";
 
 const BACKEND_ADDRESS = "http://192.168.0.12:3000"; //'http://BACKEND_IP:3000';
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default function FirstConnectionScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  
+
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [passwordConfirmation, setPasswordConfirmation] = useState(false);
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [isAllowed, setIsAllowed] = useState(false);
   const Valider = "Valider";
-  const EmailPlaceholder = "Entrer votre adresse mail";
-  const PasswordLabel = "Entrer votre mot de passe";
+  
 
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -45,13 +52,16 @@ export default function FirstConnectionScreen({ navigation }) {
     //Keyboard.dismiss();
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
-      
+
       if (password !== passwordConfirmation) {
         setPasswordError(true);
-      }else {
+        setIsAllowed(false);
+      } else {
         setPasswordError(false);
+        setIsAllowed(true);
       }
-        fetch(`https://backend-freetime.vercel.app/users/signup`, {
+      if (isAllowed) {
+      fetch(`https://backend-freetime.vercel.app/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: mail, password: password }),
@@ -60,61 +70,53 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result === true) {
-            console.log('token', data.token);
-            dispatch(login({token: data.token, lastname: "", firstname: ""}));
+            console.log("token", data.token);
+            dispatch(login({ token: data.token, lastname: "", firstname: "" }));
             navigation.navigate("CreateProfil");
           } else {
             console.error(data.error);
             console.log("Conditions non remplies.");
+            setEmailError(true);
           }
         });
-      } else {
-        console.error("Champs vides ou conditions non remplies.");
+      }
+    } else {
+      console.error("Champs vides ou conditions non remplies.");
       setEmailError(true);
-      };
-
+     
+    }
   };
 
-  
-
   return (
-    
-      <LinearGradient
-        colors={["#D9F2B1", "transparent"]}
-        style={styles.background}
-      >
-        <HeaderReturn pages="Home" isNeeded={true} />
-        <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <LinearGradient
+      colors={["#D9F2B1", "transparent"]}
+      style={styles.background}
     >
+      <HeaderReturn pages="Home" isNeeded={true} />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
-        <BasicInput
-          placeholder={EmailPlaceholder}
-          onChangeText={(value) => setMail(value)}
-          value={mail}
-          icon={false}
-          autoComplete="email"
-          keyboardType="email-address"
-        />
+        <EmailInput 
+        style={styles.EmailInput}
+        onChangeText={(value) => setMail(value)} value={mail} />
 
-      
+        <Text style={styles.title}>Saisir une adresse mail</Text>
 
-         <BasicInput
-          placeholder={PasswordLabel}
+        <PasswordInput
+        style={styles.PasswordInput}
           onChangeText={(value) => setPassword(value)}
           value={password}
-          secureTextEntry
         />
 
         <Text style={styles.title}>Confirmer votre mot de passe</Text>
 
-        <BasicInput
-          placeholder={PasswordLabel}
+        <PasswordInput
+        style={styles.PasswordInput}
           onChangeText={(value) => setPasswordConfirmation(value)}
-          value={password}
-          secureTextEntry
+          value={passwordConfirmation}
         />
 
         {passwordError && (
@@ -123,10 +125,12 @@ export default function FirstConnectionScreen({ navigation }) {
           </Text>
         )}
 
-        <SmallButton title={Valider} onPress={handleRegister} />
-        </KeyboardAvoidingView>
-      </LinearGradient>
-    
+        <View style={styles.validateContainer}>
+          <SmallButton title={Valider} onPress={handleRegister} disabled={!isAllowed} />
+        </View>
+
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }
 
@@ -146,6 +150,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 0,
   },
+  validateContainer: {
+    height: "20%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
   background: {
     height: "100%",
@@ -159,12 +169,19 @@ const styles = StyleSheet.create({
     fontFamily: "Indie-Flower",
     fontSize: 20,
     marginBottom: 10,
+    marginTop: 10,
     textAlign: "center",
   },
 
   TextError: {
     color: "#da122a",
     fontFamily: "Indie-Flower",
-    marginBottom: 10,
+    marginBottom: 5,
+  },
+  PasswordInput: {
+    margin: 5,
+  },
+  EmailInput: {
+    margin:5,
   },
 });

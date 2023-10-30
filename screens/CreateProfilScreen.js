@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TextInput,
   Button,
+  KeyboardAvoidingView
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
@@ -27,20 +28,20 @@ import DatePickerModal from "react-native-modal-datetime-picker";
 export default function CreateProfilScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-// récupérer le token de l'utilisateur
- const userToken = useSelector((state) => state.user.value.token);
+  // récupérer le token de l'utilisateur
+  const userToken = useSelector((state) => state.user.value.token);
 
-//const token = "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO";
+  //const token = "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO";
 
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [birthday, setBirthday] = useState(""); //format jj/mm/aaaa
   const [civility, setCivility] = useState("");
- 
-//date format
+
+  //date format
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-//control errors
+  //control errors
   const [birthdayError, setBirthdayError] = useState("");
   const [firstnameError, setFirstnameError] = useState("");
   const [lastnameError, setLastnameError] = useState("");
@@ -53,8 +54,6 @@ export default function CreateProfilScreen({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
-
- 
 
   //Fonction pour afficher ou cacher le sélecteur de date
 
@@ -78,25 +77,20 @@ export default function CreateProfilScreen({ navigation }) {
     setBirthday(formattedDate);
   };
 
- 
-  
-
   const handleValidate = () => {
     //if (token !== "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO") {  //
-      // Si le token n'est pas valide, sortir de la fonction
-      /*if (token !== userToken) {
+    // Si le token n'est pas valide, sortir de la fonction
+    /*if (token !== userToken) {
         console.log("Token invalide");
         return;
       }*/
-      
 
     if (lastname && firstname && civility) {
       /*console.log("Civilité :", civility);
       console.log("Nom :", lastname);
       console.log("Prénom :", firstname);
       console.log("Date de naissance :", birthday);*/
-      
-     // navigation.navigate("Profil");
+      // navigation.navigate("Profil");
     } else {
       console.log("Champs * vides !");
       setBirthdayError("");
@@ -104,54 +98,59 @@ export default function CreateProfilScreen({ navigation }) {
       setLastnameError("");
       setCivilityError("");
     }
-          
+
     // fetch(`https://backend-freetime.vercel.app/users/identity/QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO`, {
     fetch(`https://backend-freetime.vercel.app/users/identity/${userToken}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json"},
-        //Authorization: `Bearer ${token}`}, // Ajoutez le token dans l'en-tête Authorization
-        body: JSON.stringify({
-          civility: civility, 
-          lastname: lastname, 
-          firstname: firstname, 
-          /*birthday: birthday*/  }),
-      })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      //Authorization: `Bearer ${token}`}, // Ajoutez le token dans l'en-tête Authorization
+      body: JSON.stringify({
+        civility: civility,
+        lastname: lastname,
+        firstname: firstname,
+        /*birthday: birthday*/
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data Create', data);
+        console.log("data Create", data);
         console.log(data.result);
 
-        if(data.result) {
+        if (data.result) {
           console.log(data.identity.firstname);
-          dispatch(login({token: data.identity.token, 
-            firstname: data.identity.firstname,
-            lastname: data.identity.lastname
-          }));
+          dispatch(
+            login({
+              token: data.identity.token,
+              firstname: data.identity.firstname,
+              lastname: data.identity.lastname,
+            })
+          );
           navigation.navigate("Profil");
-        }
-        else {
+        } else {
           console.error(data.error);
           console.log("Conditions non remplies.");
         }
         // console.log(data);
-          //if (data.result === true) {
-          //  navigation.navigate("Profil");
+        //if (data.result === true) {
+        //  navigation.navigate("Profil");
 
-          //} else {
-          //  console.error(data.error);
-          //  console.log("Conditions non remplies.");
+        //} else {
+        //  console.error(data.error);
+        //  console.log("Conditions non remplies.");
         //  }
-        });
+      });
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <LinearGradient
-        colors={["#D9F2B1", "transparent"]}
-        style={styles.background}
+    <LinearGradient
+      colors={["#D9F2B1", "transparent"]}
+      style={styles.background}
+    >
+      <HeaderReturn pages="ComeFromProfil" isNeeded={true} />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <HeaderReturn pages="ComeFromProfil" isNeeded={true} />
-
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
             <FontAwesome name="user" size={75} color="#004644" />
@@ -182,7 +181,7 @@ export default function CreateProfilScreen({ navigation }) {
                 </View>
               </View>
             </View>
-            
+
             <TextInput
               style={[styles.input, { fontFamily: "Indie-Flower" }]}
               placeholder="Nom *"
@@ -195,15 +194,14 @@ export default function CreateProfilScreen({ navigation }) {
               onChangeText={(value) => setFirstname(value)}
               value={firstname}
             />
-        
           </View>
 
           <View style={styles.validateContainer}>
             <SmallButton title="Valider" onPress={handleValidate} />
           </View>
         </View>
-      </LinearGradient>
-    </SafeAreaView>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }
 
@@ -235,6 +233,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around",
+    
   },
   title: {
     fontSize: 22,
@@ -246,8 +245,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
-    padding: 0,
+    
+    padding: 10,
     margin: 0,
   },
   civilityContainer: {
@@ -298,7 +297,6 @@ const styles = StyleSheet.create({
     color: "#004644",
   },
   input: {
-       
     padding: 10,
     borderWidth: 2,
     borderColor: "#76a696",
@@ -308,7 +306,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 10,
   },
-  datebtn:{
+  datebtn: {
     padding: 10,
     borderWidth: 2,
     borderColor: "#76a696",

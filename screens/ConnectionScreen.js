@@ -5,6 +5,8 @@ import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import InputWithLabel from "../components/inputs/InputWithLabel";
+import EmailInput from "../components/inputs/EmailInput";
+import PasswordInput from "../components/inputs/PasswordInput";
 //pour créer un état et stocker la valeur de l'état
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,12 +28,10 @@ export default function FirstConnectionScreen({ navigation }) {
   const [passwordError, setPasswordError] = useState(false);
 
   const [isAllowed, setIsAllowed] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const Valider = "Valider";
-  const EmailPlaceholder = "Entrer votre adresse mail";
-  const Password = "Entrer votre mot de passe";
-  const EmailLabel = "Mail";
-  const PasswordLabel = "Mot de passe";
+
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -107,13 +107,7 @@ export default function FirstConnectionScreen({ navigation }) {
       setPassword("");
     }
   };
-  /* connecter avec une adresse mail et mot de passe déjà enregistré ???
-  useEffect(() => {
-    user.email && user.password && navigation.navigate('Profil');
-  }, []);
-  */
-
-  //text affiché dans le bouton et placeholder des inputs
+ 
 
   return (
     
@@ -130,22 +124,16 @@ export default function FirstConnectionScreen({ navigation }) {
           <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
          
-          <InputWithLabel
-            placeholder={EmailPlaceholder}
-            
+          <EmailInput
             onChangeText={(value) => setMail(value)}
             value={mail}
-            icon={false}
-            autoComplete="email"
-            keyboardType="email-address"
           />
+
           <Text style={styles.label}>Mot de passe</Text>
-          <InputWithLabel
-            placeholder={Password}
-           
-            icon={false}
+
+          <PasswordInput        
             onChangeText={(value) => setPassword(value)}
-            secureTextEntry
+           
           />
 
           {(emailError || passwordError) && (
@@ -157,7 +145,7 @@ export default function FirstConnectionScreen({ navigation }) {
           <View style={styles.buttonContainer}>
             <SmallButton
               title={Valider}
-              onPress={() => navigation.navigate("Connection")}
+              onPress={onPress}
             />
           </View>
         ) : (
