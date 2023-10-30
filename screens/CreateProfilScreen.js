@@ -187,12 +187,14 @@ export default function CreateProfilScreen({ navigation }) {
               placeholder="Nom *"
               onChangeText={(value) => setLastname(value)}
               value={lastname}
+              placeholderTextColor="#cae1db" 
             />
             <TextInput
               style={[styles.input, { fontFamily: "Indie-Flower" }]}
               placeholder="Prénom *"
               onChangeText={(value) => setFirstname(value)}
               value={firstname}
+              placeholderTextColor="#cae1db" 
             />
           </View>
 
