@@ -30,6 +30,7 @@ export default function ProfilScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
+
   useEffect(() => {
     const fetchHobbies = async () => {
       try {
@@ -84,7 +85,7 @@ export default function ProfilScreen({ navigation }) {
                     longitude: data.address.longitude, 
                     site: data.site, 
                     resultPages: false, 
-                    pinColor: 'green'
+                    pinColor: 'red'
                     }} />
          );
        });

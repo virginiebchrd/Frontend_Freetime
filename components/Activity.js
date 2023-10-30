@@ -8,15 +8,12 @@ function Activity (props) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
-    console.log('propsActivity', props);
-
-    //const siteWeb = props.activity.site
 
     return (
         <View style={styles.headerContainer}>
             <View style={styles.activityContainer} >
             <View style={styles.pinContainer}>
-                <PinMarker />
+                <PinMarker color={props.activity.pinColor} />
             </View>
             <View style={styles.activityDetail}>
                 <Text style={styles.text}>Activité {props.activity.key+1} : {props.activity.activityName}</Text>

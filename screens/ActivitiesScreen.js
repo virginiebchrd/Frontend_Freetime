@@ -48,6 +48,13 @@ export default function ActivitiesScreen ({navigation}) {
                 
                 navigation.navigate("ShowCategory", {dataToSend})
             }
+            else {
+                const dataToSend={
+                    category: "sports",
+                    hobbies: [],
+                }
+                navigation.navigate("ShowCategory", {dataToSend})
+            }
         })
         
     }
@@ -64,6 +71,13 @@ export default function ActivitiesScreen ({navigation}) {
                 const dataToSend={
                     category: "artistique",
                     hobbies: data.hobbies,
+                }
+                navigation.navigate("ShowCategory", {dataToSend})
+            }
+            else {
+                const dataToSend={
+                    category: "artistique",
+                    hobbies: [],
                 }
                 navigation.navigate("ShowCategory", {dataToSend})
             }
@@ -84,6 +98,13 @@ export default function ActivitiesScreen ({navigation}) {
                 }
                 navigation.navigate("ShowCategory", {dataToSend})
             }
+            else {
+                const dataToSend={
+                    category: "culture",
+                    hobbies: [],
+                }
+                navigation.navigate("ShowCategory", {dataToSend})
+            }
         })
     }
 
@@ -98,6 +119,13 @@ export default function ActivitiesScreen ({navigation}) {
                 const dataToSend={
                     category: "evasion",
                     hobbies: data.hobbies,
+                }
+                navigation.navigate("ShowCategory", {dataToSend})
+            }
+            else {
+                const dataToSend={
+                    category: "evasion",
+                    hobbies: [],
                 }
                 navigation.navigate("ShowCategory", {dataToSend})
             }

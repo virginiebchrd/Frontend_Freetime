@@ -16,10 +16,14 @@ export default function MarksScreen ({navigation, route}) {
     const dispatch = useDispatch();
     console.log('share',dataActivity);
 
+    const token = useSelector((state) => state.user.value.token)
+    console.log('tokenMarks',token);
+
     const [personnalMark, setPersonnalMark] = useState(0);
     const [averageMark, setAverageMark] = useState(0);
+    const [isDisabled, setIsDisabled] = useState(false);
 
-    const hobbies = useSelector((state) => state.hobbies.value.hobbies);
+    //const hobbies = useSelector((state) => state.hobbies.value.hobbies);
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -28,16 +32,25 @@ export default function MarksScreen ({navigation, route}) {
 
     //UseEffect pour récupérer la note moyenne au démarraeg et a chaque nouvelle note personnelle
     useEffect( () => {
-        fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/${dataActivity.id}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/${dataActivity.id}`)
+        console.log('iddata', dataActivity.id);
+        fetch(`http://192.168.1.12:3000/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
         .then(response => response.json())
         .then(data => {
-            console.log('ave',data);
-            const dataAverage = data.average;
-            const average = dataAverage.find(e => e._id === dataActivity.id);
-            console.log(average);
-            setAverageMark(average.avgRating);
+            if(data.result){
+                console.log('ave',data);
+                setAverageMark(data.average);
+                if(data.myMark) {
+                    console.log(('ici'));
+                    setPersonnalMark(data.myMark);
+                    setIsDisabled(true);
+                }
+            }
+            else {
+                console.log('no marks for activities');
+            }
         })
-    }, [])
+    }, [personnalMark])
 
     if (!fontsLoaded) {
     return null;
@@ -45,20 +58,20 @@ export default function MarksScreen ({navigation, route}) {
 
     
 
-    const handleStart = (num) => {
+    const handleStars = (num) => {
         console.log(num);
         
         
-        //fetch(`http://192.168.1.12:3000/hobbies/rating/${dataActivity.id}`,{
-        fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
+        fetch(`http://192.168.1.12:3000/hobbies/rating/${dataActivity.id}`,{
+        //fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({myMark: num+1})
+            body: JSON.stringify({token: token, myMark: num+1})
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            setPersonnalMark(data.yourMark);
+            console.log('POST', data);
+            setPersonnalMark(data.personalMark);
         })
     }
 
@@ -73,7 +86,7 @@ export default function MarksScreen ({navigation, route}) {
         else {
             styleBlue='#004644'
         }
-        myMark.push(<StarsMarks key={i} style={styleBlue} onPress={() => handleStart(i)} />)
+        myMark.push(<StarsMarks key={i} style={styleBlue} onPress={() =>{isDisabled? null : handleStars(i)}} disabled={isDisabled} activeOpacity={isDisabled? 1 : 0.2} />)
     }
     
     let markAverage = [];
@@ -85,7 +98,7 @@ export default function MarksScreen ({navigation, route}) {
         else {
             styleBlue='#004644'
         }
-        markAverage.push(<StarsMarks key={i} style={styleBlue} />)
+        markAverage.push(<StarsMarks key={i} style={styleBlue} disabled={true} activeOpacity={1} />)
     }
 
     return (
@@ -107,7 +120,7 @@ export default function MarksScreen ({navigation, route}) {
                         }}
                         style={styles.map}
                         >
-                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.colorPin}/>
+                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.pinColor}/>
                         </MapView>
                     </View>
                     <View style={styles.activityContainer}>

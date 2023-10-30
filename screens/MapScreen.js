@@ -105,6 +105,7 @@ export default function MapScreen ({navigation}) {
                             >
                             {citySearch && <Marker coordinate={{latitude: coords.latitude, longitude: coords.longitude}} title={city} pinColor="#fecb2d" />}
                             </MapView>
+
                             <View style={styles.validateContainer}>
                                 <SmallButton title="Valider" onPress={handleValidate} />
                             </View>

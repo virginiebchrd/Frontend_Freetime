@@ -6,6 +6,7 @@ import HeaderReturn from '../components/HeaderReturn';
 import CheckBoxContainer from '../components/CheckBoxContainer';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -78,8 +79,14 @@ export default function ResultScreen ({navigation}) {
         let isSaved = hobbiesSaved.some(e => e === data._id)
         let pinColor;
         console.log('isSaved', isSaved);
-        isSaved? pinColor='red' : pinColor='blue';
-        return <Marker key={i} coordinate={{latitude: data.address.latitude, longitude: data.address.longitude}} title={data.name} pinColor={pinColor} />
+        if (isSaved) {
+            pinColor='red';
+            desc = "Déja validée";
+        } else {
+            pinColor='blue';
+            desc = "Nouvelle Activité";
+        }
+        return <Marker key={i} coordinate={{latitude: data.address.latitude, longitude: data.address.longitude}} title={data.name} pinColor={pinColor} description={desc} />
         //return <Marker key={i} coordinate={{latitude: data.latitude, longitude: data.longitude}} pinColor={data.colorPin} />
     })
 
@@ -101,15 +108,23 @@ export default function ResultScreen ({navigation}) {
                     {markers}
                 </MapView>
 
+                <View style={styles.legend}>
+                    <View style={styles.legendMarker}>
+                        <FontAwesome name='map-pin' size={25} color="red" />
+                        <Text style={styles.text}>Déja validée</Text>
+                    </View>
+                    <View style={styles.legendMarker}>
+                        <FontAwesome name='map-pin' size={25} color="blue" />
+                        <Text style={styles.text}>A découvrir</Text>
+                    </View>
+                </View>
+
                 <ScrollView>
                     <View style={styles.activitiesContainer}>
                         {activities}
                     </View>
                 </ScrollView>
 
-                
-
-                
             </LinearGradient>
         </View>
     )
@@ -155,6 +170,30 @@ const styles = StyleSheet.create({
     map: {
         height: '40%',
         width: '99%',
+    },
+    legend: {
+        height: '7%',
+        width: '40%',
+        backgroundColor: 'rgba(255,255,255,0.6)',
+        zIndex: 5,
+        position: 'absolute',
+        bottom: 324,
+        right: 0,
+        pointerEvents: 'none',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    legendMarker: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 5,
+    },
+    text: {
+        fontSize: 17,
+        fontFamily: 'Indie-Flower',
+        color: '#004644',
+        marginLeft: 5,
     },
     activitiesContainer: {
         flex: 1,
