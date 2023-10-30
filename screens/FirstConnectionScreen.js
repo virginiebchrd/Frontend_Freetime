@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
   Platform,
   Keyboard,
 } from "react-native";
@@ -81,53 +81,54 @@ export default function FirstConnectionScreen({ navigation }) {
 
   return (
     
-      <LinearGradient
-        colors={["#D9F2B1", "transparent"]}
-        style={styles.background}
-      >
-        <HeaderReturn pages="Home" isNeeded={true} />
-        <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <LinearGradient
+      colors={["#D9F2B1", "transparent"]}
+      style={styles.background}
     >
-        <Text style={styles.title}>Se connecter avec une adresse mail</Text>
+      <HeaderReturn pages="Home" isNeeded={true} />
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+          
+    
+          <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
-        <BasicInput
-          placeholder={EmailPlaceholder}
-          onChangeText={(value) => setMail(value)}
-          value={mail}
-          icon={false}
-          autoComplete="email"
-          keyboardType="email-address"
-        />
+          <BasicInput
+            placeholder={EmailPlaceholder}
+            onChangeText={(value) => setMail(value)}
+            value={mail}
+            icon={false}
+            autoComplete="email"
+            keyboardType="email-address"
+          />
 
       
 
-         <BasicInput
-          placeholder={PasswordLabel}
-          onChangeText={(value) => setPassword(value)}
-          value={password}
-          secureTextEntry
-        />
+          <BasicInput
+            placeholder={PasswordLabel}
+            onChangeText={(value) => setPassword(value)}
+            value={password}
+            secureTextEntry
+          />
 
-        <Text style={styles.title}>Confirmer votre mot de passe</Text>
+          <Text style={styles.title}>Confirmer votre mot de passe</Text>
 
-        <BasicInput
-          placeholder={PasswordLabel}
-          onChangeText={(value) => setPasswordConfirmation(value)}
-          value={password}
-          secureTextEntry
-        />
+          <BasicInput
+            placeholder={PasswordLabel}
+            onChangeText={(value) => setPasswordConfirmation(value)}
+            value={password}
+            secureTextEntry
+          />
 
-        {passwordError && (
-          <Text style={styles.TextError}>
-            Le mot de passe n'est pas identique !
-          </Text>
-        )}
+          {passwordError && (
+            <Text style={styles.TextError}>
+              Le mot de passe n'est pas identique !
+            </Text>
+          )}
 
-        <SmallButton title={Valider} onPress={handleRegister} />
-        </KeyboardAvoidingView>
-      </LinearGradient>
+          <SmallButton title={Valider} onPress={handleRegister} />
+          </View>
+      </TouchableWithoutFeedback>
+    </LinearGradient>
     
   );
 }

@@ -7,7 +7,6 @@ import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
-import ChooseActivity from "../components/ChooseActivity";
 import CheckBoxContainer from "../components/CheckBoxContainer";
 import { storeHobbiesSaved } from "../reducers/hobbiesReducer";
 
@@ -111,7 +110,7 @@ export default function ProfilScreen({ navigation }) {
             <Text style={styles.title}>
               {userFirstname && userLastname
                 ? `Welcome, ${userFirstname} ${userLastname}`
-                : `Welcome, your email: ${userEmail}`}
+                : `Welcome, ${userEmail}`}
             </Text>
           </View>
 
