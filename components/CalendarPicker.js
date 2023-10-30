@@ -17,7 +17,7 @@ const DateSelector = ({onDateChange} ) => {
       doy: 4, // Le 1er jour de l'année est le jeudi
     },
     weekdays: [
-      "Diminche",
+      "Dimanche",
       "Lundi",
       "Mardi",
       "Mercredi",
