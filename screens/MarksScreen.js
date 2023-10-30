@@ -34,7 +34,8 @@ export default function MarksScreen ({navigation, route}) {
     useEffect( () => {
         //fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/${dataActivity.id}`)
         console.log('iddata', dataActivity.id);
-        fetch(`http://192.168.1.12:3000/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -62,8 +63,8 @@ export default function MarksScreen ({navigation, route}) {
         console.log(num);
         
         
-        fetch(`http://192.168.1.12:3000/hobbies/rating/${dataActivity.id}`,{
-        //fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
+        //fetch(`http://192.168.1.12:3000/hobbies/rating/${dataActivity.id}`,{
+        fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({token: token, myMark: num+1})
