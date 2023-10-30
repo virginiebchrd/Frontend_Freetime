@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
   Platform,
   Keyboard,
 } from "react-native";
@@ -98,10 +98,9 @@ export default function FirstConnectionScreen({ navigation }) {
       style={styles.background}
     >
       <HeaderReturn pages="Home" isNeeded={true} />
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+       <View style={styles.container}>
+              
         <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
         <EmailInput 
@@ -116,7 +115,7 @@ export default function FirstConnectionScreen({ navigation }) {
           value={password}
         />
 
-        <Text style={styles.title}>Confirmer votre mot de passe</Text>
+          <Text style={styles.title}>Confirmer votre mot de passe</Text>
 
         <PasswordInput
         style={styles.PasswordInput}
@@ -124,17 +123,18 @@ export default function FirstConnectionScreen({ navigation }) {
           value={passwordConfirmation}
         />
 
-        {passwordError && (
-          <Text style={styles.TextError}>
-            Le mot de passe n'est pas identique !
-          </Text>
-        )}
+          {passwordError && (
+            <Text style={styles.TextError}>
+              Le mot de passe n'est pas identique !
+            </Text>
+          )}
 
         <View style={styles.validateContainer}>
           <SmallButton title={Valider} onPress={handleRegister} disabled={!isAllowed} />
         </View>
+        </View>
 
-      </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     </LinearGradient>
   );
 }
