@@ -27,7 +27,9 @@ export default function FirstConnectionScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  
+  const Valider = "Valider";
+  const EmailPlaceholder = "Entrer votre adresse mail";
+  const PasswordLabel = "Entrer votre mot de passe";
 
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -39,7 +41,7 @@ export default function FirstConnectionScreen({ navigation }) {
   //inspiration morningnews
   //premier test en local avec fetch(`http://192.168.0.12:3000/users/signup`,
   const handleRegister = () => {
-    Keyboard.dismiss();
+    //Keyboard.dismiss();
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
    
@@ -49,8 +51,6 @@ export default function FirstConnectionScreen({ navigation }) {
         body: JSON.stringify({ email: mail, password: password }),
       })
         .then((response) => response.json())
-        //console.log("E-mail:", mail);
-        //console.log("Password:", password);
         .then((data) => {
           console.log(data);
           if (data.result === true) {
@@ -69,9 +69,7 @@ export default function FirstConnectionScreen({ navigation }) {
 
   };
 
-  const Valider = "Valider";
-  const EmailPlaceholder = "Entrer votre adresse mail";
-  const PasswordLabel = "Entrer votre mot de passe";
+  
 
   return (
     

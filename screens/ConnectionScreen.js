@@ -47,7 +47,7 @@ export default function FirstConnectionScreen({ navigation }) {
     console.log("Password:", password);
     console.log("isAllowed:", isAllowed);
 
-    if (EMAIL_REGEX.test(mail) && password.length >= 6) {
+    if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
 
       const userData = {
@@ -68,6 +68,9 @@ export default function FirstConnectionScreen({ navigation }) {
             fetch(
               `https://backend-freetime.vercel.app/users/identity/${data.token}`
             )
+            /*fetch(
+              `http://192.168.1.12:3000/users/identity/${data.token}`
+            )*/
               .then((response) => response.json())
               .then((data) => {
                 if (data.result) {

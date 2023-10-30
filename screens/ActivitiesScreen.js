@@ -8,10 +8,16 @@ import { useState } from 'react';
 import ChooseActivity from '../components/ChooseActivity';
 import { useDispatch, useSelector } from 'react-redux';
 
+
+const cityTest = 'Limoges';
+const day = 'mardi'
 export default function ActivitiesScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
+
+    const city = useSelector((state) => state.user.value.city.name)
+    console.log('city', city);
 
     if (!fontsLoaded) {
     return null;
@@ -20,7 +26,9 @@ export default function ActivitiesScreen ({navigation}) {
     const handleSports = () => {
         //setIsShownSports(true)
         console.log('sports');
-        fetch(`https://backend-freetime.vercel.app/hobbies/sports`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/sports/${city}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -38,7 +46,8 @@ export default function ActivitiesScreen ({navigation}) {
 
     const handleArtistics = () => {
         console.log('artistique');
-        fetch(`https://backend-freetime.vercel.app/hobbies/artistique`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/artistique`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -54,7 +63,8 @@ export default function ActivitiesScreen ({navigation}) {
 
     const handleCulture = () => {
         console.log('culture');
-        fetch(`https://backend-freetime.vercel.app/hobbies/culture`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/culture`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -70,7 +80,8 @@ export default function ActivitiesScreen ({navigation}) {
 
     const handleEvasion = () => {
         console.log('evasion');
-        fetch(`https://backend-freetime.vercel.app/hobbies/evasion`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/evasion`)
         .then(response => response.json())
         .then(data => {
             if(data.result){

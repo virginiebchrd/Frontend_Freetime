@@ -22,6 +22,10 @@ export default function MapScreen ({navigation}) {
     const dispatch = useDispatch();
     const coords = useSelector( (state) => state.user.value.city);
     
+    const [fontsLoaded] = useFonts({
+        'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
+    });
+    
     useEffect( () => {
             ( async () => {
             const {status} = await Location.requestForegroundPermissionsAsync();
@@ -34,9 +38,7 @@ export default function MapScreen ({navigation}) {
         }) ()
     }, [])
 
-    const [fontsLoaded] = useFonts({
-        'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
-    });
+    
 
     if (!fontsLoaded) {
     return null;

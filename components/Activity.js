@@ -22,14 +22,11 @@ function Activity (props) {
                 <Text style={styles.text}>Activité {props.activity.key+1} : {props.activity.activityName}</Text>
                 <Text style={styles.text}>Adresse : {props.activity.adress}</Text>
                 <Text style={styles.text}>{props.activity.zipCode} {props.activity.city}</Text>
-                <Text style={styles.text}>mail: {props.activity.email}</Text>
-                <Text style={styles.text}>Tél. : </Text>
                 <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(`tel:${props.activity.phoneNumber}`)}>
-                <Text style={styles.text}>{props.activity.phoneNumber}</Text>
+                    <Text style={styles.text}>Tél.: {props.activity.phoneNumber}</Text>
                 </TouchableOpacity>
-                <Text style={styles.text}>Site Web: </Text>
                 <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(props.activity.site)}>
-                <Text style={styles.text}>{props.activity.site}</Text>
+                    <Text style={styles.text}>Site web : {props.activity.site}</Text>
                 </TouchableOpacity>
             </View>
             </View>
