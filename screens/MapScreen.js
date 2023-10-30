@@ -94,6 +94,12 @@ export default function MapScreen ({navigation}) {
 
                             <MapView 
                                 style= {styles.mapContainer}
+                                initialRegion={{
+                                latitude: 45.833619,
+                                longitude: 1.261105,
+                                latitudeDelta: 12,
+                                longitudeDelta: 12,
+                                }}
                                 showsUserLocation
                                 onLongPress={(e) => handleMap(e.nativeEvent)}
                             >

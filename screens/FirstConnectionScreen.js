@@ -52,6 +52,7 @@ export default function FirstConnectionScreen({ navigation }) {
         setPasswordError(false);
       }
         fetch(`https://backend-freetime.vercel.app/users/signup`, {
+        //fetch(`http://192.168.1.12:3000/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: mail, password: password }),
@@ -61,6 +62,7 @@ export default function FirstConnectionScreen({ navigation }) {
           console.log(data);
           if (data.result === true) {
             console.log('token', data.token);
+            dispatch(addEmail(data.email))
             dispatch(login({token: data.token, lastname: "", firstname: ""}));
             navigation.navigate("CreateProfil");
           } else {
