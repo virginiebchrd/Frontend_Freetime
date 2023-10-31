@@ -36,7 +36,7 @@ export default function CalendarScreen({ navigation }) {
   const handleValidate = () => {
     if(selectedDate==null) {
       console.log("Pas de date sélectionnée");
-      alert("Pas de date sélectionnée");
+      alert("Attention la date n'a pas été sélectionnée");
       setDisabled(true);// état initialisé  disabled=désactivé//
     } else {
     console.log("La date qui est dans le reducer", selectedDate);

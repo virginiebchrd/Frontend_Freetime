@@ -35,7 +35,7 @@ export default function FirstConnectionScreen({ navigation }) {
   const [emailError, setEmailError] = useState(false);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [isAllowed, setIsAllowed] = useState(false);
+  const [disabled, setDisabled] = useState(false);// état initialisé  disabled=désactivé//
   const Valider = "Valider";
   
 
@@ -55,13 +55,13 @@ export default function FirstConnectionScreen({ navigation }) {
 
       if (password !== passwordConfirmation) {
         setPasswordError(true);
-        setIsAllowed(false);
+        setDisabled(true);// état initialisé  disabled=désactivé//
       } else {
         setPasswordError(false);
-        setIsAllowed(true);
+        setDisabled(false);// état initialisé activé//
       }
 
-      if (isAllowed) {
+      if (password === passwordConfirmation) { // attention confit entre les état si j'utilise état !disabled !
       fetch(`https://backend-freetime.vercel.app/users/signup`, {
 
         method: "POST",
@@ -70,7 +70,7 @@ export default function FirstConnectionScreen({ navigation }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          console.log("réponse seveur",data);
           if (data.result === true) {
 
             console.log('token', data.token);
@@ -136,7 +136,7 @@ export default function FirstConnectionScreen({ navigation }) {
           )}
 
         <View style={styles.validateContainer}>
-          <SmallButton title={Valider} onPress={handleRegister} disabled={!isAllowed} />
+          <SmallButton title={Valider} onPress={()=>handleRegister()} disabled={disabled} />
         </View>
         </View>
 
