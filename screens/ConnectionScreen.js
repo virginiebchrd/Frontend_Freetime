@@ -2,7 +2,7 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
 
@@ -123,35 +123,38 @@ export default function FirstConnectionScreen({ navigation }) {
       style={styles.background}
     >
       <HeaderReturn pages="Home" isNeeded={true} />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <View style={styles.InputsContainer}>
-            <Text style={styles.title}>Se connecter avec une adresse mail</Text>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={styles.InputsContainer}>
+          <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
-            <EmailInput onChangeText={(value) => setMail(value)} value={mail} />
+          <EmailInput onChangeText={(value) => setMail(value)} value={mail} />
 
-            <Text style={styles.label}>Mot de passe</Text>
+          <Text style={styles.label}>Mot de passe</Text>
 
-            <PasswordInput onChangeText={(value) => setPassword(value)} />
+          <PasswordInput onChangeText={(value) => setPassword(value)} />
 
-            {(emailError || passwordError) && (
-              <Text style={styles.TextError}>
-                Erreur mot de passe ou mail ?
-              </Text>
-            )}
-          </View>
-
-          {isAllowed ? (
-            <View style={styles.validateContainer}>
-              <SmallButton title={Valider} onPress={onPress} />
-            </View>
-          ) : (
-            <View style={styles.validateContainer}>
-              <SmallButton style={styles.Btn} title={Valider} onPress={handleConnection} />
-            </View>
+          {(emailError || passwordError) && (
+            <Text style={styles.TextError}>Erreur mot de passe ou mail ?</Text>
           )}
         </View>
-      </TouchableWithoutFeedback>
+
+        {isAllowed ? (
+          <View style={styles.validateContainer}>
+            <SmallButton title={Valider} onPress={onPress} />
+          </View>
+        ) : (
+          <View style={styles.validateContainer}>
+            <SmallButton
+              style={styles.Btn}
+              title={Valider}
+              onPress={handleConnection}
+            />
+          </View>
+        )}
+      </KeyboardAvoidingView>
     </LinearGradient>
   );
 }
