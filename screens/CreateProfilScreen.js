@@ -167,7 +167,7 @@ export default function CreateProfilScreen({ navigation }) {
                       onValueChange={() => setCivility("Monsieur")}
                       color="#004644"
                     />
-                    <Text style={styles.civilityText}> Monsieur</Text>
+                    <Text style={styles.civilityText}>  Monsieur </Text>
                   </View>
                   <View style={styles.CheckboxMadame}>
                     <Checkbox
@@ -175,7 +175,7 @@ export default function CreateProfilScreen({ navigation }) {
                       onValueChange={() => setCivility("Madame")}
                       color="#004644"
                     />
-                    <Text style={styles.civilityText}> Madame </Text>
+                    <Text style={styles.civilityText}>  Madame </Text>
                   </View>
                 </View>
               </View>
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 0,
     padding: 0,
-    // backgroundColor: "yellow",
+    
   },
   background: {
     height: "100%",
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginTop: 0,
     padding: 0,
-    // backgroundColor: "red",
+    
   },
   titleContainer: {
     height: "20%",
@@ -237,13 +237,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     
-    // backgroundColor: "blue",
+  
   },
   title: {
     fontSize: 22,
     fontFamily: "Indie-Flower",
     color: "#004644",
-    paddingTop: 20,
+    paddingTop: 30, // 20
 
   },
   infoContainer: {
@@ -258,9 +258,9 @@ const styles = StyleSheet.create({
   civilityContainer: {
     height: "35%", // à la place de 25%
     width: "65%",
-    flexDirection: "row", //
-    alignItems: "center", //
-    justifyContent: "space-between", //
+    flexDirection: "row", 
+    alignItems: "center", 
+    justifyContent: "space-between", 
     borderBlockColor: "#004644",
     borderRadius: 10,
     borderWidth: 2,
