@@ -2,6 +2,7 @@ import {
   View,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
@@ -123,41 +124,39 @@ export default function FirstConnectionScreen({ navigation }) {
       style={styles.background}
     >
       <HeaderReturn pages="Home" isNeeded={true} />
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <View style={styles.InputsContainer}>
-          <Text style={styles.title}>Se connecter avec une adresse mail</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-          <EmailInput onChangeText={(value) => setMail(value)} value={mail} />
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+        
+        <View style={styles.container}>
+            <View style={styles.InputsContainerCSS}>
+              <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
-          <Text style={styles.label}>Mot de passe</Text>
+              <EmailInput onChangeText={(value) => setMail(value)} value={mail} />
 
-          <PasswordInput onChangeText={(value) => setPassword(value)} />
+              <Text style={styles.label}>Mot de passe</Text>
 
-            {(emailError || passwordError) && (
-              <Text style={styles.TextError}>
-                Erreur mot de passe ou mail ?
-              </Text>
-            )}
-          
+              <PasswordInput style={styles.PasswordInput} onChangeText={(value) => setPassword(value)} />
 
-        {isAllowed ? (
-          <View style={styles.validateContainer}>
-            <SmallButton title={Valider} onPress={onPress} />
-          </View>
-        ) : (
-          <View style={styles.validateContainer}>
-            <SmallButton
-              style={styles.Btn}
-              title={Valider}
-              onPress={handleConnection}
-            />
-          </View>
+              {(emailError || passwordError) && (
+                <Text style={styles.TextError}>
+                  Erreur mot de passe ou mail ?
+                </Text>
+              )}
+           </View>
+
+          {isAllowed ? (
+            <View style={styles.validateContainer}>
+              <SmallButton style={styles.Btn} title={Valider} onPress={onPress} />
+            </View>
+          ) : (
+            <View style={styles.validateContainer}>
+              <SmallButton style={styles.Btn} title={Valider} onPress={handleConnection} />
+            </View>
           )}
-          </View>
-      </KeyboardAvoidingView>
+        </View>
+        </KeyboardAvoidingView>
+       </TouchableWithoutFeedback>
     </LinearGradient>
   );
 }
@@ -175,22 +174,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  InputsContainer: {
+  InputsContainerCSS: {
     height: "50%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    top: 10,
+    },
+
+  PasswordInput:{
+    magin: 30,
   },
+
   validateContainer: {
     height: "20%",
     width: "100%",
     alignItems: "center",
-    bottom: 0,
-     //faire descendre le btn
+    justifyContent: "center",
+    top: 1,
+    bottom: 60,
     // marginBottom: 15,
     marginTop: 45,
+   
   },
+
   title: {
     color: "#004644",
     fontFamily: "Indie-Flower",

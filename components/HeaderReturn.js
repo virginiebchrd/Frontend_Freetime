@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         height: '18%',
         width: '100%',
+       // position:'absolute',
     },
     headerGradient: {
         height: '100%',
