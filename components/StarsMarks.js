@@ -2,12 +2,12 @@ import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
-function StarsMarks ({onPress, style}) {
+function StarsMarks ({onPress, style, activeOpacity}) {
 
     return (
         <View style={styles.headerContainer}>
-            <TouchableOpacity style={styles.logoutBtn} onPress={onPress}>
-                <FontAwesome name= 'star' size={25} color={style} />
+            <TouchableOpacity style={styles.logoutBtn} onPress={onPress} activeOpacity={activeOpacity}>
+                <FontAwesome name= 'star' size={25} color={style}  />
             </TouchableOpacity>
         </View>
     )

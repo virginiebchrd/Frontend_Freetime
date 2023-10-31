@@ -27,18 +27,25 @@ export default function ShowCategoryScreen ({navigation, route}) {
         navigation.navigate('Activities');
     }
 
-    const activities = activitiesData.map((data,i) => {
-        const isChecked = hobbies.some(e=> e === data._id);
-        return(<ChooseActivity key={i} activityName={data.name} id={data._id} isChecked={isChecked}/>)
-    })
+    let activities;
+    if(activitiesData.length > 0) {
+
+        activities = activitiesData.map((data,i) => {
+            const isChecked = hobbies.some(e=> e === data._id);
+            return(<ChooseActivity key={i} activityName={data.name} id={data._id} isChecked={isChecked}/>)
+        })
+    }
+    else {
+        activities =  <View><Text style={styles.text}>Pas d'activités correspondant à vos critères</Text></View>
+    }
 
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Activities' isNeeded={true}/>
+                <HeaderReturn iconContext="profil" pages='Activities' isNeeded={false}/>
                         <Text style={styles.title}>Quelle(s) activité(s) recherchez-vous ?</Text>
                         <View style={styles.largeButton} >
-                            <LargeButton title={title} style={styles.test}/>
+                            <LargeButton title={title}/>
                         </View>
                         <ScrollView>
                             <View style={styles.scrollView}>
@@ -47,7 +54,7 @@ export default function ShowCategoryScreen ({navigation, route}) {
                         </ScrollView>
 
                         <View style={styles.smallButton} >
-                            <SmallButton title='Valider' onPress={handleValidate} />
+                            <SmallButton title='Retour' onPress={handleValidate} />
                         </View>
             </LinearGradient>
         </View>
@@ -69,6 +76,11 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 22,
+        fontFamily: 'Indie-Flower',
+        color: '#004644',
+    },
+    text: {
+        fontSize: 17,
         fontFamily: 'Indie-Flower',
         color: '#004644',
     },
