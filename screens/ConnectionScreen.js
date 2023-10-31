@@ -125,7 +125,7 @@ export default function FirstConnectionScreen({ navigation }) {
       <HeaderReturn pages="Home" isNeeded={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <View style={styles.InputsContainer}>
+          
             <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
             <EmailInput onChangeText={(value) => setMail(value)} value={mail} />
@@ -139,7 +139,7 @@ export default function FirstConnectionScreen({ navigation }) {
                 Erreur mot de passe ou mail ?
               </Text>
             )}
-          </View>
+          
 
           {isAllowed ? (
             <View style={styles.validateContainer}>
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     bottom: 0,
-    top: 92, //faire descendre le btn
+     //faire descendre le btn
     // marginBottom: 15,
     marginTop: 45,
   },
