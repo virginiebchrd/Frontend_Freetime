@@ -155,7 +155,8 @@ export default function FirstConnectionScreen({ navigation }) {
               onPress={handleConnection}
             />
           </View>
-        )}
+          )}
+          </View>
       </KeyboardAvoidingView>
     </LinearGradient>
   );
