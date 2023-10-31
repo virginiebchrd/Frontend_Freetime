@@ -35,7 +35,7 @@ export default function FirstConnectionScreen({ navigation }) {
   const [emailError, setEmailError] = useState(false);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [isAllowed, setIsAllowed] = useState(false);
+  const [disabled, setDisabled] = useState(false);// état initialisé  disabled=désactivé//
   const Valider = "Valider";
   
 
@@ -49,18 +49,19 @@ export default function FirstConnectionScreen({ navigation }) {
   //inspiration morningnews
   //premier test en local avec fetch(`http://192.168.0.12:3000/users/signup`,
   const handleRegister = () => {
+
     //Keyboard.dismiss();
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
 
       if (password !== passwordConfirmation) {
         setPasswordError(true);
-        setIsAllowed(false);
+        setDisabled(true);// état initialisé  disabled=désactivé//
       } else {
         setPasswordError(false);
-        setIsAllowed(true);
+        setDisabled(false);// état initialisé activé//
       }
-      if (isAllowed) {
+      if (password === passwordConfirmation) { // attention confit entre les état si j'utilise état !disabled !/
       fetch(`https://backend-freetime.vercel.app/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -68,16 +69,18 @@ export default function FirstConnectionScreen({ navigation }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          console.log("réponse seveur",data);
           if (data.result === true) {
             console.log('token', data.token);
             dispatch(addEmail(data.email))
             dispatch(login({token: data.token, lastname: "", firstname: ""}));
+          
             navigation.navigate("CreateProfil");
           } else {
             console.error(data.error);
             console.log("Conditions non remplies.");
             setEmailError(true);
+            
           }
         });
       }
@@ -103,6 +106,12 @@ export default function FirstConnectionScreen({ navigation }) {
         style={styles.EmailInput}
         onChangeText={(value) => setMail(value)} value={mail} />
 
+          {emailError && (
+            <Text style={styles.TextError}>
+              votre email n'est pas valide!
+            </Text>
+          )}
+
         <Text style={styles.title}>Saisir une adresse mail</Text>
 
         <PasswordInput
@@ -126,7 +135,7 @@ export default function FirstConnectionScreen({ navigation }) {
           )}
 
         <View style={styles.validateContainer}>
-          <SmallButton title={Valider} onPress={handleRegister} disabled={!isAllowed} />
+          <SmallButton title={Valider} onPress={()=>handleRegister()} disabled={disabled} /> 
         </View>
         </View>
 
@@ -156,6 +165,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    bottom: 15,
   },
 
   background: {
@@ -169,7 +179,7 @@ const styles = StyleSheet.create({
     color: "#004644",
     fontFamily: "Indie-Flower",
     fontSize: 20,
-    marginBottom: 10,
+    marginBottom: 5,
     marginTop: 10,
     textAlign: "center",
   },
@@ -177,7 +187,8 @@ const styles = StyleSheet.create({
   TextError: {
     color: "#da122a",
     fontFamily: "Indie-Flower",
-    marginBottom: 5,
+    marginTop: 15,
+
   },
   PasswordInput: {
     margin: 5,

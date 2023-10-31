@@ -74,6 +74,7 @@ export default function MapScreen({ navigation }) {
       });
   };
 
+  
   const handleValidate = () => {
     //dispatch coordonnées + ville si recherche par input
     navigation.navigate("Activities");
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    bottom: 15,
   },
 
   containerInput: {

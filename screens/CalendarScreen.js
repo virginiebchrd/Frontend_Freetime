@@ -14,6 +14,7 @@ import "moment/locale/fr";
 export default function CalendarScreen({ navigation }) {
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(null);
+  const [disabled, setDisabled] = useState(false);// état initialisé  disabled=désactivé//
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -29,14 +30,22 @@ export default function CalendarScreen({ navigation }) {
     console.log("La date sélectionnée : ", formattedDate);
     console.log("Le jour sélectionné : ", formattedDay);
     setSelectedDate(moment(date));
+    
   };
 
   const handleValidate = () => {
+    if(selectedDate==null) {
+      console.log("Pas de date sélectionnée");
+      alert("Pas de date sélectionnée");
+      setDisabled(true);// état initialisé  disabled=désactivé//
+    } else {
     console.log("La date qui est dans le reducer", selectedDate);
     // Convertir la date en tant que chaîne au Redux store
     const dateStr = selectedDate.toISOString();
     dispatch(addDate(dateStr));
     navigation.navigate("Who");
+    setDisabled(false);// état initialisé activé//
+    }
   };
 
   return (
@@ -68,7 +77,7 @@ export default function CalendarScreen({ navigation }) {
           </View>
 
           <View style={styles.validateContainer}>
-            <SmallButton title="Valider" onPress={handleValidate} />
+            <SmallButton title="Valider" onPress={()=>handleValidate()} disabled={disabled}/>
           </View>
         </View>
       </LinearGradient>
@@ -121,5 +130,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    bottom: 15,
   },
 });
