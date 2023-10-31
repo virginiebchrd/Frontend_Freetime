@@ -197,7 +197,7 @@ export default function CreateProfilScreen({ navigation }) {
             </View>
 
             <View style={styles.validateContainer}>
-              <SmallButton title="Valider" onPress={handleValidate} />
+              <SmallButton style={styles.btn} title="Valider" onPress={handleValidate} />
             </View>
           </View>
         </View>
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    bottom: 15,
+    bottom: 35,
   },
   CheckboxMonsieur: {
     flexDirection: "row",

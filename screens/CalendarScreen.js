@@ -77,7 +77,7 @@ export default function CalendarScreen({ navigation }) {
           </View>
 
           <View style={styles.validateContainer}>
-            <SmallButton title="Valider" onPress={()=>handleValidate()} disabled={disabled}/>
+            <SmallButton style={styles.btn}  title="Valider" onPress={()=>handleValidate()} disabled={disabled}/>
           </View>
         </View>
       </LinearGradient>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   bodyContainer: {
-    height: "80%",
+    height: "82%",
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -130,6 +130,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    bottom: 15,
+    bottom: 0,
   },
 });

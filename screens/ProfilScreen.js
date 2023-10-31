@@ -120,7 +120,7 @@ export default function ProfilScreen({ navigation }) {
         </ScrollView>
 
         <View style={styles.validateContainer}>
-          <SmallButton title="Valider" onPress={handleValidate} />
+          <SmallButton style={styles.btn}  title="Valider" onPress={handleValidate} />
         </View>
       </LinearGradient>
     </View>
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    bottom: 15,
+    bottom: 0,
+    top: 5,
   },
 });

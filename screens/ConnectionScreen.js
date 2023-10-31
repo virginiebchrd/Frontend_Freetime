@@ -147,7 +147,7 @@ export default function FirstConnectionScreen({ navigation }) {
             </View>
           ) : (
             <View style={styles.validateContainer}>
-              <SmallButton title={Valider} onPress={handleConnection} />
+              <SmallButton style={styles.Btn} title={Valider} onPress={handleConnection} />
             </View>
           )}
         </View>
@@ -181,6 +181,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     alignItems: "center",
+    bottom: 0,
+    top: 92, //faire descendre le btn
     // marginBottom: 0,
     // marginTop: 5,
   },
