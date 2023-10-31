@@ -136,7 +136,7 @@ export default function FirstConnectionScreen({ navigation }) {
           )}
 
         <View style={styles.validateContainer}>
-          <SmallButton title={Valider} onPress={()=>handleRegister()} disabled={disabled} />
+          <SmallButton style={styles.btn}  title={Valider} onPress={()=>handleRegister()} disabled={disabled} />
         </View>
         </View>
 
@@ -155,17 +155,12 @@ const styles = StyleSheet.create({
     padding: 0,
   },
 
-  buttonContainer: {
-    height: 500,
-    width: "100%",
-    alignItems: "center",
-    marginBottom: 0,
-  },
   validateContainer: {
     height: "20%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    bottom: 0,
   },
 
   background: {

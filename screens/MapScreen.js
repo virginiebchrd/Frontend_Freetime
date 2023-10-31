@@ -120,7 +120,7 @@ export default function MapScreen({ navigation }) {
             )}
           </MapView>
           <View style={styles.validateContainer}>
-            <SmallButton title="Valider" onPress={handleValidate} />
+            <SmallButton style={styles.btn}  title="Valider" onPress={handleValidate} />
           </View>
         </View>
       </LinearGradient>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   mapContainer: {
-    height: "77%",
+    height: "74%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    bottom: 15,
+    bottom: 10,
   },
 
   containerInput: {

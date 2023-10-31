@@ -160,7 +160,7 @@ export default function ActivitiesScreen ({navigation}) {
                             <LargeButton title='Evasion' onPress={handleEvasion}/> 
                         </View>
                     <View style={styles.validateContainer}>
-                        <SmallButton title='Valider' onPress={handleValidate} />
+                        <SmallButton style={styles.btn}  title='Valider' onPress={handleValidate} />
                     </View>
                 </View>
 
@@ -210,21 +210,16 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     validateContainer: {
-        paddingTop: 30,
-        height: '25%',
+       // paddingTop: 30,
+        height: '20%',//25%
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        bottom: 15,
+        bottom: 0,
     },
     scrollView: {
         height: '50%',
         width: '100%',
     },
-    buttonContainer: {
-        height: '60%',
-        width: '100%',
-        borderWidth: 1
-    },
-
+  
   });

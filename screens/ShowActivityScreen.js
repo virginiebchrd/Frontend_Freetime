@@ -73,7 +73,7 @@ export default function ShowActivityScreen ({navigation, route}) {
                     
                     <View style={styles.validateContainer}>
                         {isExisted && <Text style={styles.textError}>Activité déjà ajoutée</Text>}
-                        <SmallButton title='Valider' onPress={handleValidate} />
+                        <SmallButton style={styles.btn}  title='Valider' onPress={handleValidate} />
                     </View>
                 </View>
             </LinearGradient>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     activityContainer: {
-        height: '30%',
+        height: '32%',
         width: '100%',
     },
     validateContainer: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        bottom: 15,
+        bottom: 0,
     },
     textError: {
         marginTop: 10,
