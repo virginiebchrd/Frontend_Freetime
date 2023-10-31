@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
