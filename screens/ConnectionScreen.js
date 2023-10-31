@@ -142,11 +142,11 @@ export default function FirstConnectionScreen({ navigation }) {
           </View>
 
           {isAllowed ? (
-            <View style={styles.buttonContainer}>
+            <View style={styles.validateContainer}>
               <SmallButton title={Valider} onPress={onPress} />
             </View>
           ) : (
-            <View style={styles.buttonContainer}>
+            <View style={styles.validateContainer}>
               <SmallButton title={Valider} onPress={handleConnection} />
             </View>
           )}
@@ -176,18 +176,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     top: 10,
   },
-  buttonContainer: {
+  validateContainer: {
     height: "20%",
-    width: 500,
+    width: "100%",
     alignItems: "center",
-    marginBottom: 0,
-    marginTop: 5,
+    alignItems: "center",
+    // marginBottom: 0,
+    // marginTop: 5,
   },
   title: {
     color: "#004644",
     fontFamily: "Indie-Flower",
     fontSize: 20,
-    marginBottom: 10,
+    textAlign: "center",
+    // marginBottom: 10,
   },
   label: {
     color: "#004644",
