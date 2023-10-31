@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
-
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,19 +10,23 @@ import CheckBoxContainer from "../components/CheckBoxContainer";
 import { storeHobbiesSaved } from "../reducers/hobbiesReducer";
 
 export default function ProfilScreen({ navigation }) {
+
   const dispatch = useDispatch();
   const hobbies = useSelector((state) => state.hobbies.value.hobbies);
-  const user = useSelector((state) => state.user);
+
+  const hobbiesSavedProfil = useSelector((state) => state.hobbies.value.hobbiesSaved);
 
   const userFirstname = useSelector((state) => state.user.value.firstname);
   const token = useSelector((state) => state.user.value.token);
   const userLastname = useSelector((state) => state.user.value.lastname);
   const userEmail = useSelector((state) => state.user.value.email);
-  console.log("tokenProfil", token);
+
   const [hobbiesSaved, setHobbiesSaved] = useState(false);
 
   const [activitiesData, setActivitiesData] = useState([]);
+
   let activities;
+
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -35,11 +38,19 @@ export default function ProfilScreen({ navigation }) {
           `https://backend-freetime.vercel.app/hobbies/users/${token}`
         );
         const data = await response.json();
-        console.log("data", data);
         if (data.result) {
-          console.log("hobbies", data.hobbies);
-          setHobbiesSaved(true);
-          setActivitiesData(data.hobbies);
+          if(data.hobbies.length > 0){
+            console.log("hobbiesFetch", data.hobbies);
+            
+            const idArray = data.hobbies.map((hobbiesSaved) =>{
+              return hobbiesSaved._id
+            })
+            dispatch(storeHobbiesSaved(idArray))
+            console.log('hobbies Saved Prodil', hobbiesSavedProfil);
+            
+            setActivitiesData(data.hobbies);
+            setHobbiesSaved(true);
+          }
         } else {
           if (data.error === "no hobbies") {
             console.log("nohobbies");
@@ -55,13 +66,11 @@ export default function ProfilScreen({ navigation }) {
   }, [hobbies]);
 
   const handleValidate = () => {
-    //dispatch activité
     navigation.navigate("Calendar");
   };
 
   if (hobbiesSaved) {
     activities = activitiesData.map((data, i) => {
-       dispatch(storeHobbiesSaved(data._id));
          return (
           <CheckBoxContainer 
             key={i} 

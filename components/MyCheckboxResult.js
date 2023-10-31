@@ -13,7 +13,7 @@ function MyCheckboxResult(props) {
         setChecked(!checked)
         if(!checked) {
           if(props.resultPages) {
-            console.log('add');
+
             navigation.navigate('ShowActivity',{activity: props.activity})
           }
           else {

@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
@@ -9,15 +9,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeHobbies } from '../reducers/hobbiesReducer';
 
-//const token = 'EnV8RoBmpHTaLSBCV7qvgHHD58SeazTH';
-
 export default function ShowActivityScreen ({navigation, route}) {
     const token = useSelector((state) => state.user.value.token)
-    console.log(token);
+
     const [isExisted, setIsExisted] = useState(false);
-    const dispatch = useDispatch();
+
     const dataActivity = route.params.activity;
-    console.log('dataAct', dataActivity);
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -35,7 +32,6 @@ export default function ShowActivityScreen ({navigation, route}) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             if(data.result) {
                 setIsExisted(false);
                 navigation.navigate('ShareActivity',{activity: dataActivity});
@@ -46,10 +42,6 @@ export default function ShowActivityScreen ({navigation, route}) {
             }
         })
         
-    }
-
-    if(isExisted) {
-        dispatch(removeHobbies(dataActivity.id));
     }
 
     return (
@@ -72,7 +64,7 @@ export default function ShowActivityScreen ({navigation, route}) {
                         }}
                         style={styles.map}
                         >
-                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.colorPin}/>
+                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.pinColor}/>
                         </MapView>
                     </View>
                     <View style={styles.activityContainer}>

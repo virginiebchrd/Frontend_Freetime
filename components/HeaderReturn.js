@@ -4,9 +4,15 @@ import { useNavigation } from '@react-navigation/native';
 import Logout from './Logout';
 import Profil from './Profil';
 import Return from './Return';
+import { logout } from '../reducers/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeHobbies, removeHobbiesLogout, removeHobbiesSaved } from '../reducers/hobbiesReducer';
+import Trash from './Trash';
+import { useEffect } from 'react';
 
-function HeaderReturn ({iconContext, pages, isNeeded}) {
+function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token}) {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     const handleReturn = () => {
         if(pages === 'ComeFromProfil') {
@@ -19,7 +25,8 @@ function HeaderReturn ({iconContext, pages, isNeeded}) {
 
     const handleLogout = () => {
         console.log('logout');
-        //dispatch() retirer adresse mail
+        dispatch(logout());
+        dispatch(removeHobbiesLogout());
         navigation.navigate('Home');
     }
 
@@ -31,6 +38,25 @@ function HeaderReturn ({iconContext, pages, isNeeded}) {
         navigation.navigate('Map');
     }
 
+    const handleTrash = () => {
+        console.log('trash');
+        console.log(token);
+        fetch(`https://backend-freetime.vercel.app/users/delete/query?id=${idActivity}&token=${token}`,{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            if(data.result) {
+                console.log('je passe ici');
+                dispatch(removeHobbies(idActivity))
+                dispatch(removeHobbiesSaved(idActivity))
+                navigation.navigate('Profil');
+            }
+        })
+    }
+
     let icon;
     if(iconContext === 'logout') {
         icon = <Logout onPress={handleLogout}/>
@@ -38,7 +64,9 @@ function HeaderReturn ({iconContext, pages, isNeeded}) {
     else if(iconContext === 'profil') {
         icon = <Profil onPress={handleProfil}/>
     }
-
+    else if(iconContext === 'trash') {
+        icon = <Trash onPress={handleTrash} />
+    }
 
     return (
         <View style={styles.headerContainer}>

@@ -13,17 +13,14 @@ import StarsMarks from "../components/StarsMarks";
 
 export default function MarksScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
-    const dispatch = useDispatch();
-    console.log('share',dataActivity);
 
     const token = useSelector((state) => state.user.value.token)
-    console.log('tokenMarks',token);
+
 
     const [personnalMark, setPersonnalMark] = useState(0);
     const [averageMark, setAverageMark] = useState(0);
     const [isDisabled, setIsDisabled] = useState(false);
 
-    //const hobbies = useSelector((state) => state.hobbies.value.hobbies);
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -32,17 +29,14 @@ export default function MarksScreen ({navigation, route}) {
 
     //UseEffect pour récupérer la note moyenne au démarraeg et a chaque nouvelle note personnelle
     useEffect( () => {
-        //fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/${dataActivity.id}`)
-        console.log('iddata', dataActivity.id);
         fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
-        //fetch(`http://192.168.1.12:3000/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
-                console.log('ave',data);
+
                 setAverageMark(data.average);
                 if(data.myMark) {
-                    console.log(('ici'));
+
                     setPersonnalMark(data.myMark);
                     setIsDisabled(true);
                 }
@@ -57,48 +51,43 @@ export default function MarksScreen ({navigation, route}) {
     return null;
   }
 
-    const handleStars = (num) => {
-        console.log(num);
-        
-        
-        //fetch(`http://192.168.1.12:3000/hobbies/rating/${dataActivity.id}`,{
-        fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({token: token, myMark: num+1})
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('POST', data);
-            setPersonnalMark(data.personalMark);
-        })
-    }
-
+  const handleStars = (num) => {
+    console.log(num);
     
+    fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({token: token, myMark: num+1})
+    })
+    .then(response => response.json())
+    .then(data => {
+        setPersonnalMark(data.personalMark);
+    })
+}
 
-    let myMark =[]
-    for(let i=0; i<5 ; i++) {
-        let styleBlue = {};
-        if(i < personnalMark) {
-            styleBlue = 'red'
-        }
-        else {
-            styleBlue='#004644'
-        }
-        myMark.push(<StarsMarks key={i} style={styleBlue} onPress={() =>{isDisabled? null : handleStars(i)}} disabled={isDisabled} activeOpacity={isDisabled? 1 : 0.2} />)
+let myMark =[]
+for(let i=0; i<5 ; i++) {
+    let styleBlue = {};
+    if(i < personnalMark) {
+        styleBlue = 'red'
     }
-    
-    let markAverage = [];
-    for(let i=0; i<5 ; i++) {
-        let styleBlue;
-        if(i <= averageMark-1) {
-            styleBlue = 'red'
-        }
-        else {
-            styleBlue='#004644'
-        }
-        markAverage.push(<StarsMarks key={i} style={styleBlue} disabled={true} activeOpacity={1} />)
+    else {
+        styleBlue='#004644'
     }
+    myMark.push(<StarsMarks key={i} style={styleBlue} onPress={() =>{isDisabled? null : handleStars(i)}} disabled={isDisabled} activeOpacity={isDisabled? 1 : 0.2} />)
+}
+
+let markAverage = [];
+for(let i=0; i<5 ; i++) {
+    let styleBlue;
+    if(i <= averageMark-1) {
+        styleBlue = 'red'
+    }
+    else {
+        styleBlue='#004644'
+    }
+    markAverage.push(<StarsMarks key={i} style={styleBlue} disabled={true} activeOpacity={1} />)
+}
 
   return (
     <View style={styles.container}>
@@ -106,7 +95,7 @@ export default function MarksScreen ({navigation, route}) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn iconContext="profil" pages="Profil" isNeeded={true} />
+        <HeaderReturn iconContext="trash" idActivity={dataActivity.id} pages="Profil" isNeeded={true} token={token} />
 
         <View style={styles.bodyContainer}>
           <Text style={styles.title}>Noter votre activité</Text>

@@ -1,7 +1,7 @@
 import {TouchableOpacity, Text, View, StyleSheet, Image, Pressable} from 'react-native';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addHobbies, removeHobbies } from '../reducers/hobbiesReducer';
+import { addHobbies, removeHobbies, removeHobbiesResult } from '../reducers/hobbiesReducer';
 import { Ionicons } from '@expo/vector-icons';
 
 function MyCheckbox(props) {
