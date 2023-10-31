@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 0,
     padding: 0,
+    // backgroundColor: "yellow",
   },
   background: {
     height: "100%",
@@ -222,23 +223,28 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   bodyContainer: {
-    height: "80%",
+    height: "100%",
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
-    marginBottom: 5,
+    marginTop: 0,
     padding: 0,
+    // backgroundColor: "red",
   },
   titleContainer: {
     height: "20%",
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around",
+    
+    // backgroundColor: "blue",
   },
   title: {
     fontSize: 22,
     fontFamily: "Indie-Flower",
     color: "#004644",
+    paddingTop: 20,
+
   },
   infoContainer: {
     height: "65%", //60%
@@ -250,7 +256,7 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   civilityContainer: {
-    height: "25%",
+    height: "35%", // à la place de 25%
     width: "65%",
     flexDirection: "row", //
     alignItems: "center", //
@@ -273,7 +279,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingRight: 10,
+    paddingRight: 12,
     paddingBottom: 5,
   },
   validateContainer: {
@@ -286,7 +292,7 @@ const styles = StyleSheet.create({
   CheckboxMonsieur: {
     flexDirection: "row",
     alignItems: "center",
-    margin: 10,
+    // margin: 10,
   },
   CheckboxMadame: {
     flexDirection: "row",
