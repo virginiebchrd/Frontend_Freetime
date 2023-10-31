@@ -96,26 +96,35 @@ export default function MapScreen({ navigation }) {
             />
           </View>
 
-                            <MapView 
-                                style= {styles.mapContainer}
-                                initialRegion={{
-                                latitude: 45.833619,
-                                longitude: 1.261105,
-                                latitudeDelta: 12,
-                                longitudeDelta: 12,
-                                }}
-                                showsUserLocation
-                                onLongPress={(e) => handleMap(e.nativeEvent)}
-                            >
-                            {citySearch && <Marker coordinate={{latitude: coords.latitude, longitude: coords.longitude}} title={city} pinColor="#fecb2d" />}
-                            </MapView>
-                            <View style={styles.validateContainer}>
-                                <SmallButton title="Valider" onPress={handleValidate} />
-                            </View>
-                    </View>
-            </LinearGradient>
+          <MapView
+            style={styles.mapContainer}
+            initialRegion={{
+              latitude: 45.833619,
+              longitude: 1.261105,
+              latitudeDelta: 12,
+              longitudeDelta: 12,
+            }}
+            showsUserLocation
+            onLongPress={(e) => handleMap(e.nativeEvent)}
+          >
+            {citySearch && (
+              <Marker
+                coordinate={{
+                  latitude: coords.latitude,
+                  longitude: coords.longitude,
+                }}
+                title={city}
+                pinColor="#fecb2d"
+              />
+            )}
+          </MapView>
+          <View style={styles.validateContainer}>
+            <SmallButton title="Valider" onPress={handleValidate} />
+          </View>
         </View>
-    )
+      </LinearGradient>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

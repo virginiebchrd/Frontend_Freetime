@@ -107,7 +107,7 @@ export default function FirstConnectionScreen({ navigation }) {
         style={styles.EmailInput}
         onChangeText={(value) => setMail(value)} value={mail} />
 
-        <Text style={styles.title}>Saisir une adresse mail</Text>
+        <Text style={styles.title}>Saisir votre mot de passe</Text>
 
         <PasswordInput
         style={styles.PasswordInput}
@@ -145,16 +145,16 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
-    margin: 0,
-    padding: 0,
+    // margin: 0,
+    // padding: 0,
   },
 
-  buttonContainer: {
-    height: 500,
-    width: "100%",
-    alignItems: "center",
-    marginBottom: 0,
-  },
+  // buttonContainer: {
+  //   height: 500,
+  //   width: "100%",
+  //   alignItems: "center",
+  //   marginBottom: 0,
+  // },
   validateContainer: {
     height: "20%",
     width: "100%",
@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
     color: "#004644",
     fontFamily: "Indie-Flower",
     fontSize: 20,
-    marginBottom: 10,
-    marginTop: 10,
+    // marginBottom: 10,
+    // marginTop: 10,
     textAlign: "center",
   },
 
@@ -183,10 +183,10 @@ const styles = StyleSheet.create({
     fontFamily: "Indie-Flower",
     marginBottom: 5,
   },
-  PasswordInput: {
-    margin: 5,
-  },
-  EmailInput: {
-    margin:5,
-  },
+  // PasswordInput: {
+  //   margin: 5,
+  // },
+  // EmailInput: {
+  //   margin:5,
+  // },
 });
