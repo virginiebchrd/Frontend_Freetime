@@ -10,7 +10,7 @@ import { removeHobbies, removeHobbiesLogout, removeHobbiesSaved } from '../reduc
 import Trash from './Trash';
 import { useEffect } from 'react';
 
-function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token}) {
+function HeaderReturnWithInput ({iconContext, pages, isNeeded, idActivity, token}) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
@@ -89,7 +89,7 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token}) {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '18%',
+        height: 145,
         width: '100%',
     },
     headerGradient: {
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default HeaderReturn;
+export default HeaderReturnWithInput;
