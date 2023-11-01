@@ -239,13 +239,10 @@ export default function ProfilScreen({ navigation, route }) {
 
   const handlePressAll = () => {
     setCheckedAll(!checkedAll);
-
-    if (!checkedAll) {
-      setCheckedAmis(true);
-      setCheckedPerso(true);
-      setCheckedFamille(true);
+    setCheckedPerso(!checkedAll);
+    setCheckedFamille(!checkedAll);
+    setCheckedAmis(!checkedAll);
     }
-  };
 
   const handlePressFamille = () => {
     setCheckedFamille(!checkedFamille);
@@ -287,19 +284,15 @@ export default function ProfilScreen({ navigation, route }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn
-          isNeeded={true}
-          iconContext="logout"
-          pages="ComeFromProfil"
-        />
+        <HeaderReturn isNeeded={true} iconContext="logout" pages="Calendar" />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
             <FontAwesome name="user" size={75} color="#004644" />
             <Text style={styles.title}>
               {userFirstname && userLastname
-                ? `Welcome, ${userFirstname} ${userLastname}`
-                : `Welcome, ${userEmail}`}
+                ? `Bonjour, ${userFirstname} ${userLastname}`
+                : `Bonjour, ${userEmail}`}
             </Text>
           </View>
 
@@ -427,6 +420,7 @@ const styles = StyleSheet.create({
     fontFamily: "Indie-Flower",
     fontSize: 15,
     color: "#004644",
+    textAlign: 'center',
   },
   validateContainer: {
     height: "17%",

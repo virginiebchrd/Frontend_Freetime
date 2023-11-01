@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: "#004644",
-    fontSize: 40,
+    fontSize: 60,
     fontFamily: "Indie-Flower",
     marginTop: 130,
   },

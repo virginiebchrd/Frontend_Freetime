@@ -81,7 +81,7 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token, who}) {
         <View style={styles.headerContainer}>
             <LinearGradient colors={['#004644', 'transparent']}  style={styles.headerGradient} >
                 <View style={styles.returnContainer}>
-                    {isNeeded && <Return onPress={handleReturn}/>}
+                    {isNeeded && <Return onPress={() => handleReturn()}/>}
                 </View>
                 <View style={styles.logoContainer}>
                     <TouchableOpacity style={styles.logoTouchable} onPress={()=>handleLogo()}>

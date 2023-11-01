@@ -4,10 +4,14 @@ import { useFonts } from "expo-font";
 
 import * as Linking from "expo-linking";
 
-function Activity(props) {
-  const [fontsLoaded] = useFonts({
-    "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
-  });
+function Activity (props) {
+    const [fontsLoaded] = useFonts({
+        'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
+    });
+
+    if (!fontsLoaded) {
+        return null;
+    }
 
   return (
     <View style={styles.headerContainer}>
@@ -42,41 +46,43 @@ function Activity(props) {
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    height: "100%",
-    width: "100%",
-    borderWidth: 2,
-    borderBlockColor: "#004644",
-    backgroundColor: "#cae1db",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  activityContainer: {
-    height: "90%",
-    width: "90%",
-    backgroundColor: "#004644",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  pinContainer: {
-    height: "100%",
-    width: "30%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  activityDetail: {
-    height: "100%",
-    width: "70%",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-  },
-  text: {
-    fontFamily: "Indie-Flower",
-    fontSize: 15,
-    color: "#cae1db",
-  },
+    headerContainer: {
+        height: '100%',
+        width: '100%',
+        borderWidth: 2,
+        borderBlockColor: '#004644',
+        backgroundColor: '#cae1db',
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    activityContainer: {
+        height: '90%',
+        width: '90%',
+        backgroundColor: '#004644',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
+    pinContainer: {
+        height: '100%',
+        width: '30%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    activityDetail: {
+        height: '100%',
+        width: '70%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+    },
+    text: {
+        fontFamily: 'Indie-Flower',
+        fontSize: 15,
+        color: '#cae1db',
+        textAlign: 'center',
+    }
 });
 
 export default Activity;

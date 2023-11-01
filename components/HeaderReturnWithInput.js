@@ -39,9 +39,6 @@ function HeaderReturnWithInput({
     navigation.navigate("Profil");
   };
 
-  const handleLogo = () => {
-    navigation.navigate("Map");
-  };
 
   const handleTrash = () => {
     console.log("trash");
@@ -80,31 +77,24 @@ function HeaderReturnWithInput({
     icon = <Trash onPress={handleTrash} />;
   }
 
-  return (
-    <View style={styles.headerContainer}>
-      <LinearGradient
-        colors={["#004644", "transparent"]}
-        style={styles.headerGradient}
-      >
-        <View style={styles.returnContainer}>
-          {isNeeded && <Return onPress={handleReturn} />}
+    return (
+        <View style={styles.headerContainer}>
+            <LinearGradient colors={['#004644', 'transparent']}  style={styles.headerGradient} >
+                <View style={styles.returnContainer}>
+                    {isNeeded && <Return onPress={handleReturn}/>}
+                </View>
+                <View style={styles.logoContainer}>
+                    <TouchableOpacity style={styles.logoTouchable} >
+                        <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.profilContainer}>
+                    {icon}
+                </View>
+            </LinearGradient>
         </View>
-        <View style={styles.logoContainer}>
-          <TouchableOpacity
-            style={styles.logoTouchable}
-            onPress={() => handleLogo()}
-          >
-            <Image
-              source={require("../assets/FreeTime-logos_transparent.png")}
-              style={styles.logo}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.profilContainer}>{icon}</View>
-      </LinearGradient>
-    </View>
-  );
-}
+    )
+};
 
 const styles = StyleSheet.create({
   headerContainer: {

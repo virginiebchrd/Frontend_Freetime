@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     fontFamily: "Indie-Flower",
     color: "#cae1db",
     fontSize: 15,
+        textAlign: 'center',
   },
   checkboxContainer: {
     height: "100%",
