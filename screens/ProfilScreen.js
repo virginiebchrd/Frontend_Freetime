@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     color: "#004644",
   },
   validateContainer: {
-    height: "20%",
+    height: "17%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
