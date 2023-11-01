@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
@@ -6,14 +6,15 @@ import SmallButton from '../components/buttons/SmallButton';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
-
-const token = 'EnV8RoBmpHTaLSBCV7qvgHHD58SeazTH';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeHobbies } from '../reducers/hobbiesReducer';
 
 export default function ShowActivityScreen ({navigation, route}) {
-    const dataActivity = route.params.activity;
-    console.log('dataAct', dataActivity);
+    const token = useSelector((state) => state.user.value.token)
 
-    const [isValidated, setIsValidated] = useState(false);
+    const [isExisted, setIsExisted] = useState(false);
+
+    const dataActivity = route.params.activity;
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -24,19 +25,20 @@ export default function ShowActivityScreen ({navigation, route}) {
     }
 
     const handleValidate = () => {
-        fetch(`http://192.168.1.12:3000/users/hobbies/${token}`, {
+        fetch(`https://backend-freetime.vercel.app/users/hobbies/${token}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({hobbies : dataActivity.id})
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             if(data.result) {
+                setIsExisted(false);
                 navigation.navigate('ShareActivity',{activity: dataActivity});
             }
             else {
                 console.log(data.error);
+                setIsExisted(true);
             }
         })
         
@@ -49,11 +51,7 @@ export default function ShowActivityScreen ({navigation, route}) {
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.titleContainer}>
-                    {isValidated ?
-                        <Text style={styles.title}>Partager votre activité</Text>
-                        :
                         <Text style={styles.title}>Activité sélectionnée</Text>
-                    }
                     </View>
                     <View style={styles.mapContainer}>
                         {/*TODO mettre coordonnée du useSelector */}
@@ -66,7 +64,7 @@ export default function ShowActivityScreen ({navigation, route}) {
                         }}
                         style={styles.map}
                         >
-                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.colorPin}/>
+                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.pinColor}/>
                         </MapView>
                     </View>
                     <View style={styles.activityContainer}>
@@ -74,11 +72,8 @@ export default function ShowActivityScreen ({navigation, route}) {
                     </View>
                     
                     <View style={styles.validateContainer}>
-                    {isValidated ?
-                        <View></View>
-                        :
-                        <SmallButton title='Valider' onPress={handleValidate} />
-                    }
+                        {isExisted && <Text style={styles.textError}>Activité déjà ajoutée</Text>}
+                        <SmallButton style={styles.btn}  title='Valider' onPress={handleValidate} />
                     </View>
                 </View>
             </LinearGradient>
@@ -128,7 +123,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     activityContainer: {
-        height: '30%',
+        height: '32%',
         width: '100%',
     },
     validateContainer: {
@@ -136,6 +131,13 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        bottom: 0,
+    },
+    textError: {
+        marginTop: 10,
+        fontSize: 18,
+        fontFamily: 'Indie-Flower',
+        color: '#004644',
     },
 
   });

@@ -3,12 +3,12 @@
 @param {string} label
  */
 import React from "react";
-import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView, Keyboard } from "react-native";
+import { View, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 
 
-function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label, icon, onChangeText, secureTextEntry, onPress }) {
+function InputCity({ value, placeholder, onChangeText, onPress }) {
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -20,22 +20,16 @@ function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label,
     <KeyboardAvoidingView
     behavior={Platform.OS === "ios" ? "padding" : "height"}
     style={styles.container}
-  >
+    >
       <View style={styles.inputContainer}>
-
         <TextInput  style={[styles.input, { fontFamily: "Indie-Flower" }]}
         placeholderTextColor="#cae1db" 
         placeholder={placeholder}
         onChangeText={onChangeText}
         autoCapitalize="none" 
-        secureTextEntry={secureTextEntry}
-        keyborardType={keyborardType} 
-        autoComplete={autoComplete}
         value={value}
-
        />
 
-        {icon && (
           <View style={styles.iconContainer}>
             <FontAwesomeIcon
               name="search"
@@ -45,10 +39,8 @@ function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label,
               onPress={onPress}
             />
           </View>
-        )}
 
       </View>
-      
     </KeyboardAvoidingView>
   );
 }
@@ -67,7 +59,18 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     backgroundColor: "#fff",
   },
-  
+
+  label: {
+    position: "absolute",
+    left: 10, // Ajustez la position à gauche selon vos besoins
+    top: 10, // Ajustez la position vers le haut selon vos besoins
+    color: "#004644",
+    fontSize: 12,
+    backgroundColor: "#bbd1b0",
+    borderRadius: 5,
+    padding: 3,
+    },
+
   placeholder: {
     color: "#004644",
     fontSize: 12,
@@ -92,9 +95,9 @@ const styles = StyleSheet.create({
     width: 250, // Ajustez la largeur de l'input
     padding:5,
   },
-
   iconContainer:{
+
   },
 });
 
-export default InputWithLabel;
+export default InputCity;

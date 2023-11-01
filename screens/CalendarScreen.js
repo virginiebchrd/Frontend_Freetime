@@ -4,8 +4,18 @@ import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import CalendarContainer from "../components/CalendarContainer";
+import DateSelector from "../components/CalendarPicker";
+import { useDispatch } from "react-redux";
+import { addDate } from "../reducers/hobbiesReducer";
+import React, { useState } from "react";
+import moment from "moment";
+import "moment/locale/fr";
 
 export default function CalendarScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [disabled, setDisabled] = useState(false);// état initialisé  disabled=désactivé//
+
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -14,17 +24,29 @@ export default function CalendarScreen({ navigation }) {
     return null;
   }
 
-
-    const handleValidate = () => {
-        //dispatch activité
-        navigation.navigate('Who');
-    }
+  const onDateChange = (date) => {
+    const formattedDate = moment(date).locale("fr").format("dddd D MMMM YYYY");
+    const formattedDay = moment(date).locale("fr").format("dddd").split(" ");
+    console.log("La date sélectionnée : ", formattedDate);
+    console.log("Le jour sélectionné : ", formattedDay);
+    setSelectedDate(moment(date));
     
-    return (
-        <View style={styles.container}>
-            <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages="Profil" isNeeded={true} />
+  };
 
+  const handleValidate = () => {
+    if(selectedDate==null) {
+      console.log("Pas de date sélectionnée");
+      alert("Attention la date n'a pas été sélectionnée");
+      setDisabled(true);// état initialisé  disabled=désactivé//
+    } else {
+    console.log("La date qui est dans le reducer", selectedDate);
+    // Convertir la date en tant que chaîne au Redux store
+    const dateStr = selectedDate.toISOString();
+    dispatch(addDate(dateStr));
+    navigation.navigate("Who");
+    setDisabled(false);// état initialisé activé//
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -32,7 +54,7 @@ export default function CalendarScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn iconContext="profil" pages="Profil" />
+        <HeaderReturn iconContext="profil" pages="Profil" isNeeded={true} />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
@@ -42,11 +64,20 @@ export default function CalendarScreen({ navigation }) {
           </View>
 
           <View style={styles.infoContainer}>
-            <CalendarContainer />
+            <DateSelector
+              setSelectedDate={setSelectedDate}
+              onDateChange={onDateChange}
+            />
+            {selectedDate && (
+              <Text style={styles.textCalendar}>
+                Date sélectionnée :{" "}
+                {moment(selectedDate).locale("fr").format("dddd D MMMM YYYY")}
+              </Text>
+            )}
           </View>
 
           <View style={styles.validateContainer}>
-            <SmallButton title="Valider" onPress={handleValidate} />
+            <SmallButton style={styles.btn}  title="Valider" onPress={()=>handleValidate()} disabled={disabled}/>
           </View>
         </View>
       </LinearGradient>
@@ -68,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   bodyContainer: {
-    height: "80%",
+    height: "82%",
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -90,13 +121,15 @@ const styles = StyleSheet.create({
     height: "60%",
     width: "100%",
     alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
+    justifyContent: "top",
+    margin: 0,
+    paddingBottom: 0,
   },
   validateContainer: {
     height: "20%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    bottom: 0,
   },
 });

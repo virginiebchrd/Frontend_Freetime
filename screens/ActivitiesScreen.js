@@ -7,11 +7,27 @@ import SmallButton from '../components/buttons/SmallButton';
 import { useState } from 'react';
 import ChooseActivity from '../components/ChooseActivity';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from "moment";
+import "moment/locale/fr";
 
+
+//const cityTest = 'Lyon';
+const cityTest = 'Limoges';
+
+const day = 'mardi'
 export default function ActivitiesScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
+
+    const city = useSelector((state) => state.user.value.city.name)
+    console.log('city', city);
+
+    let date = useSelector((state) => state.hobbies.value.date);
+    date = new Date(date);
+    let day = moment(date).locale("fr").format("dddd")
+    day= day.toLowerCase();
+    console.log('date', day);
 
     if (!fontsLoaded) {
     return null;
@@ -20,7 +36,9 @@ export default function ActivitiesScreen ({navigation}) {
     const handleSports = () => {
         //setIsShownSports(true)
         console.log('sports');
-        fetch(`http://192.168.1.12:3000/hobbies/sports`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/sports/${city}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -32,13 +50,22 @@ export default function ActivitiesScreen ({navigation}) {
                 
                 navigation.navigate("ShowCategory", {dataToSend})
             }
+            else {
+                const dataToSend={
+                    category: "sports",
+                    hobbies: [],
+                }
+                navigation.navigate("ShowCategory", {dataToSend})
+            }
         })
         
     }
 
     const handleArtistics = () => {
         console.log('artistique');
-        fetch(`http://192.168.1.12:3000/hobbies/artistique`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/artistique`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -49,12 +76,20 @@ export default function ActivitiesScreen ({navigation}) {
                 }
                 navigation.navigate("ShowCategory", {dataToSend})
             }
+            else {
+                const dataToSend={
+                    category: "artistique",
+                    hobbies: [],
+                }
+                navigation.navigate("ShowCategory", {dataToSend})
+            }
         })
     }
 
     const handleCulture = () => {
         console.log('culture');
-        fetch(`http://192.168.1.12:3000/hobbies/culture`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/culture`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -65,12 +100,20 @@ export default function ActivitiesScreen ({navigation}) {
                 }
                 navigation.navigate("ShowCategory", {dataToSend})
             }
+            else {
+                const dataToSend={
+                    category: "culture",
+                    hobbies: [],
+                }
+                navigation.navigate("ShowCategory", {dataToSend})
+            }
         })
     }
 
     const handleEvasion = () => {
         console.log('evasion');
-        fetch(`http://192.168.1.12:3000/hobbies/evasion`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/evasion`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -78,6 +121,13 @@ export default function ActivitiesScreen ({navigation}) {
                 const dataToSend={
                     category: "evasion",
                     hobbies: data.hobbies,
+                }
+                navigation.navigate("ShowCategory", {dataToSend})
+            }
+            else {
+                const dataToSend={
+                    category: "evasion",
+                    hobbies: [],
                 }
                 navigation.navigate("ShowCategory", {dataToSend})
             }
@@ -110,7 +160,7 @@ export default function ActivitiesScreen ({navigation}) {
                             <LargeButton title='Evasion' onPress={handleEvasion}/> 
                         </View>
                     <View style={styles.validateContainer}>
-                        <SmallButton title='Valider' onPress={handleValidate} />
+                        <SmallButton style={styles.btn}  title='Valider' onPress={handleValidate} />
                     </View>
                 </View>
 
@@ -160,20 +210,16 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     validateContainer: {
-        paddingTop: 30,
-        height: '25%',
+       // paddingTop: 30,
+        height: '20%',//25%
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        bottom: 0,
     },
     scrollView: {
         height: '50%',
         width: '100%',
     },
-    buttonContainer: {
-        height: '60%',
-        width: '100%',
-        borderWidth: 1
-    },
-
+  
   });

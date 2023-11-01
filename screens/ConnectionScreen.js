@@ -1,17 +1,23 @@
-
-import { View, StyleSheet, Text, KeyboardAvoidingView, } from "react-native";
-
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
+} from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
-import HeaderReturn from "../components/HeaderReturn";
+import HeaderReturnWithInput from "../components/HeaderReturnWithInput";
 import SmallButton from "../components/buttons/SmallButton";
 import InputWithLabel from "../components/inputs/InputWithLabel";
+import EmailInput from "../components/inputs/EmailInput";
+import PasswordInput from "../components/inputs/PasswordInput";
 //pour créer un état et stocker la valeur de l'état
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateEmail } from "../reducers/userReducer";
-
+import { addEmail, login } from "../reducers/userReducer";
 
 //pris sur emailregex.com
 const EMAIL_REGEX =
@@ -29,13 +35,10 @@ export default function FirstConnectionScreen({ navigation }) {
   const [passwordError, setPasswordError] = useState(false);
 
   const [isAllowed, setIsAllowed] = useState(false);
- 
+  const [showPassword, setShowPassword] = useState(false);
 
   const Valider = "Valider";
-  const EmailPlaceholder = "Entrer votre adresse mail";
-  const Password = "Entrer votre mot de passe";
-  const EmailLabel = "Mail";
-  const PasswordLabel = "Mot de passe";
+
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -46,18 +49,20 @@ export default function FirstConnectionScreen({ navigation }) {
   }
   //inspiration morningnews
   const handleConnection = () => {
+    Keyboard.dismiss();
     console.log("E-mail:", mail);
     console.log("Password:", password);
     console.log("isAllowed:", isAllowed);
 
-    if (EMAIL_REGEX.test(mail) && password.length >= 6) {
+    if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
 
       const userData = {
         email: mail,
         password: password,
       };
-      fetch("https://backend-freetime.vercel.app/users/signin", {
+      fetch(`https://backend-freetime.vercel.app/users/signin/`, {
+        //fetch(`http://192.168.1.12:3000/users/signin/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,9 +73,32 @@ export default function FirstConnectionScreen({ navigation }) {
         .then((data) => {
           console.log(data);
           if (data.result) {
-            dispatch(updateEmail(mail));
-            console.log("ici");
-            navigation.navigate("Profil");
+            console.log(data.email);
+            dispatch(addEmail(data.email));
+            fetch(
+              `https://backend-freetime.vercel.app/users/identity/${data.token}`
+            )
+              /*fetch(
+              `http://192.168.1.12:3000/users/identity/${data.token}`
+            )*/
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.result) {
+                  console.log(data.identity);
+
+                  dispatch(
+                    login({
+                      token: data.identity.token,
+                      firstname: data.identity.firstname,
+                      lastname: data.identity.lastname,
+                    })
+                  );
+                  console.log("ici");
+                  navigation.navigate("Profil");
+                } else {
+                  console.log("error identity", data.error);
+                }
+              });
           } else {
             console.log(
               "Échec de la connexion. Message d'erreur du serveur : ",
@@ -90,65 +118,49 @@ export default function FirstConnectionScreen({ navigation }) {
       setPassword("");
     }
   };
-  /* connecter avec une adresse mail et mot de passe déjà enregistré ???
-  useEffect(() => {
-    user.email && user.password && navigation.navigate('Profil');
-  }, []);
-  */
-  
-  //text affiché dans le bouton et placeholder des inputs
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <LinearGradient
+      colors={["#D9F2B1", "transparent"]}
+      style={styles.background}
     >
-      <LinearGradient
-        colors={["#D9F2B1", "transparent"]}
-        style={styles.background}
-      >
-        <HeaderReturn pages='Home' isNeeded={true}/>
+     <HeaderReturnWithInput pages="Home" isNeeded={true}  />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-        <View style={styles.InputsContainer}>
-          <Text style={styles.title}>Se connecter avec une adresse mail</Text>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerKeyboard}>
+      
+        <View style={styles.container}>
+            <View  style={styles.InputsContainerCSS}>
+              <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
-          <InputWithLabel
-            placeholder={EmailPlaceholder}
-            label={EmailLabel}
-            onChangeText={(value) => setMail(value)}
-            value={mail}
-            icon={false}
-            autoComplete="email"
-            keyboardType="email-address"
-          />
+              <EmailInput onChangeText={(value) => setMail(value)} value={mail} />
 
-          <InputWithLabel
-            placeholder={Password}
-            label={PasswordLabel}
-            icon={false}
-            onChangeText={(value) => setPassword(value)}
-            secureTextEntry
-          />
+              <Text style={styles.title}>Mot de passe</Text>
 
-          {(emailError || passwordError) && (
-            <Text style={styles.TextError}>Erreur mot de passe ou mail ?</Text>
+              <PasswordInput style={styles.PasswordInput} onChangeText={(value) => setPassword(value)} />
+
+              {(emailError || passwordError) && (
+                <Text style={styles.TextError}>
+                  Erreur mot de passe ou mail ?
+                </Text>
+              )}
+           </View>
+                  <View  style={styles.AjustementContainer}></View>
+          {isAllowed ? (
+            <View  style={styles.validateContainer}
+            >
+              <SmallButton style={styles.Btn} title={Valider} onPress={onPress} />
+            </View>
+          ) : (
+            <View  style={styles.validateContainer}
+            >
+              <SmallButton style={styles.Btn} title={Valider} onPress={handleConnection} />
+            </View>
           )}
         </View>
-
-        {isAllowed ? (
-          <View style={styles.buttonContainer}>
-            <SmallButton
-              title={Valider}
-              onPress={() => navigation.navigate("Connection")}
-            />
-          </View>
-        ) : (
-          <View style={styles.buttonContainer}>
-            <SmallButton title={Valider} onPress={handleConnection} />
-          </View>
-        )}
-      </LinearGradient>
-    </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+       </TouchableWithoutFeedback>
+    </LinearGradient>
   );
 }
 
@@ -158,6 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    top:0,
   },
   background: {
     height: "100%",
@@ -165,29 +178,64 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  InputsContainer: {
-    height: "50%",
+
+  containerKeyboard:{
+    flex: 1,
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+    bottom:0,
+    top:0,
+  },
+
+  InputsContainerCSS: {
+    height:"55%",
+    width: "90%",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    top: 30,
+    paddingTop: 0,
+    },
+
+  PasswordInput:{
+    magin: 30,
+  },
+  AjustementContainer: {
+    height: "20%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    top: 10,
-  },
-  buttonContainer: {
-    height: "20%",
-    width: 500,
-    alignItems: "center",
-    marginBottom: 0,
-  },
+    
+   },
+  validateContainer: {
+   height: "20%",
+   width: "100%",
+   alignItems: "center",
+    justifyContent: "flex-end",
+    bottom: -10,
+   },
+
   title: {
     color: "#004644",
     fontFamily: "Indie-Flower",
     fontSize: 20,
-    marginBottom: 10,
+    textAlign: "center",
+    top: -5,
+    bottom: 15,
   },
-
+  label: {
+    color: "#004644",
+    fontFamily: "Indie-Flower",
+    fontSize: 16,
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 10,
+    fontWeight: "600",
+  },
   TextError: {
     color: "#da122a",
     fontFamily: "Indie-Flower",
     marginBottom: 10,
   },
+ 
 });

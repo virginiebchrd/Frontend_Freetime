@@ -9,6 +9,7 @@ import CreateProfilScreen from "./screens/CreateProfilScreen";
 import ProfilScreen from "./screens/ProfilScreen";
 import CalendarScreen from "./screens/CalendarScreen";
 import WhoScreen from "./screens/WhoScreen";
+import WhoScreenBis from "./screens/WhoScreenBis";
 import MapScreen from "./screens/MapScreen";
 import ActivitiesScreen from "./screens/ActivitiesScreen";
 import ResultScreen from "./screens/ResultScreen";
@@ -20,6 +21,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/userReducer";
 import hobbies from './reducers/hobbiesReducer';
 import ShareActivityScreen from "./screens/ShareActivityScreen";
+import MarksScreen from "./screens/MarksScreen";
 
 const store = configureStore({
   reducer: { user: userReducer, hobbies },
@@ -37,8 +39,10 @@ export default function App() {
           <Stack.Screen name="Connection" component={ConnectionScreen} />
           <Stack.Screen name="CreateProfil" component={CreateProfilScreen} />
           <Stack.Screen name="Profil" component={ProfilScreen} />
+          <Stack.Screen name="Marks" component={MarksScreen} />
           <Stack.Screen name="Calendar" component={CalendarScreen} />
           <Stack.Screen name="Who" component={WhoScreen} />
+          <Stack.Screen name="WhoBis" component={WhoScreenBis} />
           <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Activities" component={ActivitiesScreen} />
           <Stack.Screen name="ShowCategory" component={ShowCategoryScreen} />

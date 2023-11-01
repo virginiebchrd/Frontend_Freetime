@@ -6,46 +6,27 @@ import HeaderReturn from '../components/HeaderReturn';
 import CheckBoxContainer from '../components/CheckBoxContainer';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const city = {latitude: 45.83, longitude: 1.26} //test avec Limoges avec des données brutes imaginaires
 
-const ActivityDataTest = [
-    {colorPin: 'red',name: "Boxe", latitude: 45.8359, longitude: 1.2635, activity:{
-        street: "25 rue des coqs", zipCode: 87000, city: "Limoges", email:"boxe@gmail.com", phoneNumber: +33555241236,
-    } },
-    {colorPin: 'yellow',name: "Cinéma", latitude: 45.8354, longitude: 1.2604, activity:{
-        street: " 2 Allée des coquelicots", zipCode: 87000, city: "Limoges", email:"cinema@gmail.com", phoneNumber: +33555241295,
-    }},
-    {colorPin: 'pink',name: "Escape Game", latitude: 45.8257, longitude: 1.2575,activity:{
-        street: "56 rue de la soif", zipCode: 87000, city: "Limoges", email:"escape@gmail.com", phoneNumber: +33555225236,
-    } },
-    {colorPin: 'blue',name: "Fly Yoga", latitude: 45.8370, longitude: 1.2596, activity:{
-        street: "25 rue des coqs", zipCode: 87000, city: "Limoges", email:"yogaFly@gmail.com", phoneNumber: +33555691236,
-    } },
-]
 
-const test = [
-    '6537cf76d30bc3e81d0e8cf0',
-    '6537cd29d30bc3e81d0e8ceb',
-    /*'6537ca41d30bc3e81d0e8ce7',*/
-];
-
-const token = 'uhSWw7eDVYOdKDbJSDbxMBOf_40T09E-';
+//const city = { latitude: 45.7578137, longitude: 4.8320114 } //test avec Lyon avec des données brutes imaginaires
+const city = { latitude: 45.8354243, longitude: 1.2644847 } //test avec Limoges avec des données brutes imaginaires
 
 export default function ResultScreen ({navigation}) {
     const [ActivityData, setActivityData] = useState([]);
     const hobbies = useSelector( (state) => state.hobbies.value.hobbies)
-    console.log(hobbies);
+
+    const hobbiesSaved = useSelector( (state) => state.hobbies.value.hobbiesSaved);
 
     useEffect ( () => {
-        //TODO Ajouter le tableau récupérer d'ID
+
             if(hobbies.length !== 0) {
                 console.log('test');
-                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbies}`,)
+                fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbies}`,)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {
-                            console.log('hobbies',data.hobby);
                             setActivityData(data.hobby);
                         }
                 })
@@ -64,16 +45,26 @@ export default function ResultScreen ({navigation}) {
     }
     
     const activities = ActivityData.map((data,i) => {
-        //const activities = ActivityDataTest.map((data,i) => {
-        return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, id:data._id, activityName: data.name, email:data.email, adress: data.address.street, zipCode: data.address.zipCode, phoneNumber: data.phoneNumber, city: data.address.city, activity: data.category, latitude: data.address.latitude, longitude: data.address.longitude}} />
-        //return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, activityName: data.name, email:data.activity.email, adress: data.activity.street, zipCode: data.activity.zipCode, phoneNumber: data.activity.phoneNumber, city: data.activity.city, activity: data.category, latitude: data.latitude, longitude: data.longitude, pinColor: data.colorPin}} />
+        let isSaved = hobbiesSaved.some(e => e === data._id)
+        let colorPin;
+        console.log('isSaved', isSaved);
+        isSaved? colorPin='red' : colorPin='blue';
+        return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, id:data._id, activityName: data.name, email:data.email, adress: data.address.street, zipCode: data.address.zipCode, phoneNumber: data.phoneNumber, city: data.address.city, activity: data.category, latitude: data.address.latitude, longitude: data.address.longitude, site: data.site, resultPages: true, pinColor: colorPin}} />
+    
     })
 
-
-    //const markers = ActivityDataTest.map((data,i) => {
     const markers = ActivityData.map((data,i) => {
-        return <Marker key={i} coordinate={{latitude: data.address.latitude, longitude: data.address.longitude}} pinColor={data.colorPin} />
-        //return <Marker key={i} coordinate={{latitude: data.latitude, longitude: data.longitude}} pinColor={data.colorPin} />
+        let isSaved = hobbiesSaved.some(e => e === data._id)
+        let pinColor;
+
+        if (isSaved) {
+            pinColor='red';
+            desc = "Déja validée";
+        } else {
+            pinColor='blue';
+            desc = "Nouvelle Activité";
+        }
+        return <Marker key={i} coordinate={{latitude: data.address.latitude, longitude: data.address.longitude}} title={data.name} pinColor={pinColor} description={desc} />
     })
 
     return (
@@ -86,13 +77,24 @@ export default function ResultScreen ({navigation}) {
                     initialRegion={{
                         latitude: city.latitude,
                         longitude: city.longitude,
-                        latitudeDelta: 0.05,
-                        longitudeDelta: 0.05,
+                        latitudeDelta: 0.10, //0.10 au lieu de 0.05 => affichage de la périphérie de la ville
+                        longitudeDelta: 0.10,
                     }}
                     style={styles.map}
                 >
                     {markers}
                 </MapView>
+
+                <View style={styles.legend}>
+                    <View style={styles.legendMarker}>
+                        <FontAwesome name='map-pin' size={25} color="red" />
+                        <Text style={styles.text}>Déja validée</Text>
+                    </View>
+                    <View style={styles.legendMarker}>
+                        <FontAwesome name='map-pin' size={25} color="blue" />
+                        <Text style={styles.text}>A découvrir</Text>
+                    </View>
+                </View>
 
                 <ScrollView>
                     <View style={styles.activitiesContainer}>
@@ -100,9 +102,6 @@ export default function ResultScreen ({navigation}) {
                     </View>
                 </ScrollView>
 
-                
-
-                
             </LinearGradient>
         </View>
     )
@@ -148,6 +147,30 @@ const styles = StyleSheet.create({
     map: {
         height: '40%',
         width: '99%',
+    },
+    legend: {
+        height: '7%',
+        width: '40%',
+        backgroundColor: 'rgba(255,255,255,0.6)',
+        zIndex: 5,
+        position: 'absolute',
+        bottom: 324,
+        right: 0,
+        pointerEvents: 'none',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    legendMarker: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 5,
+    },
+    text: {
+        fontSize: 17,
+        fontFamily: 'Indie-Flower',
+        color: '#004644',
+        marginLeft: 5,
     },
     activitiesContainer: {
         flex: 1,

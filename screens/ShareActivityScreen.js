@@ -2,20 +2,18 @@ import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
-import SmallButton from '../components/buttons/SmallButton';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeHobbies } from '../reducers/hobbiesReducer';
+import { removeHobbies, storeHobbiesSaved } from '../reducers/hobbiesReducer';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function ShareActivityScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
-    const dispatch = useDispatch();
-    console.log('share',dataActivity);
 
-    const hobbies = useSelector((state) => state.hobbies.value.hobbies);
+    const dispatch = useDispatch();
+
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -26,14 +24,24 @@ export default function ShareActivityScreen ({navigation, route}) {
     
     const handleReturn  = () => {
         dispatch(removeHobbies(dataActivity.id));
-        console.log("after dispatch",hobbies);
         navigation.navigate('Result');
+    }
+
+    const handleProfil = () => {
+        dispatch(removeHobbies(dataActivity.id));
+        dispatch(storeHobbiesSaved([dataActivity.id]));
+        navigation.navigate('Profil');
     }
 
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Result' isNeeded={false} />
+                <HeaderReturn pages='Result' isNeeded={false} />
+                <View style={styles.headerContainer}>
+                    <TouchableOpacity style={styles.logoutBtn} onPress={() => handleProfil()}>
+                        <FontAwesome name= 'user' size={25} color='#cae1db' />
+                    </TouchableOpacity>
+                </View>
 
                 <View style={styles.bodyContainer}>
 
@@ -42,7 +50,7 @@ export default function ShareActivityScreen ({navigation, route}) {
                             <Text style={styles.returnText}>Retour vers Résultats</Text>
                         </TouchableOpacity>
 
-                        <Text style={styles.title}>Partager votre activité</Text>
+                        <Text style={styles.title}>Validation de votre activité</Text>
 
                     <View style={styles.mapContainer}>
                         <MapView 
@@ -54,7 +62,7 @@ export default function ShareActivityScreen ({navigation, route}) {
                         }}
                         style={styles.map}
                         >
-                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.colorPin}/>
+                            <Marker coordinate={{latitude: dataActivity.latitude, longitude: dataActivity.longitude}} pinColor={dataActivity.pinColor}/>
                         </MapView>
                     </View>
                     <View style={styles.activityContainer}>
@@ -88,6 +96,16 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'flex-start',
+    },
+    headerContainer: {
+        height: '5%',
+        width: '10%',
+        zIndex: 5,
+        position: 'absolute',
+        right: 25,
+        top: 75,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     titleContainer: {
         height: '5%',
@@ -133,6 +151,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        bottom: 15,
     },
 
   });

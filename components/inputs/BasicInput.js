@@ -49,14 +49,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 250, // Ajustez la largeur de l'input
     padding:5
-  
   },
+  
   input: {
   flex: 1,
   height: 40,
   borderColor: "#76a696",
   paddingLeft: 5,
   backgroundColor: "#fff",
+  margin: 0,
+  padding: 0,
   },
   placeholder: {
     color: "#004644",
@@ -64,7 +66,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#bbd1b0",
     borderRadius: 5,
     paddingLeft: 10,
-    fontFamily: "Indie-Flower",
   },
 
 
