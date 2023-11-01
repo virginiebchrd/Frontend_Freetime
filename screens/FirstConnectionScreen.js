@@ -1,25 +1,11 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Platform,
-  Keyboard,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Platform, Keyboard, KeyboardAvoidingView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addEmail,
-  addFirstname,
-  addPassword,
-  login,
-} from "../reducers/userReducer";
+import { addEmail, login } from "../reducers/userReducer";
 import HeaderReturnWithInput from "../components/HeaderReturnWithInput";
 import SmallButton from "../components/buttons/SmallButton";
-
 import EmailInput from "../components/inputs/EmailInput";
 import PasswordInput from "../components/inputs/PasswordInput";
 
@@ -50,7 +36,6 @@ export default function FirstConnectionScreen({ navigation }) {
   //inspiration morningnews
   //premier test en local avec fetch(`http://192.168.0.12:3000/users/signup`,
   const handleRegister = () => {
-    //Keyboard.dismiss();
     if (EMAIL_REGEX.test(mail)) {
       console.log("Conditions remplies.");
 
@@ -63,8 +48,8 @@ export default function FirstConnectionScreen({ navigation }) {
       }
 
       if (password === passwordConfirmation) { // attention confit entre les état si j'utilise état !disabled !
-      fetch(`https://backend-freetime.vercel.app/users/signup`, {
-
+      //fetch(`https://backend-freetime.vercel.app/users/signup`, {
+        fetch(`http://192.168.1.12:3000/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: mail, password: password }),

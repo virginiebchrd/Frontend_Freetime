@@ -3,11 +3,11 @@
 @param {string} label
  */
 import React from "react";
-import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView} from "react-native";
+import { View, StyleSheet, TextInput, KeyboardAvoidingView} from "react-native";
 import { useFonts } from "expo-font";
 
 
-function EmailInput({ value, onChangeText, secureTextEntry }) {
+function EmailInput({ value, onChangeText }) {
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
   });

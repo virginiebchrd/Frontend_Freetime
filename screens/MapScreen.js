@@ -1,11 +1,4 @@
-import {
-  TouchableOpacity,
-  Keyboard,
-  KeyboardAvoidingView,
-  TextInput,
-  View,
-  StyleSheet,
-} from "react-native";
+import { Keyboard, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
@@ -13,7 +6,6 @@ import SmallButton from "../components/buttons/SmallButton";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { addCity } from "../reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import InputCity from "../components/inputs/InputCity";
@@ -76,7 +68,6 @@ export default function MapScreen({ navigation }) {
 
   
   const handleValidate = () => {
-    //dispatch coordonnées + ville si recherche par input
     navigation.navigate("Activities");
   };
 
@@ -120,7 +111,7 @@ export default function MapScreen({ navigation }) {
             )}
           </MapView>
           <View style={styles.validateContainer}>
-            <SmallButton style={styles.btn}  title="Valider" onPress={handleValidate} />
+            <SmallButton style={styles.btn}  title="Suivant" onPress={handleValidate} />
           </View>
         </View>
       </LinearGradient>

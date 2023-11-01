@@ -3,12 +3,12 @@
 @param {string} label
  */
 import React from "react";
-import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView, Keyboard } from "react-native";
+import { View, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 
 
-function InputWithLabel({ value,placeholder,autoComplete , keyborardType, label, icon, onChangeText, secureTextEntry, onPress }) {
+function InputWithLabel({ value,placeholder,autoComplete , keyborardType, icon, onChangeText, secureTextEntry, onPress }) {
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
   });

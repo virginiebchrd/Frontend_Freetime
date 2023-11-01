@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import PinMarker from './PinMarker';
 import { useFonts } from 'expo-font';
 

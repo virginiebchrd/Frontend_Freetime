@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 function Trash ({onPress}) {

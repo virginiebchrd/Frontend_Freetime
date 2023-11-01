@@ -1,49 +1,24 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  TextInput,
-  Keyboard,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-} from "react-native";
+import { Text, View, StyleSheet, TextInput, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HeaderReturnWithInput from "../components/HeaderReturnWithInput";
 import SmallButton from "../components/buttons/SmallButton";
-import BasicInput from "../components/inputs/BasicInput";
 import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addLastname,
-  addFirstname,
-  addBirthday,
-  addCivility,
-  login,
-} from "../reducers/userReducer";
-import DatePickerModal from "react-native-modal-datetime-picker";
+import { login } from "../reducers/userReducer";
 
 export default function CreateProfilScreen({ navigation }) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.value);
-  // récupérer le token de l'utilisateur
-  const userToken = useSelector((state) => state.user.value.token);
 
-  //const token = "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO";
+  const userToken = useSelector((state) => state.user.value.token);
 
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
-  const [birthday, setBirthday] = useState(""); //format jj/mm/aaaa
   const [civility, setCivility] = useState("");
 
-  //date format
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
   //control errors
-  const [birthdayError, setBirthdayError] = useState("");
   const [firstnameError, setFirstnameError] = useState("");
   const [lastnameError, setLastnameError] = useState("");
   const [civilityError, setCivilityError] = useState("");
@@ -58,13 +33,6 @@ export default function CreateProfilScreen({ navigation }) {
 
 
   const handleValidate = () => {
-    //if (token !== "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO") {  //
-    // Si le token n'est pas valide, sortir de la fonction
-    /*if (token !== userToken) {
-        console.log("Token invalide");
-        return;
-      }*/
-
     if (lastname && firstname && civility) {
       /*console.log("Civilité :", civility);
       console.log("Nom :", lastname);
@@ -79,21 +47,18 @@ export default function CreateProfilScreen({ navigation }) {
       setCivilityError("");
     }
 
-    // fetch(`https://backend-freetime.vercel.app/users/identity/QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO`, {
-    fetch(`https://backend-freetime.vercel.app/users/identity/${userToken}`, {
+    //fetch(`https://backend-freetime.vercel.app/users/identity/${userToken}`, {
+      fetch(`http://192.168.1.12:3000/users/identity/${userToken}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      //Authorization: `Bearer ${token}`}, // Ajoutez le token dans l'en-tête Authorization
       body: JSON.stringify({
         civility: civility,
         lastname: lastname,
         firstname: firstname,
-        /*birthday: birthday*/
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data Create", data);
         console.log(data.result);
 
         if (data.result) {

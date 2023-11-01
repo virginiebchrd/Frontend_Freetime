@@ -5,13 +5,9 @@
 
 import { TouchableOpacity, Text, View, StyleSheet} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useFonts } from 'expo-font';
-
-
 
 const SmallButton  = ({ title, onPress  }) => {
-    
-   
+
   return (
     <View style={styles.smallButtonContainer}>
    
@@ -32,7 +28,6 @@ const SmallButton  = ({ title, onPress  }) => {
 }
 
 const styles = StyleSheet.create({
- 
   smallButtonContainer: {
     flex: 1,
     justifyContent: "center",
@@ -49,7 +44,6 @@ const styles = StyleSheet.create({
   buttonBackground: {
     height: '50%',
     width: '100%',
-   
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',

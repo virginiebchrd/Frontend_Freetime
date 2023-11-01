@@ -1,4 +1,4 @@
-import {Dimensions, Text, View, StyleSheet, Image} from 'react-native';
+import { Dimensions, Text, View, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -7,7 +7,6 @@ import MyCheckboxResult from './MyCheckboxResult';
 
 function CheckBoxContainer (props) {
     const [isToggled, setIsToggled] = useState(false);
-    const navigation = useNavigation();
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -16,11 +15,6 @@ function CheckBoxContainer (props) {
     if (!fontsLoaded) {
     return null;
     }
-    
-    /*if(isToggled) {
-        navigation.navigate('ShowActivity',{activity: props.activity});
-        setIsToggled(false);
-    }*/
 
     return (
         <View style={styles.headerContainer}>
@@ -35,6 +29,7 @@ function CheckBoxContainer (props) {
                     isChecked={isToggled}
                     activity={props.activity}
                     resultPages={props.activity.resultPages}
+                    who={props.who}
                     />
             </View>
         </View>

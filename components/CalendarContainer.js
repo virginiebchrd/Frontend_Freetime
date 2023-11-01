@@ -1,5 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
-import { useFonts } from 'expo-font';
+import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import { useState } from 'react';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 

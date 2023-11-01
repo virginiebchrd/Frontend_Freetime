@@ -1,6 +1,5 @@
 import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useFonts } from "expo-font";
 
 const LoginButtons = ({ title, onPress }) => {
   return (
@@ -29,7 +28,6 @@ const styles = StyleSheet.create({
     height: '100%', 
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: "blue",
   },
   buttonBackground: {
     height: "50%",

@@ -1,4 +1,4 @@
-import {ScrollView, Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { ScrollView, Text, View, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import MapView, {Marker} from 'react-native-maps';
@@ -8,22 +8,27 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-
-
 //const city = { latitude: 45.7578137, longitude: 4.8320114 } //test avec Lyon avec des données brutes imaginaires
 const city = { latitude: 45.8354243, longitude: 1.2644847 } //test avec Limoges avec des données brutes imaginaires
 
 export default function ResultScreen ({navigation}) {
     const [ActivityData, setActivityData] = useState([]);
-    const hobbies = useSelector( (state) => state.hobbies.value.hobbies)
+    
+    const hobbiesPerso = useSelector( (state) => state.hobbies.value.hobbiesPerso);
+    const hobbiesFamille = useSelector( (state) => state.hobbies.value.hobbiesFamille);
+    const hobbiesAmis = useSelector( (state) => state.hobbies.value.hobbiesAmis);
 
-    const hobbiesSaved = useSelector( (state) => state.hobbies.value.hobbiesSaved);
+    const hobbiesSavedPerso = useSelector( (state) => state.hobbies.value.hobbiesSavedPerso);
+    const hobbiesSavedFamille = useSelector( (state) => state.hobbies.value.hobbiesSavedFamille);
+    const hobbiesSavedAmis = useSelector( (state) => state.hobbies.value.hobbiesSavedAmis);
+
+    const who = useSelector( (state) => state.hobbies.value.who);
 
     useEffect ( () => {
-
-            if(hobbies.length !== 0) {
-                console.log('test');
-                fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbies}`,)
+        if(who === 'perso'){
+            if(hobbiesPerso.length !== 0) {
+                //fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesPerso}`,)
+                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesPerso}`,)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {
@@ -34,8 +39,38 @@ export default function ResultScreen ({navigation}) {
             else {
                 setActivityData([]);
             }
-    }, [hobbies])
-
+        }
+        else if(who === 'famille'){
+            if(hobbiesFamille.length !== 0) {
+                //fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesFamille}`,)
+                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesFamille}`,)
+                .then(response => response.json())
+                .then (data => {
+                        if(data.result) {
+                            setActivityData(data.hobby);
+                        }
+                })
+            }
+            else {
+                setActivityData([]);
+            }
+        }
+        else if(who === 'amis'){
+            if(hobbiesAmis.length !== 0) {
+                //fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesAmis}`)
+                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesAmis}`)
+                .then(response => response.json())
+                .then (data => {
+                        if(data.result) {
+                            setActivityData(data.hobby);
+                        }
+                })
+            }
+            else {
+                setActivityData([]);
+            }
+        }
+    }, [hobbiesPerso, hobbiesFamille, hobbiesAmis])
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -45,25 +80,54 @@ export default function ResultScreen ({navigation}) {
     }
     
     const activities = ActivityData.map((data,i) => {
-        let isSaved = hobbiesSaved.some(e => e === data._id)
         let colorPin;
-        console.log('isSaved', isSaved);
-        isSaved? colorPin='red' : colorPin='blue';
+        if(who === 'perso') {
+            let isSavedPerso = hobbiesSavedPerso.some(e => e === data._id);
+            isSavedPerso? colorPin='red' : colorPin='blue';
+        } else if (who === 'famille') {
+            let isSavedFamille = hobbiesSavedFamille.some(e => e === data._id);
+            isSavedFamille? colorPin='red' : colorPin='blue';
+        } else if (who === 'amis') {
+            let isSavedAmis = hobbiesSavedAmis.some(e => e === data._id);
+            isSavedAmis? colorPin='red' : colorPin='blue';
+        }
+
         return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, id:data._id, activityName: data.name, email:data.email, adress: data.address.street, zipCode: data.address.zipCode, phoneNumber: data.phoneNumber, city: data.address.city, activity: data.category, latitude: data.address.latitude, longitude: data.address.longitude, site: data.site, resultPages: true, pinColor: colorPin}} />
     
     })
 
     const markers = ActivityData.map((data,i) => {
-        let isSaved = hobbiesSaved.some(e => e === data._id)
-        let pinColor;
 
-        if (isSaved) {
-            pinColor='red';
-            desc = "Déja validée";
-        } else {
-            pinColor='blue';
-            desc = "Nouvelle Activité";
+        let pinColor;
+        if(who === 'perso') {
+            let isSavedPerso = hobbiesSavedPerso.some(e => e === data._id);
+            if(isSavedPerso) {
+                pinColor='red';
+                desc = "Déja validée"
+            } else {
+                pinColor='blue';
+                desc = "Nouvelle Activité";
+            }    
+        } else if (who === 'famille') {
+            let isSavedFamille = hobbiesSavedFamille.some(e => e === data._id);
+            if(isSavedFamille) {
+                pinColor='red';
+                desc = "Déja validée"
+            } else {
+                pinColor='blue';
+                desc = "Nouvelle Activité";
+            }   
+        } else if (who === 'amis') {
+            let isSavedAmis = hobbiesSavedAmis.some(e => e === data._id);
+            if(isSavedAmis) {
+                pinColor='red';
+                desc = "Déja validée"
+            } else {
+                pinColor='blue';
+                desc = "Nouvelle Activité";
+            }   
         }
+
         return <Marker key={i} coordinate={{latitude: data.address.latitude, longitude: data.address.longitude}} title={data.name} pinColor={pinColor} description={desc} />
     })
 

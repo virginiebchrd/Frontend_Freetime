@@ -1,7 +1,5 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image, Pressable} from 'react-native';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addHobbies, removeHobbies } from '../reducers/hobbiesReducer';
+import { StyleSheet, Pressable} from 'react-native';
+import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,11 +11,10 @@ function MyCheckboxResult(props) {
         setChecked(!checked)
         if(!checked) {
           if(props.resultPages) {
-
             navigation.navigate('ShowActivity',{activity: props.activity})
           }
           else {
-            navigation.navigate('Marks',{activity: props.activity})
+            navigation.navigate('Marks',{activity: props.activity, who: props.who})
           }
           setChecked(false);
       }

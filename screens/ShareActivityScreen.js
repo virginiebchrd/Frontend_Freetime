@@ -1,16 +1,17 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeHobbies, storeHobbiesSaved } from '../reducers/hobbiesReducer';
+import { removeHobbiesAmis, removeHobbiesFamille, removeHobbiesPerso, removeHobbiesSavedAmis, removeHobbiesSavedFamille, removeHobbiesSavedPerso } from '../reducers/hobbiesReducer';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function ShareActivityScreen ({navigation, route}) {
     const dataActivity = route.params.activity;
+
+    const who = useSelector( (state) => state.hobbies.value.who);
 
     const dispatch = useDispatch();
 
@@ -23,13 +24,31 @@ export default function ShareActivityScreen ({navigation, route}) {
     }
     
     const handleReturn  = () => {
-        dispatch(removeHobbies(dataActivity.id));
+        if(who === 'perso') {
+            dispatch(removeHobbiesPerso(dataActivity.id));
+        }
+        else if(who === 'famille') {
+            dispatch(removeHobbiesFamille(dataActivity.id));
+        }
+        else if(who === 'amis') {
+            dispatch(removeHobbiesAmis(dataActivity.id));
+        }
         navigation.navigate('Result');
     }
 
     const handleProfil = () => {
-        dispatch(removeHobbies(dataActivity.id));
-        dispatch(storeHobbiesSaved([dataActivity.id]));
+        if(who === 'perso') {
+            dispatch(removeHobbiesPerso(dataActivity.id));
+            dispatch(removeHobbiesSavedPerso(dataActivity._id))
+        }
+        else if(who === 'famille') {
+            dispatch(removeHobbiesFamille(dataActivity.id));
+            dispatch(removeHobbiesSavedFamille(dataActivity._id))
+        }
+        else if(who === 'amis') {
+            dispatch(removeHobbiesAmis(dataActivity.id));
+            dispatch(removeHobbiesSavedAmis(dataActivity._id))
+        }
         navigation.navigate('Profil');
     }
 

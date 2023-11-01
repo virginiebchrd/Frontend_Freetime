@@ -1,9 +1,8 @@
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
-import CalendarContainer from "../components/CalendarContainer";
 import DateSelector from "../components/CalendarPicker";
 import { useDispatch } from "react-redux";
 import { addDate } from "../reducers/hobbiesReducer";
@@ -25,10 +24,10 @@ export default function CalendarScreen({ navigation }) {
   }
 
   const onDateChange = (date) => {
-    const formattedDate = moment(date).locale("fr").format("dddd D MMMM YYYY");
+    /*const formattedDate = moment(date).locale("fr").format("dddd D MMMM YYYY");
     const formattedDay = moment(date).locale("fr").format("dddd").split(" ");
     console.log("La date sélectionnée : ", formattedDate);
-    console.log("Le jour sélectionné : ", formattedDay);
+    console.log("Le jour sélectionné : ", formattedDay);*/
     setSelectedDate(moment(date));
     
   };
@@ -77,7 +76,7 @@ export default function CalendarScreen({ navigation }) {
           </View>
 
           <View style={styles.validateContainer}>
-            <SmallButton style={styles.btn}  title="Valider" onPress={()=>handleValidate()} disabled={disabled}/>
+            <SmallButton style={styles.btn}  title="Suivant" onPress={()=>handleValidate()} disabled={disabled}/>
           </View>
         </View>
       </LinearGradient>

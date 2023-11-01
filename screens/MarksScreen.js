@@ -1,18 +1,17 @@
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
-import SmallButton from "../components/buttons/SmallButton";
 import Activity from "../components/Activity";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { removeHobbies } from "../reducers/hobbiesReducer";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useSelector } from "react-redux";
 import StarsMarks from "../components/StarsMarks";
 
-export default function MarksScreen ({navigation, route}) {
+export default function MarksScreen ({route}) {
     const dataActivity = route.params.activity;
+
+    const who = route.params.who;
 
     const token = useSelector((state) => state.user.value.token)
 
@@ -29,7 +28,8 @@ export default function MarksScreen ({navigation, route}) {
 
     //UseEffect pour récupérer la note moyenne au démarraeg et a chaque nouvelle note personnelle
     useEffect( () => {
-        fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
+        fetch(`http://192.168.1.12:3000/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -51,10 +51,9 @@ export default function MarksScreen ({navigation, route}) {
     return null;
   }
 
-  const handleStars = (num) => {
-    console.log(num);
-    
-    fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
+  const handleStars = (num) => {    
+    //fetch(`https://backend-freetime.vercel.app/hobbies/rating/${dataActivity.id}`,{
+      fetch(`http://192.168.1.12:3000/hobbies/rating/${dataActivity.id}`,{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({token: token, myMark: num+1})
@@ -95,7 +94,7 @@ for(let i=0; i<5 ; i++) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn iconContext="trash" idActivity={dataActivity.id} pages="Profil" isNeeded={true} token={token} />
+        <HeaderReturn iconContext="trash" idActivity={dataActivity.id} pages="Profil" isNeeded={true} token={token} who={who} />
 
         <View style={styles.bodyContainer}>
           <Text style={styles.title}>Noter votre activité</Text>

@@ -1,20 +1,16 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image, ScrollView, SafeAreaView} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
 import LargeButton from '../components/buttons/LargeButton';
 import SmallButton from '../components/buttons/SmallButton';
-import { useState } from 'react';
-import ChooseActivity from '../components/ChooseActivity';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import moment from "moment";
 import "moment/locale/fr";
-
 
 //const cityTest = 'Lyon';
 const cityTest = 'Limoges';
 
-const day = 'mardi'
 export default function ActivitiesScreen ({navigation}) {
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -34,11 +30,8 @@ export default function ActivitiesScreen ({navigation}) {
     }
 
     const handleSports = () => {
-        //setIsShownSports(true)
-        console.log('sports');
-        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
-        //fetch(`http://192.168.1.12:3000/hobbies/sports/${city}`)
-        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
+        fetch(`http://192.168.1.12:3000/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -62,10 +55,8 @@ export default function ActivitiesScreen ({navigation}) {
     }
 
     const handleArtistics = () => {
-        console.log('artistique');
-        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
-        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
-        //fetch(`https://backend-freetime.vercel.app/hobbies/artistique`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
+        fetch(`http://192.168.1.12:3000/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -87,9 +78,8 @@ export default function ActivitiesScreen ({navigation}) {
     }
 
     const handleCulture = () => {
-        console.log('culture');
-        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
-        //fetch(`https://backend-freetime.vercel.app/hobbies/culture`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
+        fetch(`http://192.168.1.12:3000/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -112,8 +102,8 @@ export default function ActivitiesScreen ({navigation}) {
 
     const handleEvasion = () => {
         console.log('evasion');
-        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
-        //fetch(`https://backend-freetime.vercel.app/hobbies/evasion`)
+        //fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
+        fetch(`http://192.168.1.12:3000/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -141,7 +131,7 @@ export default function ActivitiesScreen ({navigation}) {
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Map' isNeeded={true}/>
+                <HeaderReturn iconContext="profil" pages='Map' isNeeded={true} />
                 
                 <View style={styles.bodyContainer}>
                     <View style={styles.titleContainer}>
@@ -160,7 +150,7 @@ export default function ActivitiesScreen ({navigation}) {
                             <LargeButton title='Evasion' onPress={handleEvasion}/> 
                         </View>
                     <View style={styles.validateContainer}>
-                        <SmallButton style={styles.btn}  title='Valider' onPress={handleValidate} />
+                        <SmallButton style={styles.btn}  title='Suivant' onPress={handleValidate} />
                     </View>
                 </View>
 

@@ -1,14 +1,13 @@
-import {Dimensions, TouchableOpacity, Text, View, StyleSheet, Image, Pressable} from 'react-native';
+import { Dimensions, Text, View, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
-import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import MyCheckbox from '../components/MyCheckbox';
 
 
 function ChooseActivity (props) {
-    const navigation = useNavigation();
-    const dispatch = useDispatch();
+    const who = useSelector( (state) => state.hobbies.value.who);
+    let isChecked = false;
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -16,6 +15,16 @@ function ChooseActivity (props) {
 
     if (!fontsLoaded) {
     return null;
+    }
+
+    if(who === 'perso') {
+        isChecked = props.isCheckedPerso;
+    }
+    else if(who === 'famille') {
+        isChecked = props.isCheckedFamille;
+    }
+    else if(who === 'amis') {
+        isChecked = props.isCheckedAmis;
     }
 
     return (

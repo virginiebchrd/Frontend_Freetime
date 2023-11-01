@@ -1,23 +1,38 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image, Pressable} from 'react-native';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addHobbies, removeHobbies, removeHobbiesResult } from '../reducers/hobbiesReducer';
+import { StyleSheet, Pressable} from 'react-native';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeHobbiesPerso, removeHobbiesFamille, removeHobbiesAmis, addHobbiesPerso, addHobbiesFamille, addHobbiesAmis } from '../reducers/hobbiesReducer';
 import { Ionicons } from '@expo/vector-icons';
 
 function MyCheckbox(props) {
     const [checked, setChecked] = useState(props.isChecked);
     const dispatch = useDispatch();
+    const who = useSelector( (state) => state.hobbies.value.who);
     
     const handlePress = () => {
         setChecked(!checked)
 
         if(!checked) {
-            console.log('add');
-            dispatch(addHobbies(props.id))
+          if(who === 'perso'){
+            dispatch(addHobbiesPerso(props.id))
+          }
+          else if(who === 'famille'){
+            dispatch(addHobbiesFamille(props.id))
+          }
+          else if(who === 'amis'){
+            dispatch(addHobbiesAmis(props.id))
+          }
         }
         else {
-            console.log('remove');
-            dispatch(removeHobbies(props.id))
+          if(who === 'perso'){
+            dispatch(removeHobbiesPerso(props.id))
+          }
+          else if(who === 'famille'){
+            dispatch(removeHobbiesFamille(props.id))
+          }
+          else if(who === 'amis'){
+            dispatch(removeHobbiesAmis(props.id))
+          }
         }
       }
 

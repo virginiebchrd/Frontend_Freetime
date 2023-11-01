@@ -5,13 +5,11 @@
 
 import { TouchableOpacity, Text, View, StyleSheet} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useFonts } from 'expo-font';
 
 const LargeButton  = ({ title, onPress  }) => {
     
   return (
     <View style={styles.smallButtonContainer}>
-   
         <LinearGradient
           colors={["transparent", "#8d9680"]}
           style={styles.buttonBackground}

@@ -1,21 +1,12 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Keyboard,
-} from "react-native";
-
+import { View, StyleSheet, Text, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturnWithInput from "../components/HeaderReturnWithInput";
 import SmallButton from "../components/buttons/SmallButton";
-import InputWithLabel from "../components/inputs/InputWithLabel";
 import EmailInput from "../components/inputs/EmailInput";
 import PasswordInput from "../components/inputs/PasswordInput";
 //pour créer un état et stocker la valeur de l'état
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addEmail, login } from "../reducers/userReducer";
 
@@ -61,8 +52,8 @@ export default function FirstConnectionScreen({ navigation }) {
         email: mail,
         password: password,
       };
-      fetch(`https://backend-freetime.vercel.app/users/signin/`, {
-        //fetch(`http://192.168.1.12:3000/users/signin/`, {
+      //fetch(`https://backend-freetime.vercel.app/users/signin/`, {
+        fetch(`http://192.168.1.12:3000/users/signin/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,12 +66,12 @@ export default function FirstConnectionScreen({ navigation }) {
           if (data.result) {
             console.log(data.email);
             dispatch(addEmail(data.email));
-            fetch(
+            /*fetch(
               `https://backend-freetime.vercel.app/users/identity/${data.token}`
-            )
-              /*fetch(
-              `http://192.168.1.12:3000/users/identity/${data.token}`
             )*/
+            fetch(
+              `http://192.168.1.12:3000/users/identity/${data.token}`
+            )
               .then((response) => response.json())
               .then((data) => {
                 if (data.result) {
@@ -93,7 +84,7 @@ export default function FirstConnectionScreen({ navigation }) {
                       lastname: data.identity.lastname,
                     })
                   );
-                  console.log("ici");
+
                   navigation.navigate("Profil");
                 } else {
                   console.log("error identity", data.error);
