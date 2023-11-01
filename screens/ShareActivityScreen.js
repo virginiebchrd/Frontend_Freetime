@@ -66,7 +66,7 @@ export default function ShareActivityScreen ({navigation, route}) {
 
                         <TouchableOpacity style={styles.titleContainer} onPress={() => handleReturn()}>
                             <FontAwesome name= 'arrow-left' size={25} color='#cae1db' />
-                            <Text style={styles.returnText}>Retour vers Résultats</Text>
+                            <Text style={styles.returnText}>Retour vers vos Résultats</Text>
                         </TouchableOpacity>
 
                         <Text style={styles.title}>Validation de votre activité</Text>

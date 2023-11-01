@@ -1,80 +1,81 @@
-import {TouchableOpacity, View, StyleSheet, Image} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
-import Logout from './Logout';
-import Profil from './Profil';
-import Return from './Return';
-import { logout } from '../reducers/userReducer';
-import { useDispatch } from 'react-redux';
-import { removeHobbies, removeHobbiesLogout, removeHobbiesSaved } from '../reducers/hobbiesReducer';
-import Trash from './Trash';
+import { TouchableOpacity, View, StyleSheet, Image } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
+import Logout from "./Logout";
+import Profil from "./Profil";
+import Return from "./Return";
+import { logout } from "../reducers/userReducer";
+import { useDispatch } from "react-redux";
+import { removeHobbiesLogout } from "../reducers/hobbiesReducer";
+import Trash from "./Trash";
 
-function HeaderReturnWithInput ({iconContext, pages, isNeeded, idActivity, token, who}) {
-    const navigation = useNavigation();
-    const dispatch = useDispatch();
+function HeaderReturnWithInput({
+  iconContext,
+  pages,
+  isNeeded,
+  idActivity,
+  token,
+  who,
+}) {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-    const handleReturn = () => {
-        if(pages === 'ComeFromProfil') {
-            navigation.goBack();
+  const handleReturn = () => {
+    if (pages === "ComeFromProfil") {
+      navigation.goBack();
+    } else {
+      navigation.navigate(pages);
+    }
+  };
+
+  const handleLogout = () => {
+    console.log("logout");
+    dispatch(logout());
+    dispatch(removeHobbiesLogout());
+    navigation.navigate("Home");
+  };
+
+  const handleProfil = () => {
+    navigation.navigate("Profil");
+  };
+
+
+  const handleTrash = () => {
+    console.log("trash");
+
+    fetch(
+      `http://192.168.1.12:3000/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          if (who === "perso") {
+            dispatch(removeHobbiesPerso(idActivity));
+            dispatch(removeHobbiesSavedPerso(idActivity));
+          } else if (who === "famille") {
+            dispatch(removeHobbiesFamille(idActivity));
+            dispatch(removeHobbiesSavedFamille(idActivity));
+          } else if (who === "amis") {
+            dispatch(removeHobbiesAmis(idActivity));
+            dispatch(removeHobbiesSavedAmis(idActivity));
+          }
+          navigation.navigate("Profil");
         }
-        else {
-            navigation.navigate(pages);
-        }
-    }
+      });
+  };
 
-    const handleLogout = () => {
-        console.log('logout');
-        dispatch(logout());
-        dispatch(removeHobbiesLogout());
-        navigation.navigate('Home');
-    }
-
-    const handleProfil = () => {
-        navigation.navigate('Profil');
-    }
-
-    const handleLogo = () => {
-        navigation.navigate('Map');
-    }
-
-    const handleTrash = () => {
-        console.log('trash');
-        //fetch(`https://backend-freetime.vercel.app/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
-        fetch(`http://192.168.1.12:3000/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-        })
-        .then(response => response.json())
-        .then(data => {
-            
-            if(data.result) {
-                if(who === 'perso') {
-                    dispatch(removeHobbiesPerso(idActivity))
-                    dispatch(removeHobbiesSavedPerso(idActivity))
-                }
-                else if(who === 'famille') {
-                    dispatch(removeHobbiesFamille(idActivity))
-                    dispatch(removeHobbiesSavedFamille(idActivity))
-                }
-                else if(who === 'amis') {
-                    dispatch(removeHobbiesAmis(idActivity))
-                    dispatch(removeHobbiesSavedAmis(idActivity))
-                }
-                navigation.navigate('Profil');
-            }
-        })
-    }
-
-    let icon;
-    if(iconContext === 'logout') {
-        icon = <Logout onPress={handleLogout}/>
-    }
-    else if(iconContext === 'profil') {
-        icon = <Profil onPress={handleProfil}/>
-    }
-    else if(iconContext === 'trash') {
-        icon = <Trash onPress={handleTrash} />
-    }
+  let icon;
+  if (iconContext === "logout") {
+    icon = <Logout onPress={handleLogout} />;
+  } else if (iconContext === "profil") {
+    icon = <Profil onPress={handleProfil} />;
+  } else if (iconContext === "trash") {
+    icon = <Trash onPress={handleTrash} />;
+  }
 
     return (
         <View style={styles.headerContainer}>
@@ -83,7 +84,7 @@ function HeaderReturnWithInput ({iconContext, pages, isNeeded, idActivity, token
                     {isNeeded && <Return onPress={handleReturn}/>}
                 </View>
                 <View style={styles.logoContainer}>
-                    <TouchableOpacity style={styles.logoTouchable} onPress={()=>handleLogo()}>
+                    <TouchableOpacity style={styles.logoTouchable} activeOpacity={1} >
                         <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
                     </TouchableOpacity>
                 </View>
@@ -96,45 +97,44 @@ function HeaderReturnWithInput ({iconContext, pages, isNeeded, idActivity, token
 };
 
 const styles = StyleSheet.create({
-    headerContainer: {
-        height: 145,
-        width: '100%',
-    },
-    headerGradient: {
-        height: '100%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection:'row',
-        paddingTop: 20
-    },
-    logo: {
-        height: '140%',
-        width: '100%',
-    },
-    returnContainer: {
-        height: '20%',
-        width: '20%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    logoContainer: {
-        height: '20%',
-        width: '60%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    logoTouchable: {
-        height: '100%',
-        width: '100%',
-    },
-    profilContainer: {
-        height: '20%',
-        width: '20%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+  headerContainer: {
+    height: 145,
+    width: "100%",
+  },
+  headerGradient: {
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    paddingTop: 20,
+  },
+  logo: {
+    height: "140%",
+    width: "100%",
+  },
+  returnContainer: {
+    height: "20%",
+    width: "20%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logoContainer: {
+    height: "20%",
+    width: "60%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logoTouchable: {
+    height: "100%",
+    width: "100%",
+  },
+  profilContainer: {
+    height: "20%",
+    width: "20%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
-
 
 export default HeaderReturnWithInput;

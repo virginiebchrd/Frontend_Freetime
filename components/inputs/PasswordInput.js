@@ -1,7 +1,3 @@
-/*
-@param {string} placeholder
-@param {string} label
- */
 import React from "react";
 import {
   Text,
@@ -9,16 +5,14 @@ import {
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { useFonts } from "expo-font";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 
-
 function PasswordInput({ value, onChangeText, onPress }) {
-
-const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
@@ -27,7 +21,6 @@ const [showPassword, setShowPassword] = useState(false);
     return null;
   }
 
-   
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -40,12 +33,12 @@ const [showPassword, setShowPassword] = useState(false);
           placeholder="Entrer votre mot de passe"
           onChangeText={onChangeText}
           autoCapitalize="none"
-          secureTextEntry={!showPassword} 
+          secureTextEntry={!showPassword}
           value={value}
           accessible={true}
           accessibilityLabel="Saisie du mot de passe"
         />
-         <TouchableOpacity
+        <TouchableOpacity
           style={styles.iconContainer}
           onPress={() => setShowPassword(!showPassword)}
         >
@@ -76,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     margin: 0,
     borderRadius: 10,
-    width: 250, // Ajustez la largeur de l'input
+    width: 250,
     padding: 5,
   },
 

@@ -35,13 +35,13 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token, who}) {
     }
 
     const handleLogo = () => {
-        navigation.navigate('Map');
+        navigation.navigate('Calendar');
     }
 
     const handleTrash = () => {
         console.log('trash', who);
         fetch(`https://backend-freetime.vercel.app/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
-        //fetch(`http://192.168.1.12:3000/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
+        
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
         })
@@ -81,7 +81,7 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token, who}) {
         <View style={styles.headerContainer}>
             <LinearGradient colors={['#004644', 'transparent']}  style={styles.headerGradient} >
                 <View style={styles.returnContainer}>
-                    {isNeeded && <Return onPress={handleReturn}/>}
+                    {isNeeded && <Return onPress={() => handleReturn()}/>}
                 </View>
                 <View style={styles.logoContainer}>
                     <TouchableOpacity style={styles.logoTouchable} onPress={()=>handleLogo()}>
