@@ -1,4 +1,11 @@
-import { Text, Pressable, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import {
+  Text,
+  Pressable,
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
@@ -7,18 +14,25 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
 import CheckBoxContainer from "../components/CheckBoxContainer";
-import { storeHobbiesSavedAmis, storeHobbiesSavedFamille, storeHobbiesSavedPerso } from "../reducers/hobbiesReducer";
-import { Ionicons } from '@expo/vector-icons';
+import {
+  storeHobbiesSavedAmis,
+  storeHobbiesSavedFamille,
+  storeHobbiesSavedPerso,
+} from "../reducers/hobbiesReducer";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ProfilScreen({ navigation, route }) {
-
   const dispatch = useDispatch();
 
   const hobbiesPerso = useSelector((state) => state.hobbies.value.hobbiesPerso);
-  const hobbiesFamille = useSelector((state) => state.hobbies.value.hobbiesFamille);
+  const hobbiesFamille = useSelector(
+    (state) => state.hobbies.value.hobbiesFamille
+  );
   const hobbiesAmis = useSelector((state) => state.hobbies.value.hobbiesAmis);
 
-  const hobbiesSavedProfil = useSelector((state) => state.hobbies.value.hobbiesSaved);
+  const hobbiesSavedProfil = useSelector(
+    (state) => state.hobbies.value.hobbiesSaved
+  );
 
   const userFirstname = useSelector((state) => state.user.value.firstname);
   const token = useSelector((state) => state.user.value.token);
@@ -47,48 +61,52 @@ export default function ProfilScreen({ navigation, route }) {
   useEffect(() => {
     const fetchHobbies = async () => {
       try {
-        const response = await fetch(`https://backend-freetime.vercel.app/users/hobbiesValidate/${token}`);
-        //const response = await fetch(`http://192.168.1.12:3000/users/hobbiesValidate/${token}`);
+        const response = await fetch(
+          `https://backend-freetime.vercel.app/users/hobbiesValidate/${token}`
+        );
+
         const data = await response.json();
         if (data.result) {
-          if(data.hobbiesValidatedPerso.length > 0){
-            
-            const idArray = data.hobbiesValidatedPerso.map((hobbiesSaved) =>{
-              return hobbiesSaved._id
-            })
-            dispatch(storeHobbiesSavedPerso(idArray))
-            console.log('hobbies Saved Prodil', hobbiesSavedProfil);
-            
+          if (data.hobbiesValidatedPerso.length > 0) {
+            const idArray = data.hobbiesValidatedPerso.map((hobbiesSaved) => {
+              return hobbiesSaved._id;
+            });
+            dispatch(storeHobbiesSavedPerso(idArray));
+            console.log("hobbies Saved Prodil", hobbiesSavedProfil);
+
             setActivitiesDataPerso(data.hobbiesValidatedPerso);
             setHobbiesSavedPerso(true);
-          }
-          else {
+          } else {
             setHobbiesSavedPerso(false);
           }
-          if(data.hobbiesValidatedFamille.length > 0){
-            console.log('recup activité sauvée Famille', data.hobbiesValidatedFamille);
-            const idArray = data.hobbiesValidatedFamille.map((hobbiesSaved) =>{
-              return hobbiesSaved._id
-            })
-            dispatch(storeHobbiesSavedFamille(idArray))
-            
+          if (data.hobbiesValidatedFamille.length > 0) {
+            console.log(
+              "recup activité sauvée Famille",
+              data.hobbiesValidatedFamille
+            );
+            const idArray = data.hobbiesValidatedFamille.map((hobbiesSaved) => {
+              return hobbiesSaved._id;
+            });
+            dispatch(storeHobbiesSavedFamille(idArray));
+
             setActivitiesDataFamille(data.hobbiesValidatedFamille);
             setHobbiesSavedFamille(true);
-          }
-          else {
+          } else {
             setHobbiesSavedFamille(false);
           }
-          if(data.hobbiesValidatedAmis.length > 0){
-            console.log('recup activité sauvée Amis', data.hobbiesValidatedAmis);
-            const idArray = data.hobbiesValidatedFamille.map((hobbiesSaved) =>{
-              return hobbiesSaved._id
-            })
-            dispatch(storeHobbiesSavedAmis(idArray))
-            
+          if (data.hobbiesValidatedAmis.length > 0) {
+            console.log(
+              "recup activité sauvée Amis",
+              data.hobbiesValidatedAmis
+            );
+            const idArray = data.hobbiesValidatedFamille.map((hobbiesSaved) => {
+              return hobbiesSaved._id;
+            });
+            dispatch(storeHobbiesSavedAmis(idArray));
+
             setActivitiesDataAmis(data.hobbiesValidatedAmis);
             setHobbiesSavedAmis(true);
-          }
-          else {
+          } else {
             setHobbiesSavedAmis(false);
           }
         } else {
@@ -113,145 +131,151 @@ export default function ProfilScreen({ navigation, route }) {
 
   if (hobbiesSavedPerso) {
     activitiesPerso = activitiesDataPerso.map((data, i) => {
-         return (
-          <CheckBoxContainer 
-            key={i} 
-            activityName={data.name} 
-            who='perso'
-            activity={{key:i, 
-                    id:data._id, 
-                    activityName: data.name, 
-                    email:data.email, 
-                    adress: data.address.street, 
-                    zipCode: data.address.zipCode, 
-                    phoneNumber: data.phoneNumber, 
-                    city: data.address.city, 
-                    activity: data.category, 
-                    latitude: data.address.latitude, 
-                    longitude: data.address.longitude, 
-                    site: data.site, 
-                    resultPages: false, 
-                    pinColor: 'blue'
-                    }} />
-         )
-      });
-    }
-    else {
-      activitiesPerso = 
+      return (
+        <CheckBoxContainer
+          key={i}
+          activityName={data.name}
+          who="perso"
+          activity={{
+            key: i,
+            id: data._id,
+            activityName: data.name,
+            email: data.email,
+            adress: data.address.street,
+            zipCode: data.address.zipCode,
+            phoneNumber: data.phoneNumber,
+            city: data.address.city,
+            activity: data.category,
+            latitude: data.address.latitude,
+            longitude: data.address.longitude,
+            site: data.site,
+            resultPages: false,
+            pinColor: "blue",
+          }}
+        />
+      );
+    });
+  } else {
+    activitiesPerso = (
       <View style={styles.noHobbiesContainer}>
-        <Text style={styles.oldActivities}>Pas d'activités personnelles sauvegardées</Text>
+        <Text style={styles.oldActivities}>
+          Pas d'activités personnelles sauvegardées
+        </Text>
       </View>
-    }
-
-    if (hobbiesSavedFamille) {
-      activitiesFamille = activitiesDataFamille.map((data, i) => {
-             return (
-              <CheckBoxContainer 
-                key={i} 
-                activityName={data.name} 
-                who='famille'
-                activity={{key:i, 
-                        id:data._id, 
-                        activityName: data.name, 
-                        email:data.email, 
-                        adress: data.address.street, 
-                        zipCode: data.address.zipCode, 
-                        phoneNumber: data.phoneNumber, 
-                        city: data.address.city, 
-                        activity: data.category, 
-                        latitude: data.address.latitude, 
-                        longitude: data.address.longitude, 
-                        site: data.site, 
-                        resultPages: false, 
-                        pinColor: 'red'
-                        }} />
-             );
-       });
-      }
-      else {
-        activitiesFamille = 
-        <View style={styles.noHobbiesContainer}>
-          <Text style={styles.oldActivities}>Pas d'activités sauvegardées avec la famille</Text>
-        </View>
-      }
-
-      if (hobbiesSavedAmis) {
-       activitiesAmis = activitiesDataAmis.map((data, i) => {
-        return (
-         <CheckBoxContainer 
-           key={i} 
-           activityName={data.name} 
-           who='amis'
-           activity={{key:i, 
-                   id:data._id, 
-                   activityName: data.name, 
-                   email:data.email, 
-                   adress: data.address.street, 
-                   zipCode: data.address.zipCode, 
-                   phoneNumber: data.phoneNumber, 
-                   city: data.address.city, 
-                   activity: data.category, 
-                   latitude: data.address.latitude, 
-                   longitude: data.address.longitude, 
-                   site: data.site, 
-                   resultPages: false, 
-                   pinColor: 'green'
-                   }} />
-        );
-  });
+    );
   }
-  else {
-    activitiesAmis = 
-    <View style={styles.noHobbiesContainer}>
-      <Text style={styles.oldActivities}>Pas d'activités sauvegardées avec les amis</Text>
-    </View>
+
+  if (hobbiesSavedFamille) {
+    activitiesFamille = activitiesDataFamille.map((data, i) => {
+      return (
+        <CheckBoxContainer
+          key={i}
+          activityName={data.name}
+          who="famille"
+          activity={{
+            key: i,
+            id: data._id,
+            activityName: data.name,
+            email: data.email,
+            adress: data.address.street,
+            zipCode: data.address.zipCode,
+            phoneNumber: data.phoneNumber,
+            city: data.address.city,
+            activity: data.category,
+            latitude: data.address.latitude,
+            longitude: data.address.longitude,
+            site: data.site,
+            resultPages: false,
+            pinColor: "red",
+          }}
+        />
+      );
+    });
+  } else {
+    activitiesFamille = (
+      <View style={styles.noHobbiesContainer}>
+        <Text style={styles.oldActivities}>
+          Pas d'activités sauvegardées avec la famille
+        </Text>
+      </View>
+    );
+  }
+
+  if (hobbiesSavedAmis) {
+    activitiesAmis = activitiesDataAmis.map((data, i) => {
+      return (
+        <CheckBoxContainer
+          key={i}
+          activityName={data.name}
+          who="amis"
+          activity={{
+            key: i,
+            id: data._id,
+            activityName: data.name,
+            email: data.email,
+            adress: data.address.street,
+            zipCode: data.address.zipCode,
+            phoneNumber: data.phoneNumber,
+            city: data.address.city,
+            activity: data.category,
+            latitude: data.address.latitude,
+            longitude: data.address.longitude,
+            site: data.site,
+            resultPages: false,
+            pinColor: "green",
+          }}
+        />
+      );
+    });
+  } else {
+    activitiesAmis = (
+      <View style={styles.noHobbiesContainer}>
+        <Text style={styles.oldActivities}>
+          Pas d'activités sauvegardées avec les amis
+        </Text>
+      </View>
+    );
   }
 
   const handlePressAll = () => {
-    setCheckedAll(!checkedAll)
+    setCheckedAll(!checkedAll);
 
-    if(!checkedAll) {
+    if (!checkedAll) {
       setCheckedAmis(true);
-      setCheckedPerso(true)
+      setCheckedPerso(true);
       setCheckedFamille(true);
     }
-
-    
-  }
+  };
 
   const handlePressFamille = () => {
-    setCheckedFamille(!checkedFamille)
+    setCheckedFamille(!checkedFamille);
 
-    if(checkedFamille) {
-      setCheckedAll(false)
-    }
-    else if(!checkedFamille && checkedAmis && checkedPerso) {
+    if (checkedFamille) {
+      setCheckedAll(false);
+    } else if (!checkedFamille && checkedAmis && checkedPerso) {
       setCheckedAll(true);
     }
-  }
+  };
 
   const handlePressAmis = () => {
     setCheckedAmis(!checkedAmis);
 
-    if(checkedAmis) {
+    if (checkedAmis) {
       setCheckedAll(false);
-    }
-    else if(checkedFamille && !checkedAmis && checkedPerso) {
+    } else if (checkedFamille && !checkedAmis && checkedPerso) {
       setCheckedAll(true);
     }
-
-  }
+  };
 
   const handlePressPerso = () => {
-    setCheckedPerso(!checkedPerso)
+    setCheckedPerso(!checkedPerso);
 
-    if(checkedPerso) {
+    if (checkedPerso) {
       setCheckedAll(false);
-    }
-    else if(checkedFamille && checkedAmis && !checkedPerso) {
+    } else if (checkedFamille && checkedAmis && !checkedPerso) {
       setCheckedAll(true);
     }
-  }
+  };
 
   if (!fontsLoaded) {
     return null;
@@ -263,7 +287,11 @@ export default function ProfilScreen({ navigation, route }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn isNeeded={true} iconContext="logout" pages="ComeFromProfil" />
+        <HeaderReturn
+          isNeeded={true}
+          iconContext="logout"
+          pages="ComeFromProfil"
+        />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
@@ -283,52 +311,79 @@ export default function ProfilScreen({ navigation, route }) {
 
             <View style={styles.moduleContainer}>
               <Pressable
-                style={[styles.checkboxBase, checkedAll && styles.checkboxChecked]}
-                onPress={() => handlePressAll()}>
-                {checkedAll && <Ionicons name="checkmark" size={24} color="#004644" />}
+                style={[
+                  styles.checkboxBase,
+                  checkedAll && styles.checkboxChecked,
+                ]}
+                onPress={() => handlePressAll()}
+              >
+                {checkedAll && (
+                  <Ionicons name="checkmark" size={24} color="#004644" />
+                )}
               </Pressable>
               <Text style={styles.text}>All</Text>
             </View>
 
             <View style={styles.moduleContainer}>
               <TouchableOpacity
-                style={[styles.checkboxBase, checkedPerso && styles.checkboxChecked]}
-                onPress={() => handlePressPerso()}>
-                {checkedPerso && <Ionicons name="checkmark" size={24} color="blue" />}
+                style={[
+                  styles.checkboxBase,
+                  checkedPerso && styles.checkboxChecked,
+                ]}
+                onPress={() => handlePressPerso()}
+              >
+                {checkedPerso && (
+                  <Ionicons name="checkmark" size={24} color="blue" />
+                )}
               </TouchableOpacity>
               <Text style={styles.text}>Perso</Text>
             </View>
 
             <View style={styles.moduleContainer}>
               <Pressable
-                style={[styles.checkboxBase, checkedAmis && styles.checkboxChecked]}
-                onPress={() => handlePressAmis()}>
-                {checkedAmis && <Ionicons name="checkmark" size={24} color="green" />}
+                style={[
+                  styles.checkboxBase,
+                  checkedAmis && styles.checkboxChecked,
+                ]}
+                onPress={() => handlePressAmis()}
+              >
+                {checkedAmis && (
+                  <Ionicons name="checkmark" size={24} color="green" />
+                )}
               </Pressable>
               <Text style={styles.text}>Amis</Text>
             </View>
 
             <View style={styles.moduleContainer}>
               <Pressable
-                style={[styles.checkboxBase, checkedFamille && styles.checkboxChecked]}
-                onPress={() => handlePressFamille()}>
-                {checkedFamille && <Ionicons name="checkmark" size={24} color="red" />}
+                style={[
+                  styles.checkboxBase,
+                  checkedFamille && styles.checkboxChecked,
+                ]}
+                onPress={() => handlePressFamille()}
+              >
+                {checkedFamille && (
+                  <Ionicons name="checkmark" size={24} color="red" />
+                )}
               </Pressable>
               <Text style={styles.text}>Famille</Text>
             </View>
-
           </View>
         </View>
         <ScrollView>
           <View style={styles.scrollView}>
-          {checkedPerso && activitiesPerso }
-          {checkedFamille && activitiesFamille}
-          {checkedAmis && activitiesAmis}
+            {checkedPerso && activitiesPerso}
+            {checkedFamille && activitiesFamille}
+            {checkedAmis && activitiesAmis}
           </View>
         </ScrollView>
 
         <View style={styles.validateContainer}>
-          <SmallButton style={styles.btn}  title="Suivant" onPress={handleValidate} />
+          <SmallButton
+            style={styles.btn}
+            title="Suivant"
+            onPress={handleValidate}
+          />
         </View>
       </LinearGradient>
     </View>
@@ -383,32 +438,32 @@ const styles = StyleSheet.create({
   },
 
   filterContainer: {
-    width: '100%',
-    height: '10%',
-    flexDirection: 'row',
+    width: "100%",
+    height: "10%",
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
     borderWidth: 1,
   },
   moduleContainer: {
-    width: '20%',
-    height: '100%',
-    flexDirection: 'row',
+    width: "20%",
+    height: "100%",
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
   },
   checkboxBase: {
     width: 24,
     height: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: '#cae1db',
-    backgroundColor: '#cae1db',
+    borderColor: "#cae1db",
+    backgroundColor: "#cae1db",
   },
   checkboxChecked: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   text: {
     fontFamily: "Indie-Flower",

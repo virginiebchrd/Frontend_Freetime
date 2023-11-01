@@ -66,7 +66,6 @@ export default function MapScreen({ navigation }) {
       });
   };
 
-  
   const handleValidate = () => {
     navigation.navigate("Activities");
   };
@@ -111,7 +110,11 @@ export default function MapScreen({ navigation }) {
             )}
           </MapView>
           <View style={styles.validateContainer}>
-            <SmallButton style={styles.btn}  title="Suivant" onPress={handleValidate} />
+            <SmallButton
+              style={styles.btn}
+              title="Suivant"
+              onPress={handleValidate}
+            />
           </View>
         </View>
       </LinearGradient>
@@ -144,12 +147,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  GeolocalizeContainer: {
-    height: "10%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   textContainer: {
     height: "5%",
     width: "80%",
@@ -158,61 +156,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  text: {
-    fontFamily: "Indie-Flower",
-    fontSize: 22,
-    color: "#004644",
-  },
+
   inputContainer1: {
     height: "10%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
-  mapContainerNoGeo: {
-    height: "77%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   validateContainer: {
     height: "20%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     bottom: 10,
-  },
-
-  containerInput: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderColor: "#76a696",
-    paddingLeft: 5,
-    backgroundColor: "#fff",
-  },
-
-  label: {
-    position: "absolute",
-    left: 10, // Ajustez la position à gauche selon vos besoins
-    top: 10, // Ajustez la position vers le haut selon vos besoins
-    color: "#004644",
-    fontSize: 12,
-    backgroundColor: "#bbd1b0",
-    borderRadius: 5,
-    padding: 3,
-  },
-
-  placeholder: {
-    color: "#004644",
-    fontSize: 12,
-    backgroundColor: "#bbd1b0",
-    borderRadius: 5,
-    paddingLeft: 10,
   },
 
   searchIcon: {
@@ -227,7 +184,7 @@ const styles = StyleSheet.create({
     borderColor: "#76a696",
     backgroundColor: "#fff",
     borderRadius: 5,
-    width: 250, // Ajustez la largeur de l'input
+    width: 20,
     padding: 5,
   },
 });

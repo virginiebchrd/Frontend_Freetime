@@ -1,6 +1,6 @@
 import { Dimensions, Text, View, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
+
 import { useSelector } from 'react-redux';
 import MyCheckbox from '../components/MyCheckbox';
 

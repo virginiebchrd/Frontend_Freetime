@@ -13,7 +13,7 @@ import "moment/locale/fr";
 export default function CalendarScreen({ navigation }) {
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(null);
-  const [disabled, setDisabled] = useState(false);// état initialisé  disabled=désactivé//
+  const [disabled, setDisabled] = useState(false);
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -24,26 +24,21 @@ export default function CalendarScreen({ navigation }) {
   }
 
   const onDateChange = (date) => {
-    /*const formattedDate = moment(date).locale("fr").format("dddd D MMMM YYYY");
-    const formattedDay = moment(date).locale("fr").format("dddd").split(" ");
-    console.log("La date sélectionnée : ", formattedDate);
-    console.log("Le jour sélectionné : ", formattedDay);*/
     setSelectedDate(moment(date));
-    
   };
 
   const handleValidate = () => {
-    if(selectedDate==null) {
+    if (selectedDate == null) {
       console.log("Pas de date sélectionnée");
       alert("Attention la date n'a pas été sélectionnée");
-      setDisabled(true);// état initialisé  disabled=désactivé//
+      setDisabled(true);
     } else {
-    console.log("La date qui est dans le reducer", selectedDate);
-    // Convertir la date en tant que chaîne au Redux store
-    const dateStr = selectedDate.toISOString();
-    dispatch(addDate(dateStr));
-    navigation.navigate("Who");
-    setDisabled(false);// état initialisé activé//
+      console.log("La date qui est dans le reducer", selectedDate);
+
+      const dateStr = selectedDate.toISOString();
+      dispatch(addDate(dateStr));
+      navigation.navigate("Who");
+      setDisabled(false);
     }
   };
 
@@ -76,7 +71,12 @@ export default function CalendarScreen({ navigation }) {
           </View>
 
           <View style={styles.validateContainer}>
-            <SmallButton style={styles.btn}  title="Suivant" onPress={()=>handleValidate()} disabled={disabled}/>
+            <SmallButton
+              style={styles.btn}
+              title="Suivant"
+              onPress={() => handleValidate()}
+              disabled={disabled}
+            />
           </View>
         </View>
       </LinearGradient>
