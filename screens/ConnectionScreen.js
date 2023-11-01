@@ -9,7 +9,7 @@ import {
 
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
-import HeaderReturn from "../components/HeaderReturn";
+import HeaderReturnWithInput from "../components/HeaderReturnWithInput";
 import SmallButton from "../components/buttons/SmallButton";
 import InputWithLabel from "../components/inputs/InputWithLabel";
 import EmailInput from "../components/inputs/EmailInput";
@@ -38,6 +38,7 @@ export default function FirstConnectionScreen({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const Valider = "Valider";
+
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -123,18 +124,18 @@ export default function FirstConnectionScreen({ navigation }) {
       colors={["#D9F2B1", "transparent"]}
       style={styles.background}
     >
-      <HeaderReturn pages="Home" isNeeded={true} />
+     <HeaderReturnWithInput pages="Home" isNeeded={true}  />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-        
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerKeyboard}>
+      
         <View style={styles.container}>
-            <View style={styles.InputsContainerCSS}>
+            <View  style={styles.InputsContainerCSS}>
               <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
               <EmailInput onChangeText={(value) => setMail(value)} value={mail} />
 
-              <Text style={styles.label}>Mot de passe</Text>
+              <Text style={styles.title}>Mot de passe</Text>
 
               <PasswordInput style={styles.PasswordInput} onChangeText={(value) => setPassword(value)} />
 
@@ -144,13 +145,15 @@ export default function FirstConnectionScreen({ navigation }) {
                 </Text>
               )}
            </View>
-
+                  <View  style={styles.AjustementContainer}></View>
           {isAllowed ? (
-            <View style={styles.validateContainer}>
+            <View  style={styles.validateContainer}
+            >
               <SmallButton style={styles.Btn} title={Valider} onPress={onPress} />
             </View>
           ) : (
-            <View style={styles.validateContainer}>
+            <View  style={styles.validateContainer}
+            >
               <SmallButton style={styles.Btn} title={Valider} onPress={handleConnection} />
             </View>
           )}
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    top:0,
   },
   background: {
     height: "100%",
@@ -174,36 +178,50 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  InputsContainerCSS: {
-    height: "50%",
-    width: "100%",
+
+  containerKeyboard:{
+    flex: 1,
+    backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    bottom:0,
+    top:0,
+  },
+
+  InputsContainerCSS: {
+    height:"55%",
+    width: "90%",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    top: 30,
+    paddingTop: 0,
     },
 
   PasswordInput:{
     magin: 30,
   },
-
-  validateContainer: {
+  AjustementContainer: {
     height: "20%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    top: 1,
-    bottom: 60,
-    // marginBottom: 15,
-    marginTop: 45,
-   
-  },
+    
+   },
+  validateContainer: {
+   height: "20%",
+   width: "100%",
+   alignItems: "center",
+    justifyContent: "flex-end",
+    bottom: -10,
+   },
 
   title: {
     color: "#004644",
     fontFamily: "Indie-Flower",
     fontSize: 20,
     textAlign: "center",
-    margin: 5,
-    marginBottom: 12,
+    top: -5,
+    bottom: 15,
   },
   label: {
     color: "#004644",
@@ -219,4 +237,5 @@ const styles = StyleSheet.create({
     fontFamily: "Indie-Flower",
     marginBottom: 10,
   },
+ 
 });

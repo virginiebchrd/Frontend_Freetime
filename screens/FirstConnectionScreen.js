@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Platform,
   Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
@@ -16,7 +17,7 @@ import {
   addPassword,
   login,
 } from "../reducers/userReducer";
-import HeaderReturn from "../components/HeaderReturn";
+import HeaderReturnWithInput from "../components/HeaderReturnWithInput";
 import SmallButton from "../components/buttons/SmallButton";
 
 import EmailInput from "../components/inputs/EmailInput";
@@ -97,50 +98,54 @@ export default function FirstConnectionScreen({ navigation }) {
       colors={["#D9F2B1", "transparent"]}
       style={styles.background}
     >
-      <HeaderReturn pages="Home" isNeeded={true} />
+      <HeaderReturnWithInput pages="Home" isNeeded={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-       <View style={styles.container}>
-              
-        <Text style={styles.title}>Se connecter avec une adresse mail</Text>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerKeyboard}>
+       
+        <View style={styles.container}>
+           <View style={styles.TextContainerCSS}></View>     
+          <Text style={styles.title}>Se connecter avec une adresse mail</Text>
 
-        <EmailInput 
-        style={styles.EmailInput}
-        onChangeText={(value) => setMail(value)} value={mail} />
+          <EmailInput 
+           style={styles.EmailInput}
+           onChangeText={(value) => setMail(value)} value={mail}
+          />
 
-          {emailError && (
-            <Text style={styles.TextError}>
-              votre email n'est pas valide!
-            </Text>
-          )}
+            {emailError && (
+              <Text style={styles.TextError}>
+                votre email n'est pas valide!
+              </Text>
+            )}
 
-        <Text style={styles.title}>Saisir votre mot de passe</Text>
+          <Text style={styles.title}>Saisir votre mot de passe</Text>
 
-        <PasswordInput
-        style={styles.PasswordInput}
-          onChangeText={(value) => setPassword(value)}
-          value={password}
-        />
+          <PasswordInput
+          style={styles.PasswordInput}
+            onChangeText={(value) => setPassword(value)}
+            value={password}
+          />
 
-          <Text style={styles.title}>Confirmer votre mot de passe</Text>
+            <Text style={styles.title}>Confirmer votre mot de passe</Text>
 
-        <PasswordInput
-        style={styles.PasswordInput}
-          onChangeText={(value) => setPasswordConfirmation(value)}
-          value={passwordConfirmation}
-        />
+          <PasswordInput
+          style={styles.PasswordInput}
+            onChangeText={(value) => setPasswordConfirmation(value)}
+            value={passwordConfirmation}
+          />
 
-          {passwordError && (
-            <Text style={styles.TextError}>
-              Le mot de passe n'est pas identique !
-            </Text>
-          )}
+            {passwordError && (
+              <Text style={styles.TextError}>
+                Le mot de passe n'est pas identique !
+              </Text>
+            )}
 
-        <View style={styles.validateContainer}>
-          <SmallButton style={styles.btn}  title={Valider} onPress={()=>handleRegister()} disabled={disabled} />
-        </View>
-        </View>
-
+          <View style={styles.validateContainer}>
+            <SmallButton style={styles.btn}  title={Valider} onPress={()=>handleRegister()} disabled={disabled} />
+          </View>
+          </View>
+          </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
+       
     </LinearGradient>
   );
 }
@@ -155,13 +160,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
 
-  validateContainer: {
-    height: "20%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    bottom: 0,
-  },
+
 
   background: {
     height: "100%",
@@ -170,12 +169,30 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 
+  containerKeyboard:{
+    flex: 1,
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+    bottom:0,
+    top:0,
+  },
+
+  validateContainer: {
+    height: "20%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "fex-end",
+    bottom: 0,
+    paddingTop: 10,
+  },
+
   title: {
     color: "#004644",
     fontFamily: "Indie-Flower",
     fontSize: 20,
-    // marginBottom: 10,
-    // marginTop: 10,
+    paddingTop: 10,
+    paddingBottom:10,
     textAlign: "center",
   },
 
@@ -185,7 +202,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   PasswordInput: {
-    margin: 5,
+   
   },
   EmailInput: {
     margin:5,

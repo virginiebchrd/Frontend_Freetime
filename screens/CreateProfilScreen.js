@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import HeaderReturn from "../components/HeaderReturn";
+import HeaderReturnWithInput from "../components/HeaderReturnWithInput";
 import SmallButton from "../components/buttons/SmallButton";
 import BasicInput from "../components/inputs/BasicInput";
 import React, { useState } from "react";
@@ -147,7 +147,7 @@ export default function CreateProfilScreen({ navigation }) {
       colors={["#D9F2B1", "transparent"]}
       style={styles.background}
     >
-      <HeaderReturn pages="ComeFromProfil" isNeeded={true} />
+      <HeaderReturnWithInput pages="ComeFromProfil" isNeeded={true} />
       <TouchableWithoutFeedback onPress={() => {}}>
         <KeyboardAvoidingView
           style={styles.container}
@@ -295,11 +295,13 @@ const styles = StyleSheet.create({
   CheckboxMonsieur: {
     flexDirection: "row",
     alignItems: "center",
+    left: 1,
     // margin: 10,
   },
   CheckboxMadame: {
     flexDirection: "row",
     alignItems: "center",
+    left: 0,
   },
   civilityText: {
     fontSize: 16,
