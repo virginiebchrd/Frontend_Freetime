@@ -110,7 +110,7 @@ export default function ProfilScreen({ navigation }) {
         colors={["#D9F2B1", "transparent"]}
         style={styles.background}
       >
-        <HeaderReturn isNeeded={true} icon="logout" pages="ComeFromProfil" />
+        <HeaderReturn isNeeded={true} iconContext="logout" pages="ComeFromProfil" />
 
         <View style={styles.bodyContainer}>
           <View style={styles.titleContainer}>
