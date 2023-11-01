@@ -51,7 +51,7 @@ export default function FirstConnectionScreen({ navigation }) {
     console.log("isAllowed:", isAllowed);
 
     if (EMAIL_REGEX.test(mail)) {
-      console.log("Conditions remplies.");
+      console.log("Conditions remplies pour le regex.");
 
       const userData = {
         email: mail,
@@ -96,6 +96,8 @@ export default function FirstConnectionScreen({ navigation }) {
               "Échec de la connexion. Message d'erreur du serveur : ",
               data.error
             );
+            setMailError(true);
+            setPasswordError(true);
           }
         })
         .catch((error) => {
@@ -147,7 +149,7 @@ export default function FirstConnectionScreen({ navigation }) {
               )}
             </View>
             <View style={styles.AjustementContainer}></View>
-            {isAllowed ? (
+            {isAllowed && !emailError && !passwordError ? (
               <View style={styles.validateContainer}>
                 <SmallButton
                   style={styles.Btn}
