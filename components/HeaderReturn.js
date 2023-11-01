@@ -40,8 +40,8 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token, who}) {
 
     const handleTrash = () => {
         console.log('trash', who);
-        //fetch(`https://backend-freetime.vercel.app/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
-        fetch(`http://192.168.1.12:3000/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
+        fetch(`https://backend-freetime.vercel.app/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
+        //fetch(`http://192.168.1.12:3000/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
         })

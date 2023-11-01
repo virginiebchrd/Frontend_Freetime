@@ -25,8 +25,8 @@ export default function ShowActivityScreen ({navigation, route}) {
     }
 
     const handleValidate = () => {
-        //fetch(`https://backend-freetime.vercel.app/users/hobbies/query?token=${token}&who=${who}`, {
-            fetch(`http://192.168.1.12:3000/users/hobbies/query?token=${token}&who=${who}`, {
+        fetch(`https://backend-freetime.vercel.app/users/hobbies/query?token=${token}&who=${who}`, {
+        //    fetch(`http://192.168.1.12:3000/users/hobbies/query?token=${token}&who=${who}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({hobbies : dataActivity.id})

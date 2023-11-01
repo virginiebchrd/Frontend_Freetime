@@ -47,8 +47,8 @@ export default function CreateProfilScreen({ navigation }) {
       setCivilityError("");
     }
 
-    //fetch(`https://backend-freetime.vercel.app/users/identity/${userToken}`, {
-      fetch(`http://192.168.1.12:3000/users/identity/${userToken}`, {
+    fetch(`https://backend-freetime.vercel.app/users/identity/${userToken}`, {
+      //fetch(`http://192.168.1.12:3000/users/identity/${userToken}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

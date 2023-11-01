@@ -30,8 +30,8 @@ export default function ActivitiesScreen ({navigation}) {
     }
 
     const handleSports = () => {
-        //fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
-        fetch(`http://192.168.1.12:3000/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -55,8 +55,8 @@ export default function ActivitiesScreen ({navigation}) {
     }
 
     const handleArtistics = () => {
-        //fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
-        fetch(`http://192.168.1.12:3000/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -78,8 +78,8 @@ export default function ActivitiesScreen ({navigation}) {
     }
 
     const handleCulture = () => {
-        //fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
-        fetch(`http://192.168.1.12:3000/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){
@@ -102,8 +102,8 @@ export default function ActivitiesScreen ({navigation}) {
 
     const handleEvasion = () => {
         console.log('evasion');
-        //fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
-        fetch(`http://192.168.1.12:3000/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
+        fetch(`https://backend-freetime.vercel.app/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
+        //fetch(`http://192.168.1.12:3000/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`)
         .then(response => response.json())
         .then(data => {
             if(data.result){

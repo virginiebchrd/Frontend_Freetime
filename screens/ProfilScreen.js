@@ -47,8 +47,8 @@ export default function ProfilScreen({ navigation, route }) {
   useEffect(() => {
     const fetchHobbies = async () => {
       try {
-        //const response = await fetch(`https://backend-freetime.vercel.app/users/hobbiesValidate/${token}`);
-        const response = await fetch(`http://192.168.1.12:3000/users/hobbiesValidate/${token}`);
+        const response = await fetch(`https://backend-freetime.vercel.app/users/hobbiesValidate/${token}`);
+        //const response = await fetch(`http://192.168.1.12:3000/users/hobbiesValidate/${token}`);
         const data = await response.json();
         if (data.result) {
           if(data.hobbiesValidatedPerso.length > 0){

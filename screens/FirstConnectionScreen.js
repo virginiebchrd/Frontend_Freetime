@@ -48,8 +48,8 @@ export default function FirstConnectionScreen({ navigation }) {
       }
 
       if (password === passwordConfirmation) { // attention confit entre les état si j'utilise état !disabled !
-      //fetch(`https://backend-freetime.vercel.app/users/signup`, {
-        fetch(`http://192.168.1.12:3000/users/signup`, {
+      fetch(`https://backend-freetime.vercel.app/users/signup`, {
+        //fetch(`http://192.168.1.12:3000/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: mail, password: password }),

@@ -27,8 +27,8 @@ export default function ResultScreen ({navigation}) {
     useEffect ( () => {
         if(who === 'perso'){
             if(hobbiesPerso.length !== 0) {
-                //fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesPerso}`,)
-                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesPerso}`,)
+                fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesPerso}`,)
+                //fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesPerso}`,)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {
@@ -42,8 +42,8 @@ export default function ResultScreen ({navigation}) {
         }
         else if(who === 'famille'){
             if(hobbiesFamille.length !== 0) {
-                //fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesFamille}`,)
-                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesFamille}`,)
+                fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesFamille}`,)
+                //fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesFamille}`,)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {
@@ -57,8 +57,8 @@ export default function ResultScreen ({navigation}) {
         }
         else if(who === 'amis'){
             if(hobbiesAmis.length !== 0) {
-                //fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesAmis}`)
-                fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesAmis}`)
+                fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesAmis}`)
+                //fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesAmis}`)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {

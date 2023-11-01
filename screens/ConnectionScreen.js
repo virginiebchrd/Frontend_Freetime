@@ -52,8 +52,8 @@ export default function FirstConnectionScreen({ navigation }) {
         email: mail,
         password: password,
       };
-      //fetch(`https://backend-freetime.vercel.app/users/signin/`, {
-        fetch(`http://192.168.1.12:3000/users/signin/`, {
+      fetch(`https://backend-freetime.vercel.app/users/signin/`, {
+        //fetch(`http://192.168.1.12:3000/users/signin/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,12 +66,12 @@ export default function FirstConnectionScreen({ navigation }) {
           if (data.result) {
             console.log(data.email);
             dispatch(addEmail(data.email));
-            /*fetch(
-              `https://backend-freetime.vercel.app/users/identity/${data.token}`
-            )*/
             fetch(
-              `http://192.168.1.12:3000/users/identity/${data.token}`
+              `https://backend-freetime.vercel.app/users/identity/${data.token}`
             )
+            /*fetch(
+              `http://192.168.1.12:3000/users/identity/${data.token}`
+            )*/
               .then((response) => response.json())
               .then((data) => {
                 if (data.result) {
