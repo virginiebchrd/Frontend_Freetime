@@ -4,7 +4,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TextInput,
-  Button,
+  Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
 } from "react-native";
@@ -56,27 +56,6 @@ export default function CreateProfilScreen({ navigation }) {
     return null;
   }
 
-  //Fonction pour afficher ou cacher le sélecteur de date
-
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (selectedDate) => {
-    console.log("Une date a été sélectionnée : ", selectedDate);
-    hideDatePicker();
-    // Format date: jj/mm/aaaa
-    const formattedDate = `${selectedDate.getDate()}/${
-      selectedDate.getMonth() + 1
-    }/${selectedDate.getFullYear()}`;
-
-    // add date dans le redux store
-    setBirthday(formattedDate);
-  };
 
   const handleValidate = () => {
     //if (token !== "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO") {  //
@@ -148,57 +127,61 @@ export default function CreateProfilScreen({ navigation }) {
       style={styles.background}
     >
       <HeaderReturnWithInput pages="ComeFromProfil" isNeeded={true} />
-      <TouchableWithoutFeedback onPress={() => {}}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
         <KeyboardAvoidingView
-          style={styles.container}
+          style={styles.bodyContainer}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={styles.bodyContainer}>
-            <View style={styles.titleContainer}>
-              <FontAwesome name="user" size={75} color="#004644" />
-              <Text style={styles.title}>Création du profil</Text>
-            </View>
+          <View style={styles.titleContainer}>
+                <FontAwesome name="user" size={75} color="#004644" />
+                <Text style={styles.title}>Création du profil</Text>
+            </View>  
 
-            <View style={styles.infoContainer}>
-              <View style={styles.civilityContainer}>
-                <View style={styles.leftCivilityContainer}>
-                  <Text style={styles.civilityText}>Civilité* :</Text>
-                </View>
-                <View style={styles.rightCivilityContainer}>
-                  <View style={styles.CheckboxMonsieur}>
-                    <Checkbox
-                      value={civility === "Monsieur"}
-                      onValueChange={() => setCivility("Monsieur")}
-                      color="#004644"
-                    />
-                    <Text style={styles.civilityText}> Monsieur </Text>
+            <View style={styles.separationContainer}></View>
+              <View style={styles.infoContainer}>
+
+                <View style={styles.civilityContainer}>
+                  <View style={styles.leftCivilityContainer}>
+                    <Text style={styles.civilityText}>Civilité* :</Text>
                   </View>
-                  <View style={styles.CheckboxMadame}>
-                    <Checkbox
-                      value={civility === "Madame"}
-                      onValueChange={() => setCivility("Madame")}
-                      color="#004644"
-                    />
-                    <Text style={styles.civilityText}> Madame </Text>
+                  <View style={styles.rightCivilityContainer}>
+                    <View style={styles.CheckboxMonsieur}>
+                      <Checkbox
+                        value={civility === "Monsieur"}
+                        onValueChange={() => setCivility("Monsieur")}
+                        color="#004644"
+                      />
+                      <Text style={styles.civilityText}> Monsieur</Text>
+                    </View>
+                    <View style={styles.CheckboxMadame}>
+                      <Checkbox
+                        value={civility === "Madame"}
+                        onValueChange={() => setCivility("Madame")}
+                        color="#004644"
+                      />
+                      <Text style={styles.civilityText}> Madame</Text>
+                    </View>
                   </View>
                 </View>
+             <View style={styles.separationContainer}></View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={[styles.input, { fontFamily: "Indie-Flower" }]}
+                  placeholder="Nom *"
+                  onChangeText={(value) => setLastname(value)}
+                  value={lastname}
+                  placeholderTextColor="#cae1db"
+                />
+                <TextInput
+                  style={[styles.input, { fontFamily: "Indie-Flower" }]}
+                  placeholder="Prénom *"
+                  onChangeText={(value) => setFirstname(value)}
+                  value={firstname}
+                  placeholderTextColor="#cae1db"
+                />
               </View>
-
-              <TextInput
-                style={[styles.input, { fontFamily: "Indie-Flower" }]}
-                placeholder="Nom *"
-                onChangeText={(value) => setLastname(value)}
-                value={lastname}
-                placeholderTextColor="#cae1db"
-              />
-              <TextInput
-                style={[styles.input, { fontFamily: "Indie-Flower" }]}
-                placeholder="Prénom *"
-                onChangeText={(value) => setFirstname(value)}
-                value={firstname}
-                placeholderTextColor="#cae1db"
-              />
-            </View>
+              <View style={styles.separationContainer}></View>
 
             <View style={styles.validateContainer}>
               <SmallButton
@@ -230,36 +213,40 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   bodyContainer: {
-    height: "100%",
+    height: "82%",
     width: "100%",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     marginTop: 0,
     padding: 0,
+  
+    top: 0,
   },
   titleContainer: {
     height: "20%",
     width: "100%",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "flex-start",
+ 
+    top: -40,
+    margin: 0,
   },
   title: {
     fontSize: 22,
     fontFamily: "Indie-Flower",
     color: "#004644",
-    paddingTop: 30, // 20
+    paddingTop: 0, 
   },
   infoContainer: {
     height: "65%", //60%
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-
-    padding: 10,
-    margin: 0,
+    padding: 0,
+   
   },
   civilityContainer: {
-    height: "35%", // à la place de 25%
+    height: "25%", // à la place de 25%
     width: "65%",
     flexDirection: "row",
     alignItems: "center",
@@ -267,7 +254,7 @@ const styles = StyleSheet.create({
     borderBlockColor: "#004644",
     borderRadius: 10,
     borderWidth: 2,
-    marginTop: 10,
+    marginTop: 0,
     padding: 0,
     backgroundColor: "#CAE1DB",
   },
@@ -284,13 +271,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingRight: 12,
     paddingBottom: 5,
+    paddingTop:5,
+    margin: 0,
   },
-  validateContainer: {
-    height: "20%",
+
+  inputContainer:{
+    height: "55%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    bottom: 35,
+   
+  },
+  separationContainer:{
+    height: "40",
+    width: "100%",
+  },
+
+  validateContainer: {
+    height: "31%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    bottom: -25,  
   },
   CheckboxMonsieur: {
     flexDirection: "row",
@@ -318,10 +320,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 10,
   },
-  datebtn: {
-    padding: 10,
-    borderWidth: 2,
-    borderColor: "#76a696",
-    backgroundColor: "#fff",
-  },
+
 });
