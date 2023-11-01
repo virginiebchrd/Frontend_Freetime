@@ -174,6 +174,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
+  title: {
+    fontSize: 22,
+    fontFamily: "Indie-Flower",
+    color: "#004644",
+    marginTop: 20,
+    marginBottom: 20,
+  },
 
   mapContainer: {
     height: "30%",

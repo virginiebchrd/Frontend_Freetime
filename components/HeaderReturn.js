@@ -35,7 +35,7 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token, who}) {
     }
 
     const handleLogo = () => {
-        navigation.navigate('Map');
+        navigation.navigate('Calendar');
     }
 
     const handleTrash = () => {

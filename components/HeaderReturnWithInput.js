@@ -84,7 +84,7 @@ function HeaderReturnWithInput({
                     {isNeeded && <Return onPress={handleReturn}/>}
                 </View>
                 <View style={styles.logoContainer}>
-                    <TouchableOpacity style={styles.logoTouchable} >
+                    <TouchableOpacity style={styles.logoTouchable} activeOpacity={1} >
                         <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
                     </TouchableOpacity>
                 </View>
