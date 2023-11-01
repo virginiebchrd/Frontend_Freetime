@@ -33,9 +33,6 @@ function HeaderReturnWithInput ({iconContext, pages, isNeeded, idActivity, token
         navigation.navigate('Profil');
     }
 
-    const handleLogo = () => {
-        navigation.navigate('Map');
-    }
 
     const handleTrash = () => {
         console.log('trash');
@@ -83,7 +80,7 @@ function HeaderReturnWithInput ({iconContext, pages, isNeeded, idActivity, token
                     {isNeeded && <Return onPress={handleReturn}/>}
                 </View>
                 <View style={styles.logoContainer}>
-                    <TouchableOpacity style={styles.logoTouchable} onPress={()=>handleLogo()}>
+                    <TouchableOpacity style={styles.logoTouchable} >
                         <Image source={require('../assets/FreeTime-logos_transparent.png')} style={styles.logo} />
                     </TouchableOpacity>
                 </View>

@@ -9,6 +9,10 @@ function Activity (props) {
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
 
+    if (!fontsLoaded) {
+        return null;
+    }
+
     return (
         <View style={styles.headerContainer}>
             <View style={styles.activityContainer} >
@@ -67,6 +71,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Indie-Flower',
         fontSize: 15,
         color: '#cae1db',
+        textAlign: 'center',
     }
 });
 

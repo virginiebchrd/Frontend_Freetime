@@ -124,6 +124,13 @@ const styles = StyleSheet.create({
     margin: 0,
     paddingBottom: 0,
   },
+  textCalendar: {
+    fontSize: 18,
+    fontFamily: "Indie-Flower",
+    color: "#004644",
+    textAlign: "center",
+  },
+
   validateContainer: {
     height: "20%",
     width: "100%",
