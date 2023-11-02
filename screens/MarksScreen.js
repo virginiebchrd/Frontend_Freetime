@@ -27,10 +27,15 @@ export default function MarksScreen({ route }) {
     fetch(
       `https://backend-freetime.vercel.app/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`
     )
+    /*fetch(
+      `http://192.168.1.12:3000/hobbies/averageMarks/query?id=${dataActivity.id}&token=${token}`
+    )*/
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
+        
         if (data.result) {
-          setAverageMark(data.average);
+          setAverageMark(data.average.toFixed(2));
           if (data.myMark) {
             setPersonnalMark(data.myMark);
             setIsDisabled(true);
@@ -81,6 +86,7 @@ export default function MarksScreen({ route }) {
 
   let markAverage = [];
   for (let i = 0; i < 5; i++) {
+    console.log(averageMark);
     let styleBlue;
     if (i <= averageMark - 1) {
       styleBlue = "red";

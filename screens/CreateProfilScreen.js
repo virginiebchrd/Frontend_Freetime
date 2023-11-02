@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   separationContainer: {
-    height: "40",
+
     width: "100%",
   },
 
