@@ -9,10 +9,13 @@ import { useSelector } from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 //const city = { latitude: 45.7578137, longitude: 4.8320114 } //test avec Lyon avec des données brutes imaginaires
-const city = { latitude: 45.8354243, longitude: 1.2644847 } //test avec Limoges avec des données brutes imaginaires
+//const city = { latitude: 45.8354243, longitude: 1.2644847 } //test avec Limoges avec des données brutes imaginaires
 
-export default function ResultScreen ({navigation}) {
+export default function ResultScreen () {
     const [ActivityData, setActivityData] = useState([]);
+
+    const city = useSelector ((state) => state.user.value.city);
+    console.log(city);
     
     const hobbiesPerso = useSelector( (state) => state.hobbies.value.hobbiesPerso);
     const hobbiesFamille = useSelector( (state) => state.hobbies.value.hobbiesFamille);
@@ -28,7 +31,6 @@ export default function ResultScreen ({navigation}) {
         if(who === 'perso'){
             if(hobbiesPerso.length !== 0) {
                 fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesPerso}`,)
-                //fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesPerso}`,)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {
@@ -43,7 +45,6 @@ export default function ResultScreen ({navigation}) {
         else if(who === 'famille'){
             if(hobbiesFamille.length !== 0) {
                 fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesFamille}`,)
-                //fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesFamille}`,)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {
@@ -58,7 +59,6 @@ export default function ResultScreen ({navigation}) {
         else if(who === 'amis'){
             if(hobbiesAmis.length !== 0) {
                 fetch(`https://backend-freetime.vercel.app/hobbies/each/${hobbiesAmis}`)
-                //fetch(`http://192.168.1.12:3000/hobbies/each/${hobbiesAmis}`)
                 .then(response => response.json())
                 .then (data => {
                         if(data.result) {
@@ -91,7 +91,6 @@ export default function ResultScreen ({navigation}) {
             let isSavedAmis = hobbiesSavedAmis.some(e => e === data._id);
             isSavedAmis? colorPin='red' : colorPin='blue';
         }
-
         return <CheckBoxContainer key={i} activityName={data.name} activity={{key:i, id:data._id, activityName: data.name, email:data.email, adress: data.address.street, zipCode: data.address.zipCode, phoneNumber: data.phoneNumber, city: data.address.city, activity: data.category, latitude: data.address.latitude, longitude: data.address.longitude, site: data.site, resultPages: true, pinColor: colorPin}} />
     
     })
@@ -184,29 +183,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    bodyContainer: {
-        height: '80%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    },
-    titleContainer: {
-        height: '10%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     title: {
         fontSize: 22,
         fontFamily: 'Indie-Flower',
         color: '#004644',
         margin: 10,
-    },
-    mapContainer: {
-        height: '40%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     map: {
         height: '40%',

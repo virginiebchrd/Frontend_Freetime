@@ -27,11 +27,10 @@ export default function MapScreen({ navigation }) {
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      console.log(status);
+
       if (status === "granted") {
         const location = await Location.getCurrentPositionAsync({});
         setMyPosition(location.coords);
-        console.log(myPosition);
       }
     })();
   }, []);
@@ -41,18 +40,15 @@ export default function MapScreen({ navigation }) {
   }
 
   const handleMap = (pressed) => {
-    console.log("clicked");
     setPressedCoordinates(pressed.coordinate);
-    console.log(pressedCoordinates);
   };
 
   const handleSearch = () => {
     Keyboard.dismiss();
-    console.log("city", city);
+
     fetch(`https://api-adresse.data.gouv.fr/search/?q=${city}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setCitySearch(true);
         const firstCity = data.features[0];
         const newPlace = {
@@ -135,17 +131,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  mapContainer: {
-    height: "74%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   bodyContainer: {
     height: "80%",
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
+  },
+  inputContainer1: {
+    height: "10%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mapContainer: {
+    height: "74%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   textContainer: {
@@ -156,35 +158,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
-  inputContainer1: {
-    height: "10%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   validateContainer: {
     height: "20%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     bottom: 10,
-  },
-
-  searchIcon: {
-    margin: 5,
-    color: "#004644",
-  },
-
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: "#76a696",
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    width: 20,
-    padding: 5,
   },
 });

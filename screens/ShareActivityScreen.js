@@ -57,7 +57,7 @@ export default function ShareActivityScreen ({navigation, route}) {
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
                 <HeaderReturn pages='Result' isNeeded={false} />
                 <View style={styles.headerContainer}>
-                    <TouchableOpacity style={styles.logoutBtn} onPress={() => handleProfil()}>
+                    <TouchableOpacity onPress={() => handleProfil()}>
                         <FontAwesome name= 'user' size={25} color='#cae1db' />
                     </TouchableOpacity>
                 </View>

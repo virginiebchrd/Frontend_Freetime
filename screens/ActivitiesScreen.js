@@ -8,22 +8,17 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import "moment/locale/fr";
 
-//const cityTest = 'Lyon';
-const cityTest = "Limoges";
-
 export default function ActivitiesScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
   });
 
   const city = useSelector((state) => state.user.value.city.name);
-  console.log("city", city);
 
   let date = useSelector((state) => state.hobbies.value.date);
   date = new Date(date);
   let day = moment(date).locale("fr").format("dddd");
   day = day.toLowerCase();
-  console.log("date", day);
 
   if (!fontsLoaded) {
     return null;
@@ -31,12 +26,11 @@ export default function ActivitiesScreen({ navigation }) {
 
   const handleSports = () => {
     fetch(
-      `https://backend-freetime.vercel.app/hobbies/category/query?category=sports&city=${cityTest}&day=${day}`
+      `https://backend-freetime.vercel.app/hobbies/category/query?category=sports&city=${city}&day=${day}`
     )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data.hobbies);
           const dataToSend = {
             category: "sports",
             hobbies: data.hobbies,
@@ -55,12 +49,11 @@ export default function ActivitiesScreen({ navigation }) {
 
   const handleArtistics = () => {
     fetch(
-      `https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${cityTest}&day=${day}`
+      `https://backend-freetime.vercel.app/hobbies/category/query?category=artistique&city=${city}&day=${day}`
     )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data.hobbies);
           const dataToSend = {
             category: "artistique",
             hobbies: data.hobbies,
@@ -78,12 +71,11 @@ export default function ActivitiesScreen({ navigation }) {
 
   const handleCulture = () => {
     fetch(
-      `https://backend-freetime.vercel.app/hobbies/category/query?category=culture&city=${cityTest}&day=${day}`
+      `https://backend-freetime.vercel.app/hobbies/category/query?category=culture&city=${city}&day=${day}`
     )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data.hobbies);
           const dataToSend = {
             category: "culture",
             hobbies: data.hobbies,
@@ -100,14 +92,12 @@ export default function ActivitiesScreen({ navigation }) {
   };
 
   const handleEvasion = () => {
-    console.log("evasion");
     fetch(
-      `https://backend-freetime.vercel.app/hobbies/category/query?category=evasion&city=${cityTest}&day=${day}`
+      `https://backend-freetime.vercel.app/hobbies/category/query?category=evasion&city=${city}&day=${day}`
     )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data.hobbies);
           const dataToSend = {
             category: "evasion",
             hobbies: data.hobbies,
@@ -208,20 +198,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  checkBoxContainer: {
-    height: "50%",
-    width: "100%",
-  },
   validateContainer: {
-    // paddingTop: 30,
-    height: "20%", //25%
+    height: "20%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     bottom: 0,
-  },
-  scrollView: {
-    height: "50%",
-    width: "100%",
   },
 });

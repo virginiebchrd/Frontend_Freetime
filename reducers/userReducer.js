@@ -50,12 +50,9 @@ export const userSlice = createSlice({
     },
  
     addCity: (state,action) => {
-      console.log('city', action.payload);
       state.value.city = action.payload;
     },
-    //connect
     login: (state, action) => {
-      console.log(action.payload)
       state.value.token = action.payload.token;
       state.value.firstname = action.payload.firstname;
       state.value.lastname = action.payload.lastname;
