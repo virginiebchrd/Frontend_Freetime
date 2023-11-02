@@ -133,6 +133,7 @@ export default function FirstConnectionScreen({ navigation }) {
               <EmailInput
                 onChangeText={(value) => setMail(value)}
                 value={mail}
+                onFocus={() => setMailError(false)}
               />
 
               <Text style={styles.title}>Mot de passe</Text>
@@ -140,6 +141,7 @@ export default function FirstConnectionScreen({ navigation }) {
               <PasswordInput
                 style={styles.PasswordInput}
                 onChangeText={(value) => setPassword(value)}
+                onFocus={() => setPasswordError(false)}
               />
 
               {(emailError || passwordError) && (

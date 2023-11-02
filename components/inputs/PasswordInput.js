@@ -11,7 +11,7 @@ import { useFonts } from "expo-font";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 
-function PasswordInput({ value, onChangeText, onPress }) {
+function PasswordInput({ value, onChangeText, onPress, onFocus }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const fontsLoaded = useFonts({
@@ -37,6 +37,7 @@ function PasswordInput({ value, onChangeText, onPress }) {
           value={value}
           accessible={true}
           accessibilityLabel="Saisie du mot de passe"
+          onFocus={onFocus}
         />
         <TouchableOpacity
           style={styles.iconContainer}

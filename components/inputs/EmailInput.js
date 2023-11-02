@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 
-function EmailInput({ value, onChangeText }) {
+function EmailInput({ value, onChangeText, onFocus }) {
   const fontsLoaded = useFonts({
     "Indie-Flower": require("../../assets/fonts/IndieFlower-Regular.ttf"),
   });
@@ -32,6 +32,7 @@ function EmailInput({ value, onChangeText }) {
           autoCompleteType="email"
           accessibilityLabel="Saisie de votre adresse mail"
           value={value}
+          onFocus={onFocus}
         />
       </View>
     </KeyboardAvoidingView>

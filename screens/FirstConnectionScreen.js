@@ -101,20 +101,24 @@ export default function FirstConnectionScreen({ navigation }) {
               style={styles.EmailInput}
               onChangeText={(value) => setMail(value)}
               value={mail}
+              onFocus={() => {setEmailError(false)}}
             />
 
-            {emailError && (
-              <Text style={styles.TextError}>
-                votre email n'est pas valide!
-              </Text>
-            )}
-
+            <View style={styles.textErrorContainer}>
+              {emailError && (
+                <Text style={styles.TextError}>
+                  votre email n'est pas valide!
+                </Text>
+              )}
+            </View>
+            
             <Text style={styles.title}>Saisir votre mot de passe</Text>
 
             <PasswordInput
               style={styles.PasswordInput}
               onChangeText={(value) => setPassword(value)}
               value={password}
+              onFocus={() => {setPasswordError(false)}}
             />
 
             <Text style={styles.title}>Confirmer votre mot de passe</Text>
@@ -123,6 +127,7 @@ export default function FirstConnectionScreen({ navigation }) {
               style={styles.PasswordInput}
               onChangeText={(value) => setPasswordConfirmation(value)}
               value={passwordConfirmation}
+              onFocus={() => {setPasswordError(false)}}
             />
 
             {passwordError && (
