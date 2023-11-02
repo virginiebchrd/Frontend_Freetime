@@ -23,8 +23,6 @@ const EMAIL_REGEX =
 export default function FirstConnectionScreen({ navigation }) {
   const dispatch = useDispatch();
 
-  // const user = useSelector((state) => state.user.value);
-
   const [mail, setMail] = useState("");
   const [emailError, setMailError] = useState(false);
 
@@ -32,7 +30,6 @@ export default function FirstConnectionScreen({ navigation }) {
   const [passwordError, setPasswordError] = useState(false);
 
   const [isAllowed, setIsAllowed] = useState(false);
-  // const [showPassword, setShowPassword] = useState(false);
 
   const Valider = "Valider";
 
@@ -46,13 +43,8 @@ export default function FirstConnectionScreen({ navigation }) {
 
   const handleConnection = () => {
     Keyboard.dismiss();
-    console.log("E-mail:", mail);
-    console.log("Password:", password);
-    console.log("isAllowed:", isAllowed);
 
     if (EMAIL_REGEX.test(mail)) {
-      console.log("Conditions remplies pour le regex.");
-
       const userData = {
         email: mail,
         password: password,
@@ -66,9 +58,7 @@ export default function FirstConnectionScreen({ navigation }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           if (data.result) {
-            console.log(data.email);
             dispatch(addEmail(data.email));
             fetch(
               `https://backend-freetime.vercel.app/users/identity/${data.token}`
@@ -76,8 +66,6 @@ export default function FirstConnectionScreen({ navigation }) {
               .then((response) => response.json())
               .then((data) => {
                 if (data.result) {
-                  console.log(data.identity);
-
                   dispatch(
                     login({
                       token: data.identity.token,
@@ -104,7 +92,6 @@ export default function FirstConnectionScreen({ navigation }) {
           console.error("Erreur lors de la requête POST :", error);
         });
     } else {
-      console.log("Champs vides ou conditions non remplies.");
       setMailError(true);
       setPasswordError(true);
       setIsAllowed(false);

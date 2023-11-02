@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '20%',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-end',
     },
     checkbox: {
         margin: 8,

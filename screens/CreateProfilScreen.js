@@ -41,7 +41,6 @@ export default function CreateProfilScreen({ navigation }) {
   const handleValidate = () => {
     if (lastname && firstname && civility) {
     } else {
-      console.log("Champs * vides !");
       setBirthdayError("");
       setFirstnameError("");
       setLastnameError("");
@@ -59,10 +58,7 @@ export default function CreateProfilScreen({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.result);
-
         if (data.result) {
-          console.log(data.identity.firstname);
           dispatch(
             login({
               token: data.identity.token,
@@ -73,7 +69,6 @@ export default function CreateProfilScreen({ navigation }) {
           navigation.navigate("Profil");
         } else {
           console.error(data.error);
-          console.log("Conditions non remplies.");
         }
       });
   };

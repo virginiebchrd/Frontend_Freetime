@@ -15,7 +15,6 @@ export default function ResultScreen () {
     const [ActivityData, setActivityData] = useState([]);
 
     const city = useSelector ((state) => state.user.value.city);
-    console.log(city);
     
     const hobbiesPerso = useSelector( (state) => state.hobbies.value.hobbiesPerso);
     const hobbiesFamille = useSelector( (state) => state.hobbies.value.hobbiesFamille);

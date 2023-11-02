@@ -42,7 +42,6 @@ export default function FirstConnectionScreen({ navigation }) {
 
   const handleRegister = () => {
     if (EMAIL_REGEX.test(mail)) {
-      console.log("Conditions remplies.");
 
       if (password !== passwordConfirmation) {
         setPasswordError(true);
@@ -60,9 +59,7 @@ export default function FirstConnectionScreen({ navigation }) {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("réponse seveur", data);
             if (data.result === true) {
-              console.log("token", data.token);
               dispatch(addEmail(data.email));
               dispatch(
                 login({ token: data.token, lastname: "", firstname: "" })
@@ -71,7 +68,6 @@ export default function FirstConnectionScreen({ navigation }) {
               navigation.navigate("CreateProfil");
             } else {
               console.error(data.error);
-              console.log("Conditions non remplies.");
               setEmailError(true);
             }
           });
