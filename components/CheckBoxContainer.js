@@ -72,11 +72,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  checkbox: {
-    margin: 8,
-    height: 30,
-    width: 30,
-  },
 });
 
 export default CheckBoxContainer;

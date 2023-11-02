@@ -28,13 +28,11 @@ function Activity (props) {
             {props.activity.zipCode} {props.activity.city}
           </Text>
           <TouchableOpacity
-            style={styles.button}
             onPress={() => Linking.openURL(`tel:${props.activity.phoneNumber}`)}
           >
             <Text style={styles.text}>Tél.: {props.activity.phoneNumber}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
             onPress={() => Linking.openURL(props.activity.site)}
           >
             <Text style={styles.text}>Site web : {props.activity.site}</Text>

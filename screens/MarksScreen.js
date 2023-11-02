@@ -35,8 +35,6 @@ export default function MarksScreen({ route }) {
             setPersonnalMark(data.myMark);
             setIsDisabled(true);
           }
-        } else {
-          console.log("no marks for activities");
         }
       });
   }, [personnalMark]);

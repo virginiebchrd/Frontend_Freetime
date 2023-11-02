@@ -72,7 +72,6 @@ export default function ProfilScreen({ navigation, route }) {
               return hobbiesSaved._id;
             });
             dispatch(storeHobbiesSavedPerso(idArray));
-            console.log("hobbies Saved Prodil", hobbiesSavedProfil);
 
             setActivitiesDataPerso(data.hobbiesValidatedPerso);
             setHobbiesSavedPerso(true);
@@ -80,10 +79,6 @@ export default function ProfilScreen({ navigation, route }) {
             setHobbiesSavedPerso(false);
           }
           if (data.hobbiesValidatedFamille.length > 0) {
-            console.log(
-              "recup activité sauvée Famille",
-              data.hobbiesValidatedFamille
-            );
             const idArray = data.hobbiesValidatedFamille.map((hobbiesSaved) => {
               return hobbiesSaved._id;
             });
@@ -95,10 +90,6 @@ export default function ProfilScreen({ navigation, route }) {
             setHobbiesSavedFamille(false);
           }
           if (data.hobbiesValidatedAmis.length > 0) {
-            console.log(
-              "recup activité sauvée Amis",
-              data.hobbiesValidatedAmis
-            );
             const idArray = data.hobbiesValidatedFamille.map((hobbiesSaved) => {
               return hobbiesSaved._id;
             });

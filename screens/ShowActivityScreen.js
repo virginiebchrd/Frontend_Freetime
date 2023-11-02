@@ -26,7 +26,6 @@ export default function ShowActivityScreen ({navigation, route}) {
 
     const handleValidate = () => {
         fetch(`https://backend-freetime.vercel.app/users/hobbies/query?token=${token}&who=${who}`, {
-        //    fetch(`http://192.168.1.12:3000/users/hobbies/query?token=${token}&who=${who}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({hobbies : dataActivity.id})
@@ -38,7 +37,6 @@ export default function ShowActivityScreen ({navigation, route}) {
                     navigation.navigate('ShareActivity',{activity: dataActivity});
                 }
                 else {
-                    console.log(data.error);
                     setIsExisted(true);
                 }
             })        
@@ -73,7 +71,7 @@ export default function ShowActivityScreen ({navigation, route}) {
                     
                     <View style={styles.validateContainer}>
                         {isExisted && <Text style={styles.textError}>Activité déjà ajoutée</Text>}
-                        <SmallButton style={styles.btn}  title='Valider' onPress={handleValidate} />
+                        <SmallButton  title='Valider' onPress={handleValidate} />
                     </View>
                 </View>
             </LinearGradient>

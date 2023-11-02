@@ -12,7 +12,6 @@ export default function ShowCategoryScreen ({navigation, route}) {
     const title = route.params.dataToSend.category;
     
     const who = useSelector( (state) => state.hobbies.value.who);
-    console.log('who', who);
 
     const hobbiesPerso = useSelector((state) => state.hobbies.value.hobbiesPerso);
     const hobbiesAmis = useSelector((state) => state.hobbies.value.hobbiesAmis);
@@ -84,6 +83,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Indie-Flower',
         color: '#004644',
     },
+    largeButton: {
+        height:'15%',
+        width: '70%',
+    },
     text: {
         fontSize: 17,
         fontFamily: 'Indie-Flower',
@@ -93,10 +96,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         justifyContent: 'space-between',
-    },
-    largeButton: {
-        height:'15%',
-        width: '70%',
     },
     smallButton: {
         height:'15%',
