@@ -14,6 +14,7 @@ export default function ActivitiesScreen({ navigation }) {
   });
 
   const city = useSelector((state) => state.user.value.city.name);
+  
 
   let date = useSelector((state) => state.hobbies.value.date);
   date = new Date(date);
@@ -53,6 +54,7 @@ export default function ActivitiesScreen({ navigation }) {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.result) {
           const dataToSend = {
             category: "artistique",

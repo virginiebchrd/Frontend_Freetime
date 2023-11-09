@@ -19,6 +19,7 @@ export default function MapScreen({ navigation }) {
 
   const dispatch = useDispatch();
   const coords = useSelector((state) => state.user.value.city);
+  console.log("Coords:", coords);
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -29,7 +30,7 @@ export default function MapScreen({ navigation }) {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
       if (status === "granted") {
-        const location = await Location.getCurrentPositionAsync({});
+        const location = Location.getCurrentPositionAsync({});
         setMyPosition(location.coords);
       }
     })();
@@ -85,20 +86,21 @@ export default function MapScreen({ navigation }) {
 
           <MapView
             style={styles.mapContainer}
-            initialRegion={{
-              latitude: 45.833619,
-              longitude: 1.261105,
+            
+            initialRegion={{                               
+              latitude: myPosition.latitude || 45.833619,
+              longitude: myPosition.longitude || 1.261105,
               latitudeDelta: 12,
               longitudeDelta: 12,
             }}
             showsUserLocation
             onLongPress={(e) => handleMap(e.nativeEvent)}
           >
-            {citySearch && (
+            {citySearch && coords && coords.latitude && coords.longitude && (
               <Marker
                 coordinate={{
-                  latitude: coords.latitude,
-                  longitude: coords.longitude,
+                  latitude: coords.latitude, 
+                  longitude: coords.longitude, 
                 }}
                 title={city}
                 pinColor="#fecb2d"

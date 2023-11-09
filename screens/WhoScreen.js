@@ -92,6 +92,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#004644',
         fontFamily: 'Indie-Flower',
-        fontWeight: 'bold',
+        fontWeight: '600',
     },
   });
