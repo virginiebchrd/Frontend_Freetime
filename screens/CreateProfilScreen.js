@@ -2,7 +2,6 @@ import {
   Text,
   View,
   StyleSheet,
-  SafeAreaView,
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
@@ -13,37 +12,20 @@ import { useFonts } from "expo-font";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HeaderReturnWithInput from "../components/HeaderReturnWithInput";
 import SmallButton from "../components/buttons/SmallButton";
-import BasicInput from "../components/inputs/BasicInput";
 import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addLastname,
-  addFirstname,
-  addBirthday,
-  addCivility,
-  login,
-} from "../reducers/userReducer";
-import DatePickerModal from "react-native-modal-datetime-picker";
+import { login } from "../reducers/userReducer";
 
 export default function CreateProfilScreen({ navigation }) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.value);
-  // récupérer le token de l'utilisateur
-  const userToken = useSelector((state) => state.user.value.token);
 
-  //const token = "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO";
+  const userToken = useSelector((state) => state.user.value.token);
 
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
-  const [birthday, setBirthday] = useState(""); //format jj/mm/aaaa
   const [civility, setCivility] = useState("");
 
-  //date format
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  //control errors
-  const [birthdayError, setBirthdayError] = useState("");
   const [firstnameError, setFirstnameError] = useState("");
   const [lastnameError, setLastnameError] = useState("");
   const [civilityError, setCivilityError] = useState("");
@@ -56,48 +38,27 @@ export default function CreateProfilScreen({ navigation }) {
     return null;
   }
 
-
   const handleValidate = () => {
-    //if (token !== "QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO") {  //
-    // Si le token n'est pas valide, sortir de la fonction
-    /*if (token !== userToken) {
-        console.log("Token invalide");
-        return;
-      }*/
-
     if (lastname && firstname && civility) {
-      /*console.log("Civilité :", civility);
-      console.log("Nom :", lastname);
-      console.log("Prénom :", firstname);
-      console.log("Date de naissance :", birthday);*/
-      // navigation.navigate("Profil");
     } else {
-      console.log("Champs * vides !");
       setBirthdayError("");
       setFirstnameError("");
       setLastnameError("");
       setCivilityError("");
     }
 
-    // fetch(`https://backend-freetime.vercel.app/users/identity/QaQXXj_50JZyMv2cnNXSWUxlye1l7zOO`, {
     fetch(`https://backend-freetime.vercel.app/users/identity/${userToken}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      //Authorization: `Bearer ${token}`}, // Ajoutez le token dans l'en-tête Authorization
       body: JSON.stringify({
         civility: civility,
         lastname: lastname,
         firstname: firstname,
-        /*birthday: birthday*/
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data Create", data);
-        console.log(data.result);
-
         if (data.result) {
-          console.log(data.identity.firstname);
           dispatch(
             login({
               token: data.identity.token,
@@ -108,16 +69,7 @@ export default function CreateProfilScreen({ navigation }) {
           navigation.navigate("Profil");
         } else {
           console.error(data.error);
-          console.log("Conditions non remplies.");
         }
-        // console.log(data);
-        //if (data.result === true) {
-        //  navigation.navigate("Profil");
-
-        //} else {
-        //  console.error(data.error);
-        //  console.log("Conditions non remplies.");
-        //  }
       });
   };
 
@@ -128,60 +80,58 @@ export default function CreateProfilScreen({ navigation }) {
     >
       <HeaderReturnWithInput pages="ComeFromProfil" isNeeded={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-
         <KeyboardAvoidingView
           style={styles.bodyContainer}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <View style={styles.titleContainer}>
-                <FontAwesome name="user" size={75} color="#004644" />
-                <Text style={styles.title}>Création du profil</Text>
-            </View>  
+            <FontAwesome name="user" size={75} color="#004644" />
+            <Text style={styles.title}>Création du profil</Text>
+          </View>
 
-            <View style={styles.separationContainer}></View>
-              <View style={styles.infoContainer}>
-
-                <View style={styles.civilityContainer}>
-                  <View style={styles.leftCivilityContainer}>
-                    <Text style={styles.civilityText}>Civilité* :</Text>
-                  </View>
-                  <View style={styles.rightCivilityContainer}>
-                    <View style={styles.CheckboxMonsieur}>
-                      <Checkbox
-                        value={civility === "Monsieur"}
-                        onValueChange={() => setCivility("Monsieur")}
-                        color="#004644"
-                      />
-                      <Text style={styles.civilityText}> Monsieur</Text>
-                    </View>
-                    <View style={styles.CheckboxMadame}>
-                      <Checkbox
-                        value={civility === "Madame"}
-                        onValueChange={() => setCivility("Madame")}
-                        color="#004644"
-                      />
-                      <Text style={styles.civilityText}> Madame</Text>
-                    </View>
-                  </View>
-                </View>
-             <View style={styles.separationContainer}></View>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={[styles.input, { fontFamily: "Indie-Flower" }]}
-                  placeholder="Nom *"
-                  onChangeText={(value) => setLastname(value)}
-                  value={lastname}
-                  placeholderTextColor="#cae1db"
-                />
-                <TextInput
-                  style={[styles.input, { fontFamily: "Indie-Flower" }]}
-                  placeholder="Prénom *"
-                  onChangeText={(value) => setFirstname(value)}
-                  value={firstname}
-                  placeholderTextColor="#cae1db"
-                />
+          <View style={styles.separationContainer}></View>
+          <View style={styles.infoContainer}>
+            <View style={styles.civilityContainer}>
+              <View style={styles.leftCivilityContainer}>
+                <Text style={styles.civilityText}>Civilité* :</Text>
               </View>
-              <View style={styles.separationContainer}></View>
+              <View style={styles.rightCivilityContainer}>
+                <View style={styles.CheckboxMonsieur}>
+                  <Checkbox
+                    value={civility === "Monsieur"}
+                    onValueChange={() => setCivility("Monsieur")}
+                    color="#004644"
+                  />
+                  <Text style={styles.civilityText}> Monsieur</Text>
+                </View>
+                <View style={styles.CheckboxMadame}>
+                  <Checkbox
+                    value={civility === "Madame"}
+                    onValueChange={() => setCivility("Madame")}
+                    color="#004644"
+                  />
+                  <Text style={styles.civilityText}> Madame</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.separationContainer}></View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={[styles.input, { fontFamily: "Indie-Flower" }]}
+                placeholder="Nom *"
+                onChangeText={(value) => setLastname(value)}
+                value={lastname}
+                placeholderTextColor="#cae1db"
+              />
+              <TextInput
+                style={[styles.input, { fontFamily: "Indie-Flower" }]}
+                placeholder="Prénom *"
+                onChangeText={(value) => setFirstname(value)}
+                value={firstname}
+                placeholderTextColor="#cae1db"
+              />
+            </View>
+            <View style={styles.separationContainer}></View>
 
             <View style={styles.validateContainer}>
               <SmallButton
@@ -219,7 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 0,
     padding: 0,
-  
+
     top: 0,
   },
   titleContainer: {
@@ -227,7 +177,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
- 
+
     top: -40,
     margin: 0,
   },
@@ -235,18 +185,17 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontFamily: "Indie-Flower",
     color: "#004644",
-    paddingTop: 0, 
+    paddingTop: 0,
   },
   infoContainer: {
-    height: "65%", //60%
+    height: "65%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     padding: 0,
-   
   },
   civilityContainer: {
-    height: "25%", // à la place de 25%
+    height: "25%",
     width: "65%",
     flexDirection: "row",
     alignItems: "center",
@@ -271,19 +220,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingRight: 12,
     paddingBottom: 5,
-    paddingTop:5,
+    paddingTop: 5,
     margin: 0,
   },
 
-  inputContainer:{
+  inputContainer: {
     height: "55%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-   
   },
-  separationContainer:{
-    height: "40",
+  separationContainer: {
+
     width: "100%",
   },
 
@@ -292,13 +240,12 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-end",
-    bottom: -25,  
+    bottom: -25,
   },
   CheckboxMonsieur: {
     flexDirection: "row",
     alignItems: "center",
     left: 1,
-    // margin: 10,
   },
   CheckboxMadame: {
     flexDirection: "row",
@@ -320,5 +267,4 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 10,
   },
-
 });

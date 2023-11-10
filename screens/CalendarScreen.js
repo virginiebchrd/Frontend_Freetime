@@ -1,9 +1,8 @@
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
 import SmallButton from "../components/buttons/SmallButton";
-import CalendarContainer from "../components/CalendarContainer";
 import DateSelector from "../components/CalendarPicker";
 import { useDispatch } from "react-redux";
 import { addDate } from "../reducers/hobbiesReducer";
@@ -14,7 +13,7 @@ import "moment/locale/fr";
 export default function CalendarScreen({ navigation }) {
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(null);
-  const [disabled, setDisabled] = useState(false);// état initialisé  disabled=désactivé//
+  const [disabled, setDisabled] = useState(false);
 
   const [fontsLoaded] = useFonts({
     "Indie-Flower": require("../assets/fonts/IndieFlower-Regular.ttf"),
@@ -25,26 +24,18 @@ export default function CalendarScreen({ navigation }) {
   }
 
   const onDateChange = (date) => {
-    const formattedDate = moment(date).locale("fr").format("dddd D MMMM YYYY");
-    const formattedDay = moment(date).locale("fr").format("dddd").split(" ");
-    console.log("La date sélectionnée : ", formattedDate);
-    console.log("Le jour sélectionné : ", formattedDay);
     setSelectedDate(moment(date));
-    
   };
 
   const handleValidate = () => {
-    if(selectedDate==null) {
-      console.log("Pas de date sélectionnée");
+    if (selectedDate == null) {
       alert("Attention la date n'a pas été sélectionnée");
-      setDisabled(true);// état initialisé  disabled=désactivé//
+      setDisabled(true);
     } else {
-    console.log("La date qui est dans le reducer", selectedDate);
-    // Convertir la date en tant que chaîne au Redux store
-    const dateStr = selectedDate.toISOString();
-    dispatch(addDate(dateStr));
-    navigation.navigate("Who");
-    setDisabled(false);// état initialisé activé//
+      const dateStr = selectedDate.toISOString();
+      dispatch(addDate(dateStr));
+      navigation.navigate("Who");
+      setDisabled(false);
     }
   };
 
@@ -77,7 +68,11 @@ export default function CalendarScreen({ navigation }) {
           </View>
 
           <View style={styles.validateContainer}>
-            <SmallButton style={styles.btn}  title="Valider" onPress={()=>handleValidate()} disabled={disabled}/>
+            <SmallButton
+              title="Suivant"
+              onPress={() => handleValidate()}
+              disabled={disabled}
+            />
           </View>
         </View>
       </LinearGradient>
@@ -125,6 +120,13 @@ const styles = StyleSheet.create({
     margin: 0,
     paddingBottom: 0,
   },
+  textCalendar: {
+    fontSize: 18,
+    fontFamily: "Indie-Flower",
+    color: "#004644",
+    textAlign: "center",
+  },
+
   validateContainer: {
     height: "20%",
     width: "100%",

@@ -9,7 +9,6 @@ import CreateProfilScreen from "./screens/CreateProfilScreen";
 import ProfilScreen from "./screens/ProfilScreen";
 import CalendarScreen from "./screens/CalendarScreen";
 import WhoScreen from "./screens/WhoScreen";
-import WhoScreenBis from "./screens/WhoScreenBis";
 import MapScreen from "./screens/MapScreen";
 import ActivitiesScreen from "./screens/ActivitiesScreen";
 import ResultScreen from "./screens/ResultScreen";
@@ -42,7 +41,6 @@ export default function App() {
           <Stack.Screen name="Marks" component={MarksScreen} />
           <Stack.Screen name="Calendar" component={CalendarScreen} />
           <Stack.Screen name="Who" component={WhoScreen} />
-          <Stack.Screen name="WhoBis" component={WhoScreenBis} />
           <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Activities" component={ActivitiesScreen} />
           <Stack.Screen name="ShowCategory" component={ShowCategoryScreen} />

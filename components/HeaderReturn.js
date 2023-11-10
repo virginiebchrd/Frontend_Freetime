@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity, View, StyleSheet, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import Logout from './Logout';
@@ -6,11 +6,11 @@ import Profil from './Profil';
 import Return from './Return';
 import { logout } from '../reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeHobbies, removeHobbiesLogout, removeHobbiesSaved } from '../reducers/hobbiesReducer';
+import { removeHobbiesAmis, removeHobbiesFamille, removeHobbiesLogout, removeHobbiesPerso, removeHobbiesSavedAmis, removeHobbiesSavedFamille, removeHobbiesSavedPerso } from '../reducers/hobbiesReducer';
 import Trash from './Trash';
-import { useEffect } from 'react';
 
-function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token}) {
+
+function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token, who}) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
@@ -24,24 +24,22 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token}) {
     }
 
     const handleLogout = () => {
-        console.log('logout');
         dispatch(logout());
         dispatch(removeHobbiesLogout());
         navigation.navigate('Home');
     }
 
     const handleProfil = () => {
-        navigation.navigate('Profil')
+        navigation.navigate('Profil');
     }
 
     const handleLogo = () => {
-        navigation.navigate('Map');
+        navigation.navigate('Calendar');
     }
 
     const handleTrash = () => {
-        console.log('trash');
-        console.log(token);
-        fetch(`https://backend-freetime.vercel.app/users/delete/query?id=${idActivity}&token=${token}`,{
+        fetch(`https://backend-freetime.vercel.app/users/delete/query?id=${idActivity}&token=${token}&who=${who}`,{
+        
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
         })
@@ -49,9 +47,18 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token}) {
         .then(data => {
             
             if(data.result) {
-                console.log('je passe ici');
-                dispatch(removeHobbies(idActivity))
-                dispatch(removeHobbiesSaved(idActivity))
+                if(who === 'perso') {
+                    dispatch(removeHobbiesPerso(idActivity))
+                    dispatch(removeHobbiesSavedPerso(idActivity))
+                }
+                else if(who === 'famille') {
+                    dispatch(removeHobbiesFamille(idActivity))
+                    dispatch(removeHobbiesSavedFamille(idActivity))
+                }
+                else if(who === 'amis') {
+                    dispatch(removeHobbiesAmis(idActivity))
+                    dispatch(removeHobbiesSavedAmis(idActivity))
+                }
                 navigation.navigate('Profil');
             }
         })
@@ -72,7 +79,7 @@ function HeaderReturn ({iconContext, pages, isNeeded, idActivity, token}) {
         <View style={styles.headerContainer}>
             <LinearGradient colors={['#004644', 'transparent']}  style={styles.headerGradient} >
                 <View style={styles.returnContainer}>
-                    {isNeeded && <Return onPress={handleReturn}/>}
+                    {isNeeded && <Return onPress={() => handleReturn()}/>}
                 </View>
                 <View style={styles.logoContainer}>
                     <TouchableOpacity style={styles.logoTouchable} onPress={()=>handleLogo()}>

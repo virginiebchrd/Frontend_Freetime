@@ -3,8 +3,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
 import LargeButton from "../components/buttons/LargeButton";
+import { useDispatch } from 'react-redux';
+import { chooseWho } from '../reducers/hobbiesReducer';
 
 export default function WhoScreen ({navigation}) {
+    const dispatch = useDispatch();
+
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
     });
@@ -16,45 +20,42 @@ export default function WhoScreen ({navigation}) {
     const seulementMoi = "Seulement Moi";
     const avecMaFamille = "Avec Ma Famille";
     const avecMesAmis = "Avec Mes Amis";
-    const uniquementCertainesPersonnes = "Uniquement Certaines Personnes";
 
     //les fonctions qui sont utilisées dans les boutons
     const handleOnlyME = () => {
-        navigation.navigate("Map")
+        dispatch(chooseWho('perso'));
+        navigation.navigate("Map", {who : 'perso'})
     }
 
     const handleWithFamily = () => {
-        navigation.navigate("Map")
+        dispatch(chooseWho('famille'));
+        navigation.navigate("Map", {who : 'famille'})
     }
 
     const handleWithFriends = () => {
-        navigation.navigate("Map")
-    }
-
-    const handleOtherPerson = () => {
-        navigation.navigate("Map")
+        dispatch(chooseWho('amis'));
+        navigation.navigate("Map", {who : 'amis'})
     }
     
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages="Calendar" isNeeded={true}/>
+                <HeaderReturn iconContext="profil" pages="Calendar" isNeeded={true} />
 
                 <View style={styles.bodyContainer}>
                     <Text style={styles.titlePage}>Qui va participer ?</Text>
                      
-                <View style={styles.buttonContainer}>
-                    <LargeButton title={seulementMoi} onPress={handleOnlyME}/>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <LargeButton title={avecMaFamille} onPress={handleWithFamily}/>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <LargeButton title={avecMesAmis} onPress={handleWithFriends}/>
-                </View>
-                {/*<View style={styles.buttonContainer}>
-                    <LargeButton title={uniquementCertainesPersonnes} onPress={handleOtherPerson}/>
-                </View>*/}
+                    <View style={styles.buttonContainer}>
+                        <LargeButton title={seulementMoi} onPress={handleOnlyME}/>
+                    </View>
+
+                    <View style={styles.buttonContainer}>
+                        <LargeButton title={avecMaFamille} onPress={handleWithFamily}/>
+                    </View>
+
+                    <View style={styles.buttonContainer}>
+                        <LargeButton title={avecMesAmis} onPress={handleWithFriends}/>
+                    </View>
                 </View>
                                                
             </LinearGradient>

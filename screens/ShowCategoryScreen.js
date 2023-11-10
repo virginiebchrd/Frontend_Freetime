@@ -1,18 +1,21 @@
-import {TouchableOpacity, Text, View, StyleSheet, Image, ScrollView, SafeAreaView} from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
 import LargeButton from '../components/buttons/LargeButton';
 import SmallButton from '../components/buttons/SmallButton';
-import { useState } from 'react';
 import ChooseActivity from '../components/ChooseActivity';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function ShowCategoryScreen ({navigation, route}) {
     const activitiesData = route.params.dataToSend.hobbies;
     const title = route.params.dataToSend.category;
     
-    const hobbies = useSelector((state) => state.hobbies.value.hobbies);
+    const who = useSelector( (state) => state.hobbies.value.who);
+
+    const hobbiesPerso = useSelector((state) => state.hobbies.value.hobbiesPerso);
+    const hobbiesAmis = useSelector((state) => state.hobbies.value.hobbiesAmis);
+    const hobbiesFamille = useSelector((state) => state.hobbies.value.hobbiesFamille);
 
     const [fontsLoaded] = useFonts({
         'Indie-Flower': require('../assets/fonts/IndieFlower-Regular.ttf'),
@@ -29,10 +32,11 @@ export default function ShowCategoryScreen ({navigation, route}) {
 
     let activities;
     if(activitiesData.length > 0) {
-
         activities = activitiesData.map((data,i) => {
-            const isChecked = hobbies.some(e=> e === data._id);
-            return(<ChooseActivity key={i} activityName={data.name} id={data._id} isChecked={isChecked}/>)
+            const isCheckedPerso = hobbiesPerso.some(e=> e === data._id);
+            const isCheckedAmis = hobbiesAmis.some(e=> e === data._id);
+            const isCheckedFamille = hobbiesFamille.some(e=> e === data._id);
+            return(<ChooseActivity key={i} activityName={data.name} id={data._id} isCheckedPerso={isCheckedPerso} isCheckedAmis={isCheckedAmis}  isCheckedFamille={isCheckedFamille}/>)
         })
     }
     else {
@@ -79,6 +83,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Indie-Flower',
         color: '#004644',
     },
+    largeButton: {
+        height:'15%',
+        width: '70%',
+    },
     text: {
         fontSize: 17,
         fontFamily: 'Indie-Flower',
@@ -88,10 +96,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         justifyContent: 'space-between',
-    },
-    largeButton: {
-        height:'15%',
-        width: '70%',
     },
     smallButton: {
         height:'15%',

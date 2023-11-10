@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import Logo from "../assets/Free-Time-logos_black.svg";
@@ -26,7 +26,6 @@ export default function HomeScreen({ navigation }) {
           <Logo width="125%" />
         </View>
 
-
         <View style={styles.buttonContainer}>
           <View style={styles.buttonBackgroundUp}>
             <LoginButtons
@@ -34,7 +33,6 @@ export default function HomeScreen({ navigation }) {
               onPress={() => navigation.navigate("FirstConnection")}
             ></LoginButtons>
           </View>
-
 
           <View style={styles.buttonBackgroundIn}>
             <LoginButtons
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: "#004644",
-    fontSize: 40,
+    fontSize: 60,
     fontFamily: "Indie-Flower",
     marginTop: 130,
   },
@@ -89,20 +87,18 @@ const styles = StyleSheet.create({
     height: "60%",
     width: "100%",
     alignItems: "center",
-    // justifyContent: "space-around",
   },
 
   buttonBackgroundUp: {
-    height: '40%',
+    height: "40%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     fontSize: 16,
-    marginTop: -40, 
-    
+    marginTop: -40,
   },
   buttonBackgroundIn: {
-    height: '40%',
+    height: "40%",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",

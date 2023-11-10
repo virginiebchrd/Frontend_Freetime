@@ -1,11 +1,4 @@
-import {
-  TouchableOpacity,
-  Keyboard,
-  KeyboardAvoidingView,
-  TextInput,
-  View,
-  StyleSheet,
-} from "react-native";
+import { Keyboard, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import HeaderReturn from "../components/HeaderReturn";
@@ -13,7 +6,6 @@ import SmallButton from "../components/buttons/SmallButton";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { addCity } from "../reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import InputCity from "../components/inputs/InputCity";
@@ -35,11 +27,10 @@ export default function MapScreen({ navigation }) {
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      console.log(status);
+
       if (status === "granted") {
         const location = await Location.getCurrentPositionAsync({});
         setMyPosition(location.coords);
-        console.log(myPosition);
       }
     })();
   }, []);
@@ -49,18 +40,15 @@ export default function MapScreen({ navigation }) {
   }
 
   const handleMap = (pressed) => {
-    console.log("clicked");
     setPressedCoordinates(pressed.coordinate);
-    console.log(pressedCoordinates);
   };
 
   const handleSearch = () => {
     Keyboard.dismiss();
-    console.log("city", city);
+
     fetch(`https://api-adresse.data.gouv.fr/search/?q=${city}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setCitySearch(true);
         const firstCity = data.features[0];
         const newPlace = {
@@ -74,9 +62,7 @@ export default function MapScreen({ navigation }) {
       });
   };
 
-  
   const handleValidate = () => {
-    //dispatch coordonnées + ville si recherche par input
     navigation.navigate("Activities");
   };
 
@@ -120,7 +106,11 @@ export default function MapScreen({ navigation }) {
             )}
           </MapView>
           <View style={styles.validateContainer}>
-            <SmallButton style={styles.btn}  title="Valider" onPress={handleValidate} />
+            <SmallButton
+              style={styles.btn}
+              title="Suivant"
+              onPress={handleValidate}
+            />
           </View>
         </View>
       </LinearGradient>
@@ -141,36 +131,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  mapContainer: {
-    height: "74%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   bodyContainer: {
     height: "80%",
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
-  },
-  GeolocalizeContainer: {
-    height: "10%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textContainer: {
-    height: "5%",
-    width: "80%",
-    borderBottomWidth: 2,
-    borderColor: "#004644",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    fontFamily: "Indie-Flower",
-    fontSize: 22,
-    color: "#004644",
   },
   inputContainer1: {
     height: "10%",
@@ -178,9 +143,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  mapContainerNoGeo: {
-    height: "77%",
+  mapContainer: {
+    height: "74%",
     width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  textContainer: {
+    height: "5%",
+    width: "80%",
+    borderBottomWidth: 2,
+    borderColor: "#004644",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -190,53 +164,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     bottom: 10,
-  },
-
-  containerInput: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderColor: "#76a696",
-    paddingLeft: 5,
-    backgroundColor: "#fff",
-  },
-
-  label: {
-    position: "absolute",
-    left: 10, // Ajustez la position à gauche selon vos besoins
-    top: 10, // Ajustez la position vers le haut selon vos besoins
-    color: "#004644",
-    fontSize: 12,
-    backgroundColor: "#bbd1b0",
-    borderRadius: 5,
-    padding: 3,
-  },
-
-  placeholder: {
-    color: "#004644",
-    fontSize: 12,
-    backgroundColor: "#bbd1b0",
-    borderRadius: 5,
-    paddingLeft: 10,
-  },
-
-  searchIcon: {
-    margin: 5,
-    color: "#004644",
-  },
-
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: "#76a696",
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    width: 250, // Ajustez la largeur de l'input
-    padding: 5,
   },
 });

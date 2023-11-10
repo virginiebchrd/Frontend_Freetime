@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import CalendarPicker from "react-native-calendar-picker";
 import moment from "moment";
 import "moment/locale/fr";
 import { LinearGradient } from "expo-linear-gradient";
 
-const DateSelector = ({onDateChange} ) => {
-  // Utilisez le hook useState pour créer un état 'selectedStartDate' avec une valeur initiale de null
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-
+const DateSelector = ({ onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   moment.updateLocale("fr", {
     week: {
-      dow: 1, // Lundi est le premier jour de la semaine
-      doy: 4, // Le 1er jour de l'année est le jeudi
+      dow: 1,
+      doy: 4,
     },
     weekdays: [
       "Dimanche",
@@ -41,17 +38,15 @@ const DateSelector = ({onDateChange} ) => {
     ],
   });
 
-  const handleDateChange = (date) => {
-    const formattedDate = moment(date).locale("fr").format("dddd D MMMM YYYY");
-    const formattedDay = moment(date).locale("fr").format("dddd").split(" ");
-    console.log("La date sélectionnée : ", formattedDate);
-    console.log("Le jour sélectionné : ", formattedDay);
-    setSelectedDate(date);
-  
-    // Appeler la fonction onDateChange du parent avec la date sélectionnée
-    onDateChange(date); 
-  };
-  
+  // const handleDateChange = (date) => {
+  //   const formattedDate = moment(date).locale("fr").format("dddd D MMMM YYYY");
+  //   const formattedDay = moment(date).locale("fr").format("dddd").split(" ");
+  //   console.log("La date sélectionnée : ", formattedDate);
+  //   console.log("Le jour sélectionné : ", formattedDay);
+  //   setSelectedDate(date);
+
+  //   onDateChange(date);
+  // };
 
   return (
     <View style={styles.container}>
@@ -83,7 +78,6 @@ const DateSelector = ({onDateChange} ) => {
           previousTitle="◄"
           nextTitle="►"
         />
-      
       </LinearGradient>
     </View>
   );
@@ -103,10 +97,3 @@ const styles = StyleSheet.create({
 });
 
 export default DateSelector;
-/* la date sous forme d'un tableau: 
-Array(1)
-0: object
-ouverture: Array(2)
- 0:"mardi"
- 1: "mercredi"
- */

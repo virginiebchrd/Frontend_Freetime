@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, Image} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import HeaderReturn from '../components/HeaderReturn';
@@ -6,11 +6,11 @@ import SmallButton from '../components/buttons/SmallButton';
 import Activity from '../components/Activity';
 import MapView, { Marker } from 'react-native-maps';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeHobbies } from '../reducers/hobbiesReducer';
+import { useSelector } from 'react-redux';
 
 export default function ShowActivityScreen ({navigation, route}) {
-    const token = useSelector((state) => state.user.value.token)
+    const token = useSelector((state) => state.user.value.token);
+    const who = useSelector((state) => state.hobbies.value.who);
 
     const [isExisted, setIsExisted] = useState(false);
 
@@ -25,29 +25,27 @@ export default function ShowActivityScreen ({navigation, route}) {
     }
 
     const handleValidate = () => {
-        fetch(`https://backend-freetime.vercel.app/users/hobbies/${token}`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({hobbies : dataActivity.id})
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.result) {
-                setIsExisted(false);
-                navigation.navigate('ShareActivity',{activity: dataActivity});
-            }
-            else {
-                console.log(data.error);
-                setIsExisted(true);
-            }
-        })
-        
+        fetch(`https://backend-freetime.vercel.app/users/hobbies/query?token=${token}&who=${who}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({hobbies : dataActivity.id})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result) {
+                    setIsExisted(false);
+                    navigation.navigate('ShareActivity',{activity: dataActivity});
+                }
+                else {
+                    setIsExisted(true);
+                }
+            })        
     }
 
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#D9F2B1', 'transparent']}  style={styles.background} >
-                <HeaderReturn iconContext="profil" pages='Result' isNeeded={true}/>
+                <HeaderReturn iconContext="profil" pages='Result' isNeeded={true} />
 
                 <View style={styles.bodyContainer}>
                     <View style={styles.titleContainer}>
@@ -73,7 +71,7 @@ export default function ShowActivityScreen ({navigation, route}) {
                     
                     <View style={styles.validateContainer}>
                         {isExisted && <Text style={styles.textError}>Activité déjà ajoutée</Text>}
-                        <SmallButton style={styles.btn}  title='Valider' onPress={handleValidate} />
+                        <SmallButton  title='Valider' onPress={handleValidate} />
                     </View>
                 </View>
             </LinearGradient>
