@@ -8,13 +8,13 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-//const city = { latitude: 45.7578137, longitude: 4.8320114 } //test avec Lyon avec des données brutes imaginaires
-//const city = { latitude: 45.8354243, longitude: 1.2644847 } //test avec Limoges avec des données brutes imaginaires
+
 
 export default function ResultScreen () {
     const [ActivityData, setActivityData] = useState([]);
 
-    const city = useSelector ((state) => state.user.value.city);
+
+    const city = useSelector ((state) => state.user.value.city); 
     
     const hobbiesPerso = useSelector( (state) => state.hobbies.value.hobbiesPerso);
     const hobbiesFamille = useSelector( (state) => state.hobbies.value.hobbiesFamille);
@@ -26,6 +26,7 @@ export default function ResultScreen () {
 
     const who = useSelector( (state) => state.hobbies.value.who);
 
+ 
     useEffect ( () => {
         if(who === 'perso'){
             if(hobbiesPerso.length !== 0) {
